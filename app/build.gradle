@@ -38,7 +38,6 @@ dependencies {
     compile dependencies.simpleStack
     compile dependencies.anko
     compile dependencies.picasso
-    //implementation project(':boilerpipe')
     compile dependencies.boilerpipe
 }
 kotlin {

@@ -29,7 +29,6 @@ ext {
             picasso         : "com.squareup.picasso:picasso:2.5.2",
 
             boilerpipe      : "com.github.BartoszJarocki:android-boilerpipe:3330c21f8d",
-            jericho      : "net.htmlparser.jericho:jericho-html:3.3",
 
             //Test
             junit           : "junit:junit:4.12",
