@@ -1,0 +1,38 @@
+ext {
+
+    //Libraries
+    supportVersion = '26.0.0-alpha1'
+    ankoVersion = '0.10.1'
+
+    dependencies = [
+
+            //Android
+            recyclerView    : "com.android.support:recyclerview-v7:${supportVersion}",
+            appCompat       : "com.android.support:appcompat-v7:${supportVersion}",
+            design          : "com.android.support:design:${supportVersion}",
+
+            //Libraries
+            kotlin          : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
+            timber          : "com.jakewharton.timber:timber:4.5.1",
+
+            simpleStack     : "com.github.Zhuinden:simple-stack:1.7.2",
+
+            anko            : "org.jetbrains.anko:anko:$ankoVersion",
+            ankoCommons     : "org.jetbrains.anko:anko-commons:$ankoVersion",
+            ankoSdk         : "org.jetbrains.anko:anko-sdk21:$ankoVersion",
+            ankoCoroutine   : "org.jetbrains.anko:anko-coroutines:$ankoVersion",
+            ankoAppcompat   : "org.jetbrains.anko:anko-appcompat-v7:$ankoVersion",
+            ankoDesign      : "org.jetbrains.anko:anko-design:$ankoVersion",
+            ankoRecyclerView: "org.jetbrains.anko:anko-recyclerview-v7:$ankoVersion",
+            ankoSupport     : "org.jetbrains.anko:anko-support-v4:$ankoVersion",
+
+            picasso         : "com.squareup.picasso:picasso:2.5.2",
+
+            boilerpipe      : "com.github.BartoszJarocki:android-boilerpipe:3330c21f8d",
+            jericho      : "net.htmlparser.jericho:jericho-html:3.3",
+
+            //Test
+            junit           : "junit:junit:4.12",
+            espresso        : "com.android.support.test.espresso:espresso-core:2.2.2"
+    ]
+}
