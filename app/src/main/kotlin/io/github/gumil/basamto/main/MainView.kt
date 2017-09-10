@@ -20,6 +20,7 @@ import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
 import io.github.gumil.basamto.common.ViewLayout
 import org.jetbrains.anko.ctx
+import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.verticalLayout
 
@@ -29,7 +30,17 @@ internal class MainView : ViewLayout() {
             recyclerView {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(ctx)
-            }
+                adapter = MainListAdapter().apply {
+                    list = listOf(
+                            "hello",
+                            "world",
+                            "list",
+                            "first app",
+                            "bookmarking",
+                            "anti social"
+                    )
+                }
+            }.lparams(matchParent, matchParent)
         }
     }
 

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Basamto</string>
+
+    <string name="empty_list">The list is empty. Nothing to do here.</string>
 </resources>
