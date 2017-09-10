@@ -25,7 +25,7 @@ internal abstract class ViewLayout {
     lateinit var view: View
     var toolbarTitle = ""
 
-    fun inflate(context: Context): View {
+    open fun inflate(context: Context): View {
         view = createView(context)
         if (toolbarTitle.isNotBlank()) {
             setActionBarTitle(toolbarTitle)
@@ -33,7 +33,7 @@ internal abstract class ViewLayout {
         return view
     }
 
-    private fun setActionBarTitle(title: String) {
+    open fun setActionBarTitle(title: String) {
         val activity = view.context.findActivity()
 
         (activity as? AppCompatActivity)?.let {

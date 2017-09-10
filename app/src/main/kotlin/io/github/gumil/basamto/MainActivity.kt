@@ -32,12 +32,13 @@ import de.l3s.boilerpipe.extractors.CommonExtractors
 import de.l3s.boilerpipe.sax.HTMLHighlighter
 import io.github.gumil.basamto.common.ViewKey
 import io.github.gumil.basamto.common.ViewLayout
+import io.github.gumil.basamto.main.MainKey
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import timber.log.Timber
 import java.net.URL
 
-class MainActivity : AppCompatActivity() {
+internal class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.plant(Timber.DebugTree())
@@ -59,46 +60,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 .create(this, root)
-        ).install(this, root, HistoryBuilder.single(object : ViewKey() {
-            override fun layout(): ViewLayout {
-                return object : ViewLayout() {
-                    override fun createView(context: Context) = with(context) {
-                        verticalLayout {
-                            textView("Hello")
-                            textView("world")
-                            textView("hello hello")
-                            button("pindot this") {
-                                onClick {
-                                    Navigator.getBackstack(ctx).goTo(object : ViewKey() {
-                                        override fun layout(): ViewLayout {
-                                            return object : ViewLayout() {
-                                                override fun createView(context: Context) = with(context) {
-                                                    verticalLayout {
-                                                        gravity = Gravity.CENTER
-
-                                                        textView("new")
-                                                        textView("page")
-                                                        textView("new page")
-                                                    }
-                                                }
-
-                                            }
-                                        }
-
-                                        override fun viewChangeHandler() = SegueViewChangeHandler()
-
-                                    })
-                                }
-                            }
-                        }
-                    }
-
-                }
-            }
-
-            override fun viewChangeHandler(): ViewChangeHandler = FadeViewChangeHandler()
-
-        }))
+        ).install(this, root, HistoryBuilder.single(MainKey()))
     }
 
     override fun onBackPressed() {

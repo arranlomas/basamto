@@ -37,6 +37,7 @@ dependencies {
     compile dependencies.timber
     compile dependencies.simpleStack
     compile dependencies.anko
+    compile dependencies.ankoRecyclerView
     compile dependencies.picasso
     compile dependencies.boilerpipe
 }

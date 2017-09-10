@@ -27,13 +27,13 @@ import android.support.v4.content.ContextCompat
 import android.widget.TextView
 import io.github.gumil.basamto.R
 
-fun Context.findActivity(): Activity {
-    if (this is Activity) {
-        return this
+internal fun Context.findActivity(): Activity {
+    return if (this is Activity) {
+        this
     } else {
         val contextWrapper = this as ContextWrapper
         val baseContext = contextWrapper.baseContext ?: throw IllegalStateException("Activity was not found as base context of view!")
-        return baseContext.findActivity()
+        baseContext.findActivity()
     }
 }
 
