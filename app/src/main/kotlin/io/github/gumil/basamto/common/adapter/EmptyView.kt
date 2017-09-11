@@ -19,7 +19,6 @@ package io.github.gumil.basamto.common.adapter
 import android.content.Context
 import android.support.annotation.DrawableRes
 import android.view.Gravity
-import android.view.View
 import android.view.ViewGroup
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.common.ViewLayout
@@ -48,9 +47,7 @@ internal class EmptyView(
         }
     }
 
-    class ViewHolder(viewLayout: ViewLayout) : BaseViewHolder(viewLayout) {
-        override fun <Unit> bind(item: Unit) {}
-    }
+    class ViewHolder(viewLayout: ViewLayout) : BaseViewHolder(viewLayout)
 
     companion object {
         fun createViewHolder(context: Context) = ViewHolder(EmptyView(

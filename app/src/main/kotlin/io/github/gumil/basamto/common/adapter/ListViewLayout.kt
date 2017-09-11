@@ -16,15 +16,8 @@
 
 package io.github.gumil.basamto.common.adapter
 
-import android.support.v7.widget.RecyclerView
 import io.github.gumil.basamto.common.ViewLayout
 
-internal abstract class BaseViewHolder(
-        private val viewLayout: ViewLayout
-) : RecyclerView.ViewHolder(viewLayout.view) {
-
-    @Suppress("UNCHECKED_CAST")
-    open fun <M> bind(item: M) {
-        (viewLayout as? ListViewLayout<M>)?.bind(item)
-    }
+internal abstract class ListViewLayout<T> : ViewLayout() {
+    abstract fun bind(item: T)
 }

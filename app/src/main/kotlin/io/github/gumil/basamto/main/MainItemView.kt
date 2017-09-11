@@ -19,11 +19,11 @@ package io.github.gumil.basamto.main
 import android.content.Context
 import android.view.Gravity
 import android.widget.TextView
-import io.github.gumil.basamto.common.ViewLayout
+import io.github.gumil.basamto.common.adapter.ListViewLayout
 import org.jetbrains.anko.frameLayout
 import org.jetbrains.anko.textView
 
-internal class MainItemView: ViewLayout() {
+internal class MainItemView: ListViewLayout<String>() {
 
     private lateinit var textView: TextView
 
@@ -35,7 +35,7 @@ internal class MainItemView: ViewLayout() {
         }
     }
 
-    fun bind(text: String) {
-        textView.text = text
+    override fun bind(item: String) {
+        textView.text = item
     }
 }

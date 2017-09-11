@@ -27,14 +27,5 @@ internal class MainListAdapter : BaseListAdapter<String, MainListAdapter.MainVie
                 inflate(context)
             })
 
-    inner class MainViewHolder(
-            private val viewLayout: MainItemView
-    ) : BaseViewHolder(viewLayout) {
-        override fun <M> bind(item: M) {
-            (item as? String)?.let {
-                viewLayout.bind(it)
-            }
-        }
-
-    }
+    inner class MainViewHolder(viewLayout: MainItemView) : BaseViewHolder(viewLayout)
 }
