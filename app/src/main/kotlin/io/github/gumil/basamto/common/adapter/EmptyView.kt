@@ -18,6 +18,7 @@ package io.github.gumil.basamto.common.adapter
 
 import android.content.Context
 import android.support.annotation.DrawableRes
+import android.support.annotation.StringRes
 import android.view.Gravity
 import android.view.ViewGroup
 import io.github.gumil.basamto.R
@@ -25,34 +26,52 @@ import io.github.gumil.basamto.common.ViewLayout
 import org.jetbrains.anko.*
 
 internal class EmptyView(
+        context: Context,
         @DrawableRes private val drawableRes: Int,
-        @DrawableRes private val messageRes: Int
-): ViewLayout() {
+        @StringRes private val messageRes: Int
+) : ListItemView<Unit>(context) {
 
-    override fun createView(context: Context) = with(context) {
-        verticalLayout {
-            gravity = Gravity.CENTER
-            layoutParams = ViewGroup.LayoutParams(matchParent, matchParent)
+    constructor(context: Context) : this(
+            context,
+            R.drawable.ic_sentiment_dissatisfied_black_24dp,
+            R.string.empty_list
+    )
 
-            imageView {
-                gravity = Gravity.CENTER
-                setImageResource(drawableRes)
-            }.lparams(dip(72), dip(72)) {
-                margin = dip(24)
-            }
-
-            textView(messageRes) {
-                gravity = Gravity.CENTER
-            }
-        }
+    init {
+        layoutParams = LayoutParams(matchParent, matchParent)
     }
 
-    class ViewHolder(viewLayout: ViewLayout) : BaseViewHolder(viewLayout)
+    override val viewLayout: ViewLayout = Layout(drawableRes, messageRes)
+
+    override fun bind(item: Unit) {}
+
+    class Layout(
+            @DrawableRes private val drawableRes: Int,
+            @StringRes private val messageRes: Int
+    ) : ViewLayout {
+        override fun createView(context: Context) = with(context) {
+            verticalLayout {
+                gravity = Gravity.CENTER
+                layoutParams = ViewGroup.LayoutParams(matchParent, matchParent)
+
+                imageView {
+                    gravity = Gravity.CENTER
+                    setImageResource(drawableRes)
+                }.lparams(dip(72), dip(72)) {
+                    margin = dip(24)
+                }
+
+                textView(messageRes) {
+                    gravity = Gravity.CENTER
+                }
+            }
+        }
+
+    }
+
+    class ViewHolder(view: EmptyView) : BaseViewHolder(view)
 
     companion object {
-        fun createViewHolder(context: Context) = ViewHolder(EmptyView(
-                R.drawable.ic_sentiment_dissatisfied_black_24dp,
-                R.string.empty_list
-        ).apply { inflate(context) })
+        fun createViewHolder(context: Context) = ViewHolder(EmptyView(context))
     }
 }

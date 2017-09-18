@@ -19,6 +19,7 @@ package io.github.gumil.basamto.common.adapter
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import io.github.gumil.basamto.common.BaseView
 
 internal abstract class BaseListAdapter<M, out VH: BaseViewHolder> : RecyclerView.Adapter<BaseViewHolder>() {
 
@@ -34,7 +35,9 @@ internal abstract class BaseListAdapter<M, out VH: BaseViewHolder> : RecyclerVie
         return if (viewType == TYPE_EMPTY) {
             onCreateEmptyViewHolder(parent.context, viewType)
         } else {
-            onCreateViewHolder(parent.context, viewType)
+            onCreateViewHolder(parent.context, viewType).apply {
+                (itemView as? BaseView)?.inflateView()
+            }
         }
     }
 

@@ -23,9 +23,7 @@ import io.github.gumil.basamto.common.adapter.BaseViewHolder
 internal class MainListAdapter : BaseListAdapter<String, MainListAdapter.MainViewHolder>() {
 
     override fun onCreateViewHolder(context: Context, viewType: Int) =
-            MainViewHolder(MainItemView().apply {
-                inflate(context)
-            })
+            MainViewHolder(MainItemView(context))
 
     inner class MainViewHolder(viewLayout: MainItemView) : BaseViewHolder(viewLayout)
 }

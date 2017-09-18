@@ -17,29 +17,8 @@
 package io.github.gumil.basamto.common
 
 import android.content.Context
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 
-internal abstract class ViewLayout {
-
-    lateinit var view: View
-    var toolbarTitle = ""
-
-    open fun inflate(context: Context): View {
-        view = createView(context)
-        if (toolbarTitle.isNotBlank()) {
-            setActionBarTitle(toolbarTitle)
-        }
-        return view
-    }
-
-    open fun setActionBarTitle(title: String) {
-        val activity = view.context.findActivity()
-
-        (activity as? AppCompatActivity)?.let {
-            it.supportActionBar?.title = title
-        }
-    }
-
-    protected abstract fun createView(context: Context): View
+internal interface ViewLayout {
+    fun createView(context: Context): View
 }

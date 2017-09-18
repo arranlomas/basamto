@@ -16,8 +16,9 @@
 
 package io.github.gumil.basamto.common.adapter
 
-import io.github.gumil.basamto.common.ViewLayout
+import android.content.Context
+import io.github.gumil.basamto.common.BaseView
 
-internal abstract class ListViewLayout<T> : ViewLayout() {
+internal abstract class ListItemView<in T>(context: Context) : BaseView(context) {
     abstract fun bind(item: T)
 }

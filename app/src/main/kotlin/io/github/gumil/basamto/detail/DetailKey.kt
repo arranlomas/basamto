@@ -16,12 +16,13 @@
 
 package io.github.gumil.basamto.detail
 
+import android.content.Context
 import com.zhuinden.simplestack.navigator.changehandlers.SegueViewChangeHandler
 import io.github.gumil.basamto.common.ViewKey
 
-internal class DetailKey : ViewKey() {
+internal class DetailKey : ViewKey {
 
-    override fun layout() = DetailView()
+    override fun view(context: Context) = DetailView(context)
 
     override fun viewChangeHandler() = SegueViewChangeHandler()
 

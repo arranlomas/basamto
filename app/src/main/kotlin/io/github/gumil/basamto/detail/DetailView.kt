@@ -18,18 +18,25 @@ package io.github.gumil.basamto.detail
 
 import android.content.Context
 import android.view.Gravity
+import io.github.gumil.basamto.common.BaseView
 import io.github.gumil.basamto.common.ViewLayout
 import org.jetbrains.anko.textView
 import org.jetbrains.anko.verticalLayout
 
-internal class DetailView : ViewLayout() {
-    override fun createView(context: Context) = with(context) {
-        verticalLayout {
-            gravity = Gravity.CENTER
+internal class DetailView(context: Context) : BaseView(context) {
 
-            textView("new")
-            textView("page")
-            textView("new page")
+    override val viewLayout: ViewLayout = Layout()
+
+    private inner class Layout : ViewLayout {
+
+        override fun createView(context: Context) = with(context) {
+            verticalLayout {
+                gravity = Gravity.CENTER
+
+                textView("new")
+                textView("page")
+                textView("new page")
+            }
         }
     }
 

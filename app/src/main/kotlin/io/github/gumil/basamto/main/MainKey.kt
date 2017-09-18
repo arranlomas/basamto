@@ -16,12 +16,13 @@
 
 package io.github.gumil.basamto.main
 
+import android.content.Context
 import com.zhuinden.simplestack.navigator.changehandlers.FadeViewChangeHandler
 import io.github.gumil.basamto.common.ViewKey
 
-internal class MainKey : ViewKey() {
+internal class MainKey : ViewKey {
 
-    override fun layout() = MainView()
+    override fun view(context: Context) = MainView(context)
 
     override fun viewChangeHandler() = FadeViewChangeHandler()
 

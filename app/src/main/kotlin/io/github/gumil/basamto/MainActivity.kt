@@ -16,25 +16,18 @@
 
 package io.github.gumil.basamto
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.Gravity
 import com.zhuinden.simplestack.HistoryBuilder
 import com.zhuinden.simplestack.StateChange
 import com.zhuinden.simplestack.navigator.DefaultStateChanger
 import com.zhuinden.simplestack.navigator.Navigator
-import com.zhuinden.simplestack.navigator.ViewChangeHandler
-import com.zhuinden.simplestack.navigator.changehandlers.FadeViewChangeHandler
 import com.zhuinden.simplestack.navigator.changehandlers.NoOpViewChangeHandler
-import com.zhuinden.simplestack.navigator.changehandlers.SegueViewChangeHandler
 import de.l3s.boilerpipe.extractors.CommonExtractors
-import de.l3s.boilerpipe.sax.HTMLHighlighter
 import io.github.gumil.basamto.common.ViewKey
-import io.github.gumil.basamto.common.ViewLayout
 import io.github.gumil.basamto.main.MainKey
-import org.jetbrains.anko.*
-import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.frameLayout
 import timber.log.Timber
 import java.net.URL
 
@@ -49,7 +42,7 @@ internal class MainActivity : AppCompatActivity() {
         Navigator.configure().setStateChanger(DefaultStateChanger.configure()
                 .setLayoutInflationStrategy { _, key, context, _, callback ->
                     (key as? ViewKey)?.let {
-                        callback.layoutInflationComplete(it.layout.inflate(context))
+                        callback.layoutInflationComplete(it.view(context))
                     }
                 }
                 .setGetViewChangeHandlerStrategy { _, _, previousKey, newKey, _, _, direction ->

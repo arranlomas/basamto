@@ -18,30 +18,35 @@ package io.github.gumil.basamto.main
 
 import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
+import io.github.gumil.basamto.common.BaseView
 import io.github.gumil.basamto.common.ViewLayout
 import org.jetbrains.anko.ctx
 import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.verticalLayout
 
-internal class MainView : ViewLayout() {
-    override fun createView(context: Context) = with(context) {
-        verticalLayout {
-            recyclerView {
-                setHasFixedSize(true)
-                layoutManager = LinearLayoutManager(ctx)
-                adapter = MainListAdapter().apply {
-                    list = listOf(
-                            "hello",
-                            "world",
-                            "list",
-                            "first app",
-                            "bookmarking",
-                            "anti social"
-                    )
-                }
-            }.lparams(matchParent, matchParent)
+internal class MainView(context: Context) : BaseView(context) {
+
+    override val viewLayout: ViewLayout = Layout()
+
+    private inner class Layout : ViewLayout {
+        override fun createView(context: Context) = with(context) {
+            verticalLayout {
+                recyclerView {
+                    setHasFixedSize(true)
+                    layoutManager = LinearLayoutManager(ctx)
+                    adapter = MainListAdapter().apply {
+                        list = listOf(
+                                "hello",
+                                "world",
+                                "list",
+                                "first app",
+                                "bookmarking",
+                                "anti social"
+                        )
+                    }
+                }.lparams(matchParent, matchParent)
+            }
         }
     }
-
 }
