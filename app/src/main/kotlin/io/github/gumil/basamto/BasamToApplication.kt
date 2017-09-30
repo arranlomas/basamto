@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-package io.github.gumil.basamto.main
+package io.github.gumil.basamto
 
-import android.content.Context
-import com.zhuinden.simplestack.navigator.changehandlers.FadeViewChangeHandler
-import io.github.gumil.basamto.common.ViewKey
-import kotlinx.android.parcel.Parcelize
+import android.app.Application
+import timber.log.Timber
 
-@Parcelize
-internal class MainKey : ViewKey {
+internal class BasamToApplication : Application() {
 
-    override fun view(context: Context) = MainView(context)
-
-    override fun viewChangeHandler() = FadeViewChangeHandler()
+    override fun onCreate() {
+        super.onCreate()
+        Timber.plant(Timber.DebugTree())
+    }
 
 }

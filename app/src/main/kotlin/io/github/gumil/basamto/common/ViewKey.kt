@@ -18,12 +18,13 @@ package io.github.gumil.basamto.common
 
 import android.content.Context
 import android.content.Intent
+import android.os.Parcelable
 import android.support.annotation.MenuRes
 import android.view.MenuItem
 import android.view.View
 import com.zhuinden.simplestack.navigator.ViewChangeHandler
 
-internal interface ViewKey {
+internal interface ViewKey : Parcelable {
 
     fun view(context: Context): View
 

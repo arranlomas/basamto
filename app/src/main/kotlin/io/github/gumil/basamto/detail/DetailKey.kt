@@ -19,11 +19,12 @@ package io.github.gumil.basamto.detail
 import android.content.Context
 import com.zhuinden.simplestack.navigator.changehandlers.SegueViewChangeHandler
 import io.github.gumil.basamto.common.ViewKey
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 internal class DetailKey : ViewKey {
 
     override fun view(context: Context) = DetailView(context)
 
     override fun viewChangeHandler() = SegueViewChangeHandler()
-
 }

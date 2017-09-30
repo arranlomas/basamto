@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+androidExtensions {
+    experimental = true
+}
 
 android {
     compileSdkVersion 26
@@ -29,17 +34,25 @@ dependencies {
     androidTestCompile(dependencies.espresso, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile dependencies.junit
-    compile dependencies.recyclerView
-    compile dependencies.appCompat
-    compile dependencies.design
-    compile dependencies.kotlin
-    compile dependencies.timber
-    compile dependencies.simpleStack
-    compile dependencies.anko
-    compile dependencies.ankoRecyclerView
-    compile dependencies.picasso
-    compile dependencies.boilerpipe
+    testImplementation dependencies.junit
+    implementation dependencies.recyclerView
+    implementation dependencies.appCompat
+    implementation dependencies.design
+
+    implementation dependencies.lifecycle
+    implementation dependencies.lifecycleExtensions
+
+    implementation dependencies.kotlin
+
+    implementation dependencies.anko
+    implementation dependencies.ankoRecyclerView
+    implementation dependencies.simpleStack
+    implementation dependencies.picasso
+
+    implementation dependencies.timber
+
+    implementation dependencies.boilerpipe
+
 }
 kotlin {
     experimental {

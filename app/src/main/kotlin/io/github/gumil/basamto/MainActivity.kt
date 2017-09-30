@@ -34,7 +34,6 @@ import java.net.URL
 internal class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Timber.plant(Timber.DebugTree())
         super.onCreate(savedInstanceState)
         val root = frameLayout { }
         extract()
