@@ -18,14 +18,7 @@ package io.github.gumil.basamto
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.zhuinden.simplestack.HistoryBuilder
-import com.zhuinden.simplestack.StateChange
-import com.zhuinden.simplestack.navigator.DefaultStateChanger
-import com.zhuinden.simplestack.navigator.Navigator
-import com.zhuinden.simplestack.navigator.changehandlers.NoOpViewChangeHandler
 import de.l3s.boilerpipe.extractors.CommonExtractors
-import io.github.gumil.basamto.common.ViewKey
-import io.github.gumil.basamto.main.MainKey
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.frameLayout
 import timber.log.Timber
@@ -37,32 +30,6 @@ internal class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val root = frameLayout { }
         extract()
-
-        Navigator.configure().setStateChanger(DefaultStateChanger.configure()
-                .setLayoutInflationStrategy { _, key, context, _, callback ->
-                    (key as? ViewKey)?.let {
-                        callback.layoutInflationComplete(it.view(context))
-                    }
-                }
-                .setGetViewChangeHandlerStrategy { _, _, previousKey, newKey, _, _, direction ->
-                    when (direction) {
-                        StateChange.FORWARD -> (newKey as ViewKey).viewChangeHandler()
-                        StateChange.BACKWARD -> (previousKey as ViewKey).viewChangeHandler()
-                        else -> NoOpViewChangeHandler()
-                    }
-                }
-                .create(this, root)
-        ).install(this, root, HistoryBuilder.single(MainKey()))
-    }
-
-    override fun onBackPressed() {
-        if (!Navigator.getBackstack(this)
-                .top<ViewKey>()
-                .onBackPressed()) {
-            if (!Navigator.onBackPressed(this)) {
-                super.onBackPressed()
-            }
-        }
     }
 
     fun extract() {

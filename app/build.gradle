@@ -46,7 +46,6 @@ dependencies {
 
     implementation dependencies.anko
     implementation dependencies.ankoRecyclerView
-    implementation dependencies.simpleStack
     implementation dependencies.picasso
 
     implementation dependencies.timber

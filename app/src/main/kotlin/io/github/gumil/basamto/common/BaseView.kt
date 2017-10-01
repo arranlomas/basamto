@@ -24,22 +24,8 @@ internal abstract class BaseView(context: Context) : FrameLayout(context) {
 
     abstract protected val viewLayout: ViewLayout
 
-    var toolbarTitle = ""
-
-    open fun setActionBarTitle(title: String) {
-        val activity = context.findActivity()
-
-        (activity as? AppCompatActivity)?.let {
-            it.supportActionBar?.title = title
-        }
-    }
-
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-
-        if (toolbarTitle.isNotBlank()) {
-            setActionBarTitle(toolbarTitle)
-        }
 
         if (childCount < 1) {
             inflateView()
