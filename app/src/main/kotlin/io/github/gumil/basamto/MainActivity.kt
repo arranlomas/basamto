@@ -18,42 +18,13 @@ package io.github.gumil.basamto
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import de.l3s.boilerpipe.extractors.CommonExtractors
-import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.frameLayout
-import timber.log.Timber
-import java.net.URL
 
 internal class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val root = frameLayout { }
-        extract()
+        frameLayout { }
     }
 
-    fun extract() {
-        doAsync {
-            val url = URL("https://medium.com/@fabioCollini/android-testing-using-dagger-2-mockito-and-a-custom-junit-rule-c8487ed01b56")
-
-            // choose from a set of useful BoilerpipeExtractors...
-            val extractor = CommonExtractors.ARTICLE_EXTRACTOR
-            // final BoilerpipeExtractor extractor = CommonExtractors.DEFAULT_EXTRACTOR;
-            // final BoilerpipeExtractor extractor = CommonExtractors.CANOLA_EXTRACTOR;
-            // final BoilerpipeExtractor extractor = CommonExtractors.LARGEST_CONTENT_EXTRACTOR;
-
-            // choose the operation mode (i.e., highlighting or extraction)
-            //val hh = HTMLHighlighter.newHighlightingInstance()
-            // final HTMLHighlighter hh = HTMLHighlighter.newExtractingInstance();
-
-
-//        val out = PrintWriter("/tmp/highlighted.html", "UTF-8")
-//        out.println("<base href=\"$url\" >")
-//        out.println("<meta http-equiv=\"Content-Type\" content=\"text-html; charset=utf-8\" />")
-//        out.println(hh.process(url, extractor))
-//        out.close()
-
-            Timber.d("url ${extractor.getText(url)}")
-        }
-    }
 }

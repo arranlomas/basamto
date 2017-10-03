@@ -8,7 +8,7 @@ androidExtensions {
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "io.github.gumil.basamto"
         minSdkVersion 21
@@ -30,11 +30,8 @@ android {
 
 dependencies {
     def dependencies = rootProject.ext.dependencies
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile(dependencies.espresso, {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testImplementation dependencies.junit
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
     implementation dependencies.recyclerView
     implementation dependencies.appCompat
     implementation dependencies.design
@@ -50,8 +47,10 @@ dependencies {
 
     implementation dependencies.timber
 
-    implementation dependencies.boilerpipe
-
+    androidTestImplementation(dependencies.espresso, {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testImplementation dependencies.junit
 }
 kotlin {
     experimental {
