@@ -1,5 +1,11 @@
 ext {
 
+    //Android
+    buildToolsVersion = "26.0.2"
+    minSdkVersion = 21
+    targetSdkVersion = 26
+    compileSdkVersion = 26
+
     //Libraries
     supportVersion = '26.1.0'
     archVersion = '1.0.0'

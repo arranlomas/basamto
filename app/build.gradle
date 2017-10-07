@@ -7,12 +7,13 @@ androidExtensions {
 }
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
     defaultConfig {
         applicationId "io.github.gumil.basamto"
-        minSdkVersion 21
-        targetSdkVersion 26
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -30,7 +31,6 @@ android {
 
 dependencies {
     def dependencies = rootProject.ext.dependencies
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     implementation dependencies.recyclerView
     implementation dependencies.appCompat
@@ -39,19 +39,16 @@ dependencies {
     implementation dependencies.lifecycle
     implementation dependencies.lifecycleExtensions
 
-    implementation dependencies.kotlin
-
     implementation dependencies.anko
     implementation dependencies.ankoRecyclerView
     implementation dependencies.picasso
-
-    implementation dependencies.timber
 
     androidTestImplementation(dependencies.espresso, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testImplementation dependencies.junit
 }
+
 kotlin {
     experimental {
         coroutines "enable"
