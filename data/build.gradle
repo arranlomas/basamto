@@ -37,6 +37,7 @@ android {
 dependencies {
     def dependencies = rootProject.ext.dependencies
 
+    api dependencies.timber
     implementation dependencies.kotlin
     testImplementation dependencies.junit
 }

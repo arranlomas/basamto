@@ -32,6 +32,8 @@ android {
 dependencies {
     def dependencies = rootProject.ext.dependencies
 
+    implementation project(':data')
+
     implementation dependencies.recyclerView
     implementation dependencies.appCompat
     implementation dependencies.design
