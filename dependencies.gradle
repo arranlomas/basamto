@@ -30,12 +30,12 @@ ext {
             timber              : "com.jakewharton.timber:timber:4.5.1",
 
             //Network
-            retrofit            : "com.squareup.retrofit2:retrofit:$retrofitVersion",
-            retrofitConverter   : "com.squareup.retrofit2:converter-moshi:$retrofitVersion",
-            retrofitAdapter     : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
+            retrofit            : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+            retrofitConverter   : "com.squareup.retrofit2:converter-moshi:${retrofitVersion}",
+            retrofitAdapter     : "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
             moshi               : "com.squareup.moshi:moshi:1.5.0",
-            okhttp              : "com.squareup.okhttp3:okhttp:$okHttpVersion",
-            okHttpLogger        : "com.squareup.okhttp3:logging-interceptor:$okHttpVersion",
+            okHttp              : "com.squareup.okhttp3:okhttp:${okHttpVersion}",
+            okHttpLogger        : "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}",
 
             //rx
             rxJava              : "io.reactivex.rxjava2:rxjava:2.1.5",
@@ -43,23 +43,23 @@ ext {
             rxAndroid           : "io.reactivex.rxjava2:rxandroid:2.0.1",
 
             //DI
-            dagger              : "com.google.dagger:dagger:$daggerVersion",
-            daggerApt           : "com.google.dagger:dagger-compiler:$daggerVersion",
-            daggerAndroid       : "com.google.dagger:dagger-android:$daggerVersion",
-            daggerAndroidSupport: "com.google.dagger:dagger-android-support:$daggerVersion",
-            daggerAndroidApt    : "com.google.dagger:dagger-android-processor:$daggerVersion",
+            dagger              : "com.google.dagger:dagger:${daggerVersion}",
+            daggerApt           : "com.google.dagger:dagger-compiler:${daggerVersion}",
+            daggerAndroid       : "com.google.dagger:dagger-android:${daggerVersion}",
+            daggerAndroidSupport: "com.google.dagger:dagger-android-support:${daggerVersion}",
+            daggerAndroidApt    : "com.google.dagger:dagger-android-processor:${daggerVersion}",
 
             //UI
             simpleStack         : "com.github.Zhuinden:simple-stack:1.7.2",
 
-            anko                : "org.jetbrains.anko:anko:$ankoVersion",
-            ankoCommons         : "org.jetbrains.anko:anko-commons:$ankoVersion",
-            ankoSdk             : "org.jetbrains.anko:anko-sdk21:$ankoVersion",
-            ankoCoroutine       : "org.jetbrains.anko:anko-coroutines:$ankoVersion",
-            ankoAppcompat       : "org.jetbrains.anko:anko-appcompat-v7:$ankoVersion",
-            ankoDesign          : "org.jetbrains.anko:anko-design:$ankoVersion",
-            ankoRecyclerView    : "org.jetbrains.anko:anko-recyclerview-v7:$ankoVersion",
-            ankoSupport         : "org.jetbrains.anko:anko-support-v4:$ankoVersion",
+            anko                : "org.jetbrains.anko:anko:${ankoVersion}",
+            ankoCommons         : "org.jetbrains.anko:anko-commons:${ankoVersion}",
+            ankoSdk             : "org.jetbrains.anko:anko-sdk21:${ankoVersion}",
+            ankoCoroutine       : "org.jetbrains.anko:anko-coroutines:${ankoVersion}",
+            ankoAppcompat       : "org.jetbrains.anko:anko-appcompat-v7:${ankoVersion}",
+            ankoDesign          : "org.jetbrains.anko:anko-design:${ankoVersion}",
+            ankoRecyclerView    : "org.jetbrains.anko:anko-recyclerview-v7:${ankoVersion}",
+            ankoSupport         : "org.jetbrains.anko:anko-support-v4:${ankoVersion}",
 
             picasso             : "com.squareup.picasso:picasso:2.5.2",
 

@@ -16,6 +16,7 @@
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -38,6 +39,22 @@ dependencies {
     def dependencies = rootProject.ext.dependencies
 
     api dependencies.timber
+
     implementation dependencies.kotlin
+
+    implementation dependencies.moshi
+    implementation dependencies.retrofit
+    implementation dependencies.retrofitConverter
+    implementation dependencies.retrofitAdapter
+    implementation dependencies.okHttp
+    implementation dependencies.okHttpLogger
+
+    api dependencies.rxJava
+    api dependencies.rxKotlin
+    api dependencies.rxAndroid
+
+    implementation dependencies.dagger
+    kapt dependencies.daggerApt
+
     testImplementation dependencies.junit
 }
