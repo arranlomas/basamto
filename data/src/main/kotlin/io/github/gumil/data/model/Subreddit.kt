@@ -36,6 +36,4 @@ data class Subreddit(
         @Json(name = "whitelist_status")
         val whiteListStatus: String = "all_ads"
 
-) : Listing<Thread> {
-
-}
+) : Listing<Thread>

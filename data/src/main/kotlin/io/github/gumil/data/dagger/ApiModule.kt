@@ -18,13 +18,8 @@ package io.github.gumil.data.dagger
 
 import dagger.Module
 import dagger.Provides
+import io.github.gumil.data.ApiFactory
 import io.github.gumil.data.network.RedditApi
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -32,29 +27,5 @@ internal class ApiModule(private val isDebug: Boolean) {
 
     @Provides
     @Singleton
-    fun provideRedditApi(): RedditApi = createRedditApi(makeOkHttpClient(makeLoggingInterceptor(isDebug)))
-
-    private fun createRedditApi(okHttpClient: OkHttpClient): RedditApi =
-            Retrofit.Builder()
-                    .baseUrl("https://www.reddit.com/")
-                    .client(okHttpClient)
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .addConverterFactory(MoshiConverterFactory.create())
-                    .build().create(RedditApi::class.java)
-
-    private fun makeOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
-            OkHttpClient.Builder()
-                    .addInterceptor(httpLoggingInterceptor)
-                    .connectTimeout(120, TimeUnit.SECONDS)
-                    .readTimeout(120, TimeUnit.SECONDS)
-                    .build()
-
-    private fun makeLoggingInterceptor(isDebug: Boolean): HttpLoggingInterceptor =
-            HttpLoggingInterceptor().apply {
-                level = if (isDebug) {
-                    HttpLoggingInterceptor.Level.BODY
-                } else {
-                    HttpLoggingInterceptor.Level.NONE
-                }
-            }
+    fun provideRedditApi(): RedditApi = ApiFactory.createRedditApi(isDebug)
 }

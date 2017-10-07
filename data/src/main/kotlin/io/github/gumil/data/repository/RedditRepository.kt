@@ -17,9 +17,9 @@
 package io.github.gumil.data.repository
 
 import io.github.gumil.data.model.Subreddit
-import io.reactivex.Single
+import io.reactivex.Observable
 
 interface RedditRepository {
 
-    fun getRedditRepository(subreddit: String, after: String?, limit: Int = 10): Single<Subreddit>
+    fun getRedditRepository(subreddit: String, after: String?, limit: Int = 10): Observable<Subreddit>
 }

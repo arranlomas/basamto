@@ -16,5 +16,18 @@
 
 package io.github.gumil.data.network
 
+import io.github.gumil.data.model.base.Listing
+import io.github.gumil.data.model.base.Thing
+import io.reactivex.Single
+import retrofit2.http.GET
+import retrofit2.http.Path
+
 internal interface RedditApi {
+
+    companion object {
+        private const val SUBREDDIT = "subreddit"
+    }
+
+    @GET("r/{$SUBREDDIT}.json")
+    fun getSubreddit(@Path(SUBREDDIT) subreddit: String): Single<Thing<Listing<Thread>>>
 }
