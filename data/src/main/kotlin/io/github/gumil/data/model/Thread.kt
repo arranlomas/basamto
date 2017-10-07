@@ -17,7 +17,11 @@
 package io.github.gumil.data.model
 
 import com.squareup.moshi.Json
-import io.github.gumil.data.model.base.*
+import io.github.gumil.data.model.base.Created
+import io.github.gumil.data.model.base.Distinguish
+import io.github.gumil.data.model.base.Kind
+import io.github.gumil.data.model.base.Thing
+import io.github.gumil.data.model.base.Votable
 
 data class Thread(
 

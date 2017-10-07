@@ -17,5 +17,6 @@
 package io.github.gumil.data.model.base
 
 enum class Kind {
-    LISTING, T3
+    LISTING,
+    T3 //thread
 }
