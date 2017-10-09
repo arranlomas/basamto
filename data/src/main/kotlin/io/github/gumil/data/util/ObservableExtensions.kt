@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package io.github.gumil.data.dagger
+package io.github.gumil.data.util
 
-import dagger.Component
-import javax.inject.Singleton
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
-@Singleton
-@Component(modules = arrayOf(ApiModule::class))
-interface DataComponent {
+fun <T> Observable<T>.applySchedulers(): Observable<T> {
+    return subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
 }

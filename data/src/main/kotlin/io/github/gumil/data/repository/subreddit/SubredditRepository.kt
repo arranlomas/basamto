@@ -14,23 +14,12 @@
  * limitations under the License.
  */
 
-package io.github.gumil.data.network
+package io.github.gumil.data.repository.subreddit
 
-import io.github.gumil.data.model.SubredditResponse
-import io.reactivex.Single
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import io.github.gumil.data.model.RedditThread
+import io.reactivex.Observable
 
-internal interface RedditApi {
+interface SubredditRepository {
 
-    companion object {
-        private const val SUBREDDIT = "subreddit"
-    }
-
-    @GET("r/{$SUBREDDIT}/top.json")
-    fun getSubreddit(
-            @Path(SUBREDDIT) subreddit: String,
-            @Query("after") after: String? = null,
-            @Query("limit") limit: Int = 10): Single<SubredditResponse>
+    fun getThreadsFrom(subreddit: String, after: String? = null, limit: Int = 10): Observable<List<RedditThread>>
 }

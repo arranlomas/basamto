@@ -19,7 +19,7 @@ package io.github.gumil.data
 import io.github.gumil.data.model.RedditThread
 import io.github.gumil.data.model.SubredditResponse
 import io.github.gumil.data.model.base.Distinguish
-import io.github.gumil.data.network.RedditApi
+import io.github.gumil.data.remote.RedditApi
 import io.reactivex.observers.TestObserver
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After

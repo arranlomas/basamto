@@ -14,18 +14,23 @@
  * limitations under the License.
  */
 
-package io.github.gumil.data.dagger
+package io.github.gumil.data.repository.subreddit
 
-import dagger.Module
-import dagger.Provides
-import io.github.gumil.data.ApiFactory
+import io.github.gumil.data.model.RedditThread
 import io.github.gumil.data.remote.RedditApi
-import javax.inject.Singleton
+import io.github.gumil.data.util.applySchedulers
+import io.reactivex.Observable
 
-@Module
-internal class ApiModule(private val isDebug: Boolean) {
+internal class SubredditDataRepository(
+        private val redditApi: RedditApi
+) : SubredditRepository {
 
-    @Provides
-    @Singleton
-    fun provideRedditApi(): RedditApi = ApiFactory.createRedditApi(isDebug)
+    override fun getThreadsFrom(subreddit: String, after: String?, limit: Int): Observable<List<RedditThread>> {
+        return redditApi.getSubreddit(subreddit, after, limit).map {
+            it.data.children.map {
+                it.data
+            }
+        }.toObservable().applySchedulers()
+    }
+
 }

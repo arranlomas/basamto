@@ -14,12 +14,16 @@
  * limitations under the License.
  */
 
-package io.github.gumil.data.dagger
+package io.github.gumil.data.repository.subreddit
 
-import dagger.Component
-import javax.inject.Singleton
+import dagger.Module
+import dagger.Provides
+import io.github.gumil.data.remote.RedditApi
 
-@Singleton
-@Component(modules = arrayOf(ApiModule::class))
-interface DataComponent {
+@Module
+internal class SubredditModule {
+
+    @Provides
+    fun providesSubredditRespository(redditApi: RedditApi): SubredditRepository =
+            SubredditDataRepository(redditApi)
 }

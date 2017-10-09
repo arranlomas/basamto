@@ -18,7 +18,7 @@ package io.github.gumil.data
 
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
-import io.github.gumil.data.network.RedditApi
+import io.github.gumil.data.remote.RedditApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
