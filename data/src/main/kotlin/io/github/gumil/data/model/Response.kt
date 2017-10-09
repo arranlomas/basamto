@@ -14,15 +14,8 @@
  * limitations under the License.
  */
 
-package io.github.gumil.data.model.base
+package io.github.gumil.data.model
 
-interface Thing<out T> {
+data class SubredditResponse(val data: Subreddit)
 
-    val id: String?
-
-    val name: String?
-
-    val kind: Kind?
-
-    val data: T?
-}
+data class ThreadResponse(val data: RedditThread)

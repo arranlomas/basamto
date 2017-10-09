@@ -19,23 +19,15 @@ package io.github.gumil.data.model
 import com.squareup.moshi.Json
 import io.github.gumil.data.model.base.Created
 import io.github.gumil.data.model.base.Distinguish
-import io.github.gumil.data.model.base.Kind
-import io.github.gumil.data.model.base.Thing
 import io.github.gumil.data.model.base.Votable
 
-data class Thread(
+data class RedditThread(
 
         @Json(name = "id")
-        override val id: String?,
+        val id: String?,
 
         @Json(name = "name")
-        override val name: String?,
-
-        @Json(name = "kind")
-        override val kind: Kind? = Kind.T3,
-
-        @Json(name = "data")
-        override val data: Unit?,
+        val name: String?,
 
         @Json(name = "ups")
         override val ups: Int,
@@ -44,7 +36,7 @@ data class Thread(
         override val downs: Int,
 
         @Json(name = "likes")
-        override val isLiked: Boolean,
+        override val isLiked: Boolean?,
 
         @Json(name = "created")
         override val created: Long,
@@ -60,9 +52,6 @@ data class Thread(
 
         @Json(name = "subreddit_id")
         val subredditId: String,
-
-        @Json(name = "subreddit_name_prefixed")
-        val subredditPrefix: String,
 
         @Json(name = "selftext_html")
         val selfTextHtml: String?,
@@ -95,16 +84,13 @@ data class Thread(
         val gilded: Int,
 
         @Json(name = "stickied")
-        val isSticky: Int,
+        val isSticky: Boolean,
 
         @Json(name = "spoiler")
         val isSpoiler: Boolean = false,
 
         @Json(name = "permalink")
         val permalink: String,
-
-        @Json(name = "subreddit_type")
-        val type: String,
 
         @Json(name = "locked")
         val isLocked: Boolean = false,
@@ -127,4 +113,4 @@ data class Thread(
         @Json(name = "distinguished")
         val distinguished: Distinguish? = null
 
-) : Thing<Unit>, Votable, Created
+) : Votable, Created

@@ -16,10 +16,10 @@
 
 package io.github.gumil.data.model.base
 
-import android.graphics.Color
+import io.github.gumil.data.R
 
 enum class Distinguish(val color: Int) {
-    MODERATOR(Color.parseColor("#4CAF50")),
-    ADMIN(Color.parseColor("#F44336")),
-    SPECIAL(Color.parseColor("#F44336"))
+    moderator(R.color.distinguish_mod),
+    admin(R.color.distinguish_admin),
+    special(R.color.distinguish_admin);
 }

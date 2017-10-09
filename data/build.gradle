@@ -36,6 +36,7 @@ android {
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
     }
 }
 
@@ -47,6 +48,7 @@ dependencies {
     implementation dependencies.kotlin
 
     implementation dependencies.moshi
+    implementation dependencies.moshiKotlin
     implementation dependencies.retrofit
     implementation dependencies.retrofitConverter
     implementation dependencies.retrofitAdapter
@@ -61,4 +63,5 @@ dependencies {
     kapt dependencies.daggerApt
 
     testImplementation dependencies.junit
+    testImplementation dependencies.mockWebServer
 }

@@ -16,11 +16,11 @@
 
 package io.github.gumil.data.network
 
-import io.github.gumil.data.model.base.Listing
-import io.github.gumil.data.model.base.Thing
+import io.github.gumil.data.model.SubredditResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 internal interface RedditApi {
 
@@ -28,6 +28,9 @@ internal interface RedditApi {
         private const val SUBREDDIT = "subreddit"
     }
 
-    @GET("r/{$SUBREDDIT}.json")
-    fun getSubreddit(@Path(SUBREDDIT) subreddit: String): Single<Thing<Listing<Thread>>>
+    @GET("r/{$SUBREDDIT}/top.json")
+    fun getSubreddit(
+            @Path(SUBREDDIT) subreddit: String,
+            @Query("limit") limit: Int = 10,
+            @Query("after") after: String? = null): Single<SubredditResponse>
 }

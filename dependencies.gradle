@@ -14,6 +14,7 @@ ext {
     retrofitVersion = '2.3.0'
     rxJavaVersion = '2.1.5'
     okHttpVersion = '3.9.0'
+    moshiVersion = '1.5.0'
 
     dependencies = [
 
@@ -33,7 +34,8 @@ ext {
             retrofit            : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
             retrofitConverter   : "com.squareup.retrofit2:converter-moshi:${retrofitVersion}",
             retrofitAdapter     : "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
-            moshi               : "com.squareup.moshi:moshi:1.5.0",
+            moshi               : "com.squareup.moshi:moshi:${moshiVersion}",
+            moshiKotlin         : "com.squareup.moshi:moshi-kotlin:${moshiVersion}",
             okHttp              : "com.squareup.okhttp3:okhttp:${okHttpVersion}",
             okHttpLogger        : "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}",
 
@@ -67,6 +69,8 @@ ext {
 
             //Test
             junit               : "junit:junit:4.12",
-            espresso            : "com.android.support.test.espresso:espresso-core:2.2.2"
+            espresso            : "com.android.support.test.espresso:espresso-core:2.2.2",
+            mockWebServer       : "com.squareup.okhttp3:mockwebserver:${okHttpVersion}",
+            mockitoKotlin       : "com.nhaarman:mockito-kotlin-kt1.1:1.5.9"
     ]
 }

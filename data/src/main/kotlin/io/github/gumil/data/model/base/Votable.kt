@@ -22,5 +22,5 @@ interface Votable {
 
     val downs: Int
 
-    val isLiked: Boolean
+    val isLiked: Boolean?
 }
