@@ -31,6 +31,6 @@ internal interface RedditApi {
     @GET("r/{$SUBREDDIT}/top.json")
     fun getSubreddit(
             @Path(SUBREDDIT) subreddit: String,
-            @Query("limit") limit: Int = 10,
-            @Query("after") after: String? = null): Single<SubredditResponse>
+            @Query("after") after: String? = null,
+            @Query("limit") limit: Int = 10): Single<SubredditResponse>
 }
