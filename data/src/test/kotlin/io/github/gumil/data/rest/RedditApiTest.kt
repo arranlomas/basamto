@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package io.github.gumil.data
+package io.github.gumil.data.rest
 
+import io.github.gumil.data.ApiFactory
+import io.github.gumil.data.createMockResponse
 import io.github.gumil.data.model.RedditThread
 import io.github.gumil.data.model.SubredditResponse
 import io.github.gumil.data.model.base.Distinguish
-import io.github.gumil.data.rest.RedditApi
+import io.github.gumil.data.readFromFile
 import io.reactivex.observers.TestObserver
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
