@@ -19,7 +19,7 @@ package io.github.gumil.data.dagger
 import dagger.Module
 import dagger.Provides
 import io.github.gumil.data.ApiFactory
-import io.github.gumil.data.remote.RedditApi
+import io.github.gumil.data.rest.RedditApi
 import javax.inject.Singleton
 
 @Module

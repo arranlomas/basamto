@@ -18,7 +18,7 @@ package io.github.gumil.data.repository.subreddit
 
 import dagger.Module
 import dagger.Provides
-import io.github.gumil.data.remote.RedditApi
+import io.github.gumil.data.rest.RedditApi
 
 @Module
 internal class SubredditModule {

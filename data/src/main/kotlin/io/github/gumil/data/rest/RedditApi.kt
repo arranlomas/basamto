@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.gumil.data.remote
+package io.github.gumil.data.rest
 
 import io.github.gumil.data.model.SubredditResponse
 import io.reactivex.Single

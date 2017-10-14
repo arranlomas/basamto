@@ -17,7 +17,7 @@
 package io.github.gumil.data.repository.subreddit
 
 import io.github.gumil.data.model.RedditThread
-import io.github.gumil.data.remote.RedditApi
+import io.github.gumil.data.rest.RedditApi
 import io.github.gumil.data.util.applySchedulers
 import io.reactivex.Observable
 
