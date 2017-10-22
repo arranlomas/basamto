@@ -14,8 +14,6 @@ android {
         applicationId "io.github.gumil.basamto"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -33,16 +31,17 @@ dependencies {
     def dependencies = rootProject.ext.dependencies
 
     implementation project(':data')
+    implementation project(':core-ui')
 
     implementation dependencies.recyclerView
     implementation dependencies.appCompat
     implementation dependencies.design
+    implementation dependencies.constraintLayout
+    implementation dependencies.cardView
 
     implementation dependencies.lifecycle
     implementation dependencies.lifecycleExtensions
 
-    implementation dependencies.anko
-    implementation dependencies.ankoRecyclerView
     implementation dependencies.picasso
 
     androidTestImplementation(dependencies.espresso, {

@@ -18,13 +18,13 @@ package io.github.gumil.basamto
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import org.jetbrains.anko.frameLayout
+
 
 internal class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        frameLayout { }
+        setContentView(R.layout.activity_main)
     }
 
 }
