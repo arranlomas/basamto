@@ -23,6 +23,7 @@ ext {
             appCompat           : "com.android.support:appcompat-v7:${supportVersion}",
             design              : "com.android.support:design:${supportVersion}",
             cardView            : "com.android.support:cardview-v7:${supportVersion}",
+            supportAnnotations  : "com.android.support:support-annotations:${supportVersion}",
             constraintLayout    : "com.android.support.constraint:constraint-layout:1.0.2",
 
             lifecycle           : "android.arch.lifecycle:runtime:${archVersion}",

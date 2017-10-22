@@ -19,4 +19,6 @@
     <dimen name="default_padding">16dp</dimen>
     <dimen name="default_half_padding">8dp</dimen>
     <dimen name="default_quarter_padding">4dp</dimen>
+    <dimen name="large_margin">24dp</dimen>
+    <dimen name="empty_view_image_size">72dp</dimen>
 </resources>

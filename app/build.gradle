@@ -33,10 +33,7 @@ dependencies {
     implementation project(':data')
     implementation project(':core-ui')
 
-    implementation dependencies.recyclerView
-    implementation dependencies.appCompat
     implementation dependencies.design
-    implementation dependencies.constraintLayout
     implementation dependencies.cardView
 
     implementation dependencies.lifecycle

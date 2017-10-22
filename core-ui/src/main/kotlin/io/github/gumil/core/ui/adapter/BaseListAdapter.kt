@@ -14,15 +14,21 @@
  * limitations under the License.
  */
 
-package io.github.gumil.basamto.common.adapter
+package io.github.gumil.core.ui.adapter
 
 import android.support.v7.widget.RecyclerView
-import android.view.View
 
-internal abstract class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+internal abstract class BaseListAdapter<M, out VH : BaseViewHolder<M>> : RecyclerView.Adapter<BaseViewHolder<M>>() {
 
-    @Suppress("UNCHECKED_CAST")
-    open fun <M> bind(item: M) {
-        (itemView as? ListItemView<M>)?.bind(item)
+    var list: List<M> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
+    override fun onBindViewHolder(holder: BaseViewHolder<M>, position: Int) {
+        holder.bind(list[position])
     }
+
+    override fun getItemCount() = list.size
 }

@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-package io.github.gumil.basamto.common
+package io.github.gumil.core.ui.extensions
 
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.support.annotation.ColorRes
-import android.support.annotation.StyleRes
 import android.support.v4.content.ContextCompat
-import android.widget.TextView
-import io.github.gumil.basamto.R
+import io.github.gumil.core.ui.R
+import java.lang.IllegalStateException
 
 internal fun Context.findActivity(): Activity {
     return if (this is Activity) {
@@ -45,12 +43,3 @@ internal fun Context.getSelectableItemBackground(): Drawable {
 }
 
 internal fun Context.getColorRes(@ColorRes color: Int): Int = ContextCompat.getColor(this, color)
-
-@Suppress("deprecation")
-internal fun TextView.textAppearance(@StyleRes style: Int) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        setTextAppearance(style)
-    } else {
-        setTextAppearance(context, style)
-    }
-}
