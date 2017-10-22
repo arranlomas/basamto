@@ -17,8 +17,9 @@
 package io.github.gumil.core.ui.adapter
 
 import android.support.v7.widget.RecyclerView
+import android.view.View
 
-internal abstract class BaseListAdapter<M, out VH : BaseViewHolder<M>> : RecyclerView.Adapter<BaseViewHolder<M>>() {
+abstract class BaseListAdapter<M, out VH : BaseViewHolder<M>> : RecyclerView.Adapter<BaseViewHolder<M>>() {
 
     var list: List<M> = emptyList()
         set(value) {
@@ -31,4 +32,8 @@ internal abstract class BaseListAdapter<M, out VH : BaseViewHolder<M>> : Recycle
     }
 
     override fun getItemCount() = list.size
+}
+
+abstract class BaseViewHolder<in M>(view: View) : RecyclerView.ViewHolder(view) {
+    abstract fun bind(item: M)
 }

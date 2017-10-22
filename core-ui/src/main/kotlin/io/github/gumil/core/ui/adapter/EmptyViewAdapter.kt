@@ -16,17 +16,20 @@
 
 package io.github.gumil.core.ui.adapter
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.view.ViewGroup
 import io.github.gumil.core.ui.R
+import io.github.gumil.core.ui.extensions.inflateLayout
 import kotlinx.android.synthetic.main.view_empty.view.emptyViewImage
 import kotlinx.android.synthetic.main.view_empty.view.emptyViewText
 
-internal abstract class BaseViewHolder<in M>(view: View) : RecyclerView.ViewHolder(view) {
-    abstract fun bind(item: M)
+open class EmptyViewAdapter: BaseListAdapter<Unit, EmptyViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Unit> =
+            EmptyViewHolder(parent.inflateLayout(R.layout.view_empty))
+
 }
 
-internal class EmptyViewHolder(
+class EmptyViewHolder(
         view: View,
         drawableRes: Int = R.drawable.ic_sentiment_dissatisfied_black_24dp,
         messageRes: Int = R.string.empty_list
