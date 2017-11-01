@@ -16,9 +16,25 @@
 
 package io.github.gumil.basamto.common
 
-import android.content.Context
-import android.view.View
+import android.arch.lifecycle.LiveData
+import io.reactivex.Observable
 
-internal interface ViewLayout {
-    fun createView(context: Context): View
+internal interface MviView<I : MviIntent, in S : MviState> {
+    fun S.render()
 }
+
+internal interface MviViewModel<in I : MviIntent, S : MviState, out A: MviAction> {
+    val state: LiveData<S>
+
+    fun sendIntent(intent: Observable<out I>)
+
+    fun sendIntent(intent: I)
+
+    fun actionFromIntent(intent: I) : A
+}
+
+
+internal interface MviIntent
+internal interface MviState
+internal interface MviAction
+internal interface MviResult

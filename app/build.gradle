@@ -36,6 +36,9 @@ dependencies {
     implementation dependencies.design
     implementation dependencies.cardView
 
+    implementation dependencies.rxRelay
+    implementation dependencies.rxBinding
+
     implementation dependencies.lifecycle
     implementation dependencies.lifecycleExtensions
 

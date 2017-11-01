@@ -63,7 +63,6 @@
             tools:ignore="UseCompoundDrawables">
 
             <ImageView
-                android:id="@+id/subredditUpvote"
                 android:layout_width="@dimen/small_icon_size"
                 android:layout_height="@dimen/small_icon_size"
                 android:layout_gravity="center_vertical"
@@ -72,6 +71,7 @@
                 android:tint="@color/subreddit_icon_tint"/>
 
             <TextView
+                android:id="@+id/subredditUpvote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
@@ -84,7 +84,6 @@
                 android:layout_height="1dp"/>
 
             <ImageView
-                android:id="@+id/subredditComments"
                 android:layout_width="@dimen/small_icon_size"
                 android:layout_height="@dimen/small_icon_size"
                 android:layout_gravity="center_vertical"
@@ -93,6 +92,7 @@
                 android:tint="@color/subreddit_icon_tint"/>
 
             <TextView
+                android:id="@+id/subredditComments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"

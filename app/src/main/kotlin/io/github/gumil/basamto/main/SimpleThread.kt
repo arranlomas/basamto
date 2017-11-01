@@ -14,17 +14,13 @@
  * limitations under the License.
  */
 
-package io.github.gumil.basamto
+package io.github.gumil.basamto.main
 
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-
-
-internal class MainActivity : AppCompatActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-    }
-
-}
+internal data class SimpleThread(
+        val title: String,
+        val subreddit: String,
+        val timeAgo: String,
+        val user: String,
+        val numUpvotes: Int,
+        val numComments: Int
+)

@@ -15,6 +15,7 @@ ext {
     rxJavaVersion = '2.1.5'
     okHttpVersion = '3.9.0'
     moshiVersion = '1.5.0'
+    rxBindingVersion = '2.0.0'
 
     dependencies = [
 
@@ -43,9 +44,11 @@ ext {
             okHttpLogger        : "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}",
 
             //rx
-            rxJava              : "io.reactivex.rxjava2:rxjava:2.1.5",
+            rxJava              : "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
             rxKotlin            : "io.reactivex.rxjava2:rxkotlin:2.1.0",
             rxAndroid           : "io.reactivex.rxjava2:rxandroid:2.0.1",
+            rxRelay             : "com.jakewharton.rxrelay2:rxrelay:2.0.0",
+            rxBinding           : "com.jakewharton.rxbinding2:rxbinding:${rxBindingVersion}",
 
             //DI
             dagger              : "com.google.dagger:dagger:${daggerVersion}",
