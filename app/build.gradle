@@ -38,6 +38,7 @@ dependencies {
 
     implementation dependencies.rxRelay
     implementation dependencies.rxBinding
+    implementation dependencies.rxBindingKotlin
 
     implementation dependencies.lifecycle
     implementation dependencies.lifecycleExtensions
