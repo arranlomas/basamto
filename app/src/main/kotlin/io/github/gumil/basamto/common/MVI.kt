@@ -18,17 +18,24 @@ package io.github.gumil.basamto.common
 
 import android.arch.lifecycle.LiveData
 import io.reactivex.Observable
+import io.reactivex.functions.BiFunction
 
 internal interface MviView<I : MviIntent, in S : MviState> {
     fun S.render()
 }
 
-internal interface MviViewModel<in I : MviIntent, S : MviState, out A: MviAction> {
+internal interface MviViewModel<S : MviState, in I : MviIntent, A: MviAction, R: MviResult> {
     val state: LiveData<S>
+
+    val initialState: S
+
+    val reducer: BiFunction<S, R, S>
 
     fun processIntents(intent: Observable<out I>)
 
     fun actionFromIntent(intent: I) : A
+
+    fun resultFromAction(action: A): Observable<out R>
 }
 
 

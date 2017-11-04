@@ -17,22 +17,19 @@
 package io.github.gumil.basamto.main
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import com.jakewharton.rxrelay2.PublishRelay
-import io.github.gumil.basamto.common.MviViewModel
+import io.github.gumil.basamto.common.BaseViewModel
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
+import io.reactivex.schedulers.Schedulers
 
-internal class MainViewModel : ViewModel(), MviViewModel<MainIntent, MainState, MainAction> {
+internal class MainViewModel : BaseViewModel<MainState, MainIntent, MainAction, MainResult>() {
 
+    override val initialState: MainState
+        get() = MainState.Empty()
 
     override val state: LiveData<MainState>
         get() = mutableState
-
-    private val mutableState = MutableLiveData<MainState>()
-
-    private val intents: PublishRelay<MainIntent> = PublishRelay.create()
 
     private val observable = Observable.just(MainResult.Load(
             LceStatus.SUCCESS,
@@ -46,37 +43,26 @@ internal class MainViewModel : ViewModel(), MviViewModel<MainIntent, MainState, 
                             10
                     )
             )
-    )).onErrorReturn {
-        MainResult.Load(LceStatus.FAILURE)
-    }.startWith(Observable.just(MainResult.Load(LceStatus.IN_FLIGHT)))
+    )).onErrorReturn { MainResult.Load(LceStatus.FAILURE) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .startWith(Observable.just(MainResult.Load(LceStatus.IN_FLIGHT)))
 
-    private val reducer = BiFunction<MainState, MainResult, MainState> { _, result ->
+
+    override val reducer = BiFunction<MainState, MainResult, MainState> { _, result ->
         when (result) {
             is MainResult.Load -> MainState.Result(result.threads)
             is MainResult.Click -> MainState.Click()
         }
     }
 
-    init {
-        intents.map(this::actionFromIntent)
-                .flatMap {
-                    when (it) {
-                        is MainAction.Load -> observable
-                        is MainAction.Click -> Observable.just(MainResult.Click())
-                    }
-                }
-                .scan(MainState.Empty(), reducer)
-                .subscribe {
-                    mutableState.value = it
-                }
-    }
-
-    override fun processIntents(intent: Observable<out MainIntent>) {
-        intent.subscribe(intents)
-    }
-
     override fun actionFromIntent(intent: MainIntent): MainAction = when (intent) {
         is MainIntent.Load -> MainAction.Load()
         is MainIntent.ButtonClick -> MainAction.Click()
+    }
+
+    override fun resultFromAction(action: MainAction): Observable<out MainResult> = when (action) {
+        is MainAction.Load -> observable
+        is MainAction.Click -> Observable.just(MainResult.Click())
     }
 }
