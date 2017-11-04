@@ -40,7 +40,6 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
-
 }
 
 dependencies {
@@ -49,4 +48,5 @@ dependencies {
     api dependencies.recyclerView
     api dependencies.appCompat
     api dependencies.constraintLayout
+    api dependencies.design
 }
