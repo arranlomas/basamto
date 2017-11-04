@@ -26,9 +26,7 @@ internal interface MviView<I : MviIntent, in S : MviState> {
 internal interface MviViewModel<in I : MviIntent, S : MviState, out A: MviAction> {
     val state: LiveData<S>
 
-    fun sendIntent(intent: Observable<out I>)
-
-    fun sendIntent(intent: I)
+    fun processIntents(intent: Observable<out I>)
 
     fun actionFromIntent(intent: I) : A
 }

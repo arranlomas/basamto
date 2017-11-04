@@ -71,12 +71,8 @@ internal class MainViewModel : ViewModel(), MviViewModel<MainIntent, MainState, 
                 }
     }
 
-    override fun sendIntent(intent: Observable<out MainIntent>) {
+    override fun processIntents(intent: Observable<out MainIntent>) {
         intent.subscribe(intents)
-    }
-
-    override fun sendIntent(intent: MainIntent) {
-        intents.accept(intent)
     }
 
     override fun actionFromIntent(intent: MainIntent): MainAction = when (intent) {

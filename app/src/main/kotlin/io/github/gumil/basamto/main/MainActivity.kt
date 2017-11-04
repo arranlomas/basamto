@@ -16,6 +16,7 @@
 
 package io.github.gumil.basamto.main
 
+import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -25,7 +26,9 @@ import android.widget.Toast
 import com.jakewharton.rxbinding2.view.RxView
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.common.MviView
+import io.github.gumil.basamto.common.RxLifecycle
 import io.github.gumil.core.ui.adapter.EmptyViewAdapter
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.subredditList
 import kotlinx.android.synthetic.main.activity_main.swipeRefreshLayout
 import kotlinx.android.synthetic.main.activity_main.testButton
@@ -40,6 +43,9 @@ internal class MainActivity : AppCompatActivity(), MviView<MainIntent, MainState
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val rxLifecycle = RxLifecycle()
+        lifecycle.addObserver(rxLifecycle)
+
         mainViewModel = ViewModelProviders.of(this)[MainViewModel::class.java]
 
         mainViewModel?.state?.observe(this, Observer<MainState> {
@@ -49,14 +55,24 @@ internal class MainActivity : AppCompatActivity(), MviView<MainIntent, MainState
         subredditList.setHasFixedSize(true)
         subredditList.layoutManager = LinearLayoutManager(this)
 
-        mainViewModel?.sendIntent(MainIntent.Load())
 
-        mainViewModel?.sendIntent(
-                RxView.clicks(testButton).map {
-                    Timber.tag("tantrums").d("click")
-                    MainIntent.ButtonClick()
-                }
+        mainViewModel?.processIntents(
+                Observable.merge(
+                        getLoadIntent(rxLifecycle),
+                        RxView.clicks(testButton).map {
+                            Timber.tag("tantrums").d("click")
+                            MainIntent.ButtonClick()
+                        }
+                )
         )
+    }
+
+    private fun getLoadIntent(rxLifecycle: RxLifecycle): Observable<MainIntent> {
+        return rxLifecycle.filter {
+            it == Lifecycle.Event.ON_CREATE
+        }.map {
+            MainIntent.Load()
+        }
     }
 
     override fun MainState.render() {
