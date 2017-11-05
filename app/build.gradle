@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 androidExtensions {
     experimental = true
@@ -39,6 +40,10 @@ dependencies {
     implementation dependencies.rxRelay
     implementation dependencies.rxBinding
     implementation dependencies.rxBindingKotlin
+
+    implementation dependencies.daggerAndroidSupport
+    kapt dependencies.daggerAndroidApt
+    kapt dependencies.daggerApt
 
     implementation dependencies.lifecycle
     implementation dependencies.lifecycleExtensions
