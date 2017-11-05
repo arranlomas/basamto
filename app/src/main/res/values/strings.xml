@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Basamto</string>
+
+    <string name="error_subreddit_list">Error loading submissions</string>
+    <string name="error_no_connection">No network connection</string>
 </resources>
