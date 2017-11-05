@@ -42,7 +42,7 @@ internal class SubredditListAdapter: BaseListAdapter<ThreadItem, SubredditListAd
             itemView.subredditTitle.text = item.title
             itemView.subredditUpvote.text = item.numUpvotes.toString()
             itemView.subredditComments.text = item.numComments.toString()
-            itemView.subredditSubiitle.text = "${item.subreddit} • ${item.timeAgo} • ${item.user}"
+            itemView.subredditSubiitle.text = "${item.subreddit} • ${item.timestamp} • ${item.user}"
         }
     }
 

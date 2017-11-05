@@ -29,26 +29,28 @@ internal fun SubredditRepository.loadThreads(
         limit: Int
 ): Observable<SubredditResult> {
     return getThreadsFrom(subreddit, after, limit)
-            .map { SubredditResult.Success(
-                    listOf(
-                            ThreadItem(
-                                    "Title Super",
-                                    "/r/androiddev",
-                                    "8h",
-                                    "gumil",
-                                    12345,
-                                    10
-                            )
-                    )
-            ) as SubredditResult }
+            .map {
+                SubredditResult.Success(it.map { it.map() })
+            }
+            .ofType(SubredditResult::class.java)
             .onErrorReturn { SubredditResult.Error() }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .startWith(SubredditResult.InProgress())
 }
 
-internal class DummyRepository: SubredditRepository {
+internal class DummyRepository : SubredditRepository {
     override fun getThreadsFrom(subreddit: String, after: String?, limit: Int): Observable<List<RedditThread>> =
             listOf<RedditThread>().just()
+}
 
+private fun RedditThread.map(): ThreadItem {
+    return ThreadItem(
+            title,
+            subreddit,
+            created,
+            author,
+            ups - downs,
+            numComments
+    )
 }

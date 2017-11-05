@@ -19,7 +19,7 @@ package io.github.gumil.basamto.subreddit
 internal data class ThreadItem(
         val title: String,
         val subreddit: String,
-        val timeAgo: String,
+        val timestamp: Long,
         val user: String,
         val numUpvotes: Int,
         val numComments: Int,
