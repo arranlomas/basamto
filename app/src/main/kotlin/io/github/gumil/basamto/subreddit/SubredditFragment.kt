@@ -16,12 +16,20 @@
 
 package io.github.gumil.basamto.subreddit
 
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import io.github.gumil.basamto.R
+import io.github.gumil.basamto.common.MviView
 import io.github.gumil.core.ui.base.BaseFragment
+import io.reactivex.Observable
+import kotlinx.android.synthetic.main.fragment_subreddit.subredditList
+import kotlinx.android.synthetic.main.fragment_subreddit.swipeRefreshLayout
 
-internal class SubredditFragment : BaseFragment() {
+internal class SubredditFragment : BaseFragment(), MviView<SubredditIntent, SubredditState> {
 
     override val layoutId: Int
         get() = R.layout.fragment_subreddit
@@ -29,5 +37,40 @@ internal class SubredditFragment : BaseFragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val viewModel = ViewModelProviders.of(this)[SubredditViewModel::class.java]
+
+        viewModel.state.observe(this, Observer<SubredditState> {
+            it?.render()
+        })
+
+        viewModel?.processIntents(intents())
+    }
+
+    private fun getLoadIntent(): Observable<SubredditIntent> {
+        return rxLifecycle.filter {
+            it == Lifecycle.Event.ON_START
+        }.map {
+            SubredditIntent.Load("androiddev", "asd")
+        }
+    }
+
+    override fun intents(): Observable<SubredditIntent> = getLoadIntent()
+
+    override fun SubredditState.render() {
+        when (this) {
+            is SubredditState.View -> {
+                swipeRefreshLayout.isRefreshing = isLoading
+
+                if (subredditList.adapter == null) {
+                    subredditList.layoutManager = LinearLayoutManager(context)
+                    subredditList.adapter = SubredditListAdapter()
+                }
+
+                (subredditList.adapter as? SubredditListAdapter)?.let {
+                    it.list = threads
+                }
+            }
+            is SubredditState.Error -> showSnackbarError(message)
+        }
     }
 }

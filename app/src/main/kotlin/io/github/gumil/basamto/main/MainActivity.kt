@@ -16,79 +16,20 @@
 
 package io.github.gumil.basamto.main
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.widget.Toast
-import com.jakewharton.rxbinding2.view.RxView
 import io.github.gumil.basamto.R
-import io.github.gumil.basamto.common.MviView
-import io.github.gumil.basamto.common.RxLifecycle
-import io.github.gumil.core.ui.adapter.EmptyViewAdapter
-import io.reactivex.Observable
-import kotlinx.android.synthetic.main.activity_main.subredditList
-import kotlinx.android.synthetic.main.activity_main.swipeRefreshLayout
-import kotlinx.android.synthetic.main.activity_main.testButton
-import timber.log.Timber
+import io.github.gumil.basamto.subreddit.SubredditFragment
 
 
-internal class MainActivity : AppCompatActivity(), MviView<MainIntent, MainState> {
-
-    private var mainViewModel: MainViewModel? = null
+internal class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val rxLifecycle = RxLifecycle()
-        lifecycle.addObserver(rxLifecycle)
-
-        mainViewModel = ViewModelProviders.of(this)[MainViewModel::class.java]
-
-        mainViewModel?.state?.observe(this, Observer<MainState> {
-            it?.render()
-        })
-
-        subredditList.setHasFixedSize(true)
-        subredditList.layoutManager = LinearLayoutManager(this)
-
-
-        mainViewModel?.processIntents(
-                Observable.merge(
-                        getLoadIntent(rxLifecycle),
-                        RxView.clicks(testButton).map {
-                            Timber.tag("tantrums").d("click")
-                            MainIntent.ButtonClick()
-                        }
-                )
-        )
-    }
-
-    private fun getLoadIntent(rxLifecycle: RxLifecycle): Observable<MainIntent> {
-        return rxLifecycle.filter {
-            it == Lifecycle.Event.ON_CREATE
-        }.map {
-            MainIntent.Load()
-        }
-    }
-
-    override fun MainState.render() {
-        when (this) {
-            is MainState.Empty -> {
-                swipeRefreshLayout.isRefreshing = false
-                subredditList.adapter = EmptyViewAdapter()
-            }
-            is MainState.Loading -> {
-                swipeRefreshLayout.isRefreshing = true
-            }
-            is MainState.Result -> {
-                swipeRefreshLayout.isRefreshing = false
-                subredditList.adapter = SubredditListAdapter(threads)
-            }
-            is MainState.Click -> Toast.makeText(this@MainActivity, "Hello World", Toast.LENGTH_SHORT).show()
-        }
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, SubredditFragment())
+                .commit()
     }
 }

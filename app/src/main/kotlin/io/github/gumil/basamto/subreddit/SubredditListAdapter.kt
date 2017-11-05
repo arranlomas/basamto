@@ -28,13 +28,7 @@ import kotlinx.android.synthetic.main.item_subreddit.view.subredditSubiitle
 import kotlinx.android.synthetic.main.item_subreddit.view.subredditTitle
 import kotlinx.android.synthetic.main.item_subreddit.view.subredditUpvote
 
-internal class SubredditListAdapter(
-        list: List<ThreadItem>
-) : BaseListAdapter<ThreadItem, SubredditListAdapter.ViewHolder>() {
-
-    init {
-        super.list = list
-    }
+internal class SubredditListAdapter: BaseListAdapter<ThreadItem, SubredditListAdapter.ViewHolder>() {
 
     val after get() = list.lastOrNull()?.after
 
