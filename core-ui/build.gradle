@@ -45,6 +45,7 @@ android {
 dependencies {
     def dependencies = rootProject.ext.dependencies
     implementation dependencies.kotlin
+    implementation dependencies.rxJava
     api dependencies.recyclerView
     api dependencies.appCompat
     api dependencies.constraintLayout

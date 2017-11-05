@@ -27,6 +27,13 @@ import android.view.ViewGroup
 abstract class BaseFragment: Fragment() {
 
     abstract val layoutId: Int
+    protected val rxLifecycle = RxLifecycle()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        lifecycle.addObserver(rxLifecycle)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(layoutId, container, false)
