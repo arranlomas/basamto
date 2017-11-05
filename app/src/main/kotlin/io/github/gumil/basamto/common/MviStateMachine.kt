@@ -16,38 +16,45 @@
 
 package io.github.gumil.basamto.common
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import com.jakewharton.rxrelay2.BehaviorRelay
 import com.jakewharton.rxrelay2.Relay
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Function as RxFunction
 
-internal abstract class BaseViewModel<S : MviState, in I : MviIntent, A : MviAction, R : MviResult>
-    : ViewModel(), MviViewModel<S, I, A, R> {
+internal class MviStateMachine<S : MviState, in I : MviIntent, A : MviAction, R : MviResult>(
+        initialState: S,
+        actionFromIntent: (I) -> A,
+        resultFromAction: (A) -> Observable<R>,
+        reducer: (state: S, result: R) -> S
+
+) {
+
+    val state: LiveData<S> get() = mutableState
 
     private val disposables = CompositeDisposable()
 
-    protected val mutableState = MutableLiveData<S>()
+    private val mutableState = MutableLiveData<S>()
 
     private val intents: Relay<I> = BehaviorRelay.create()
 
-    fun initialize() {
-        intents.map(this::actionFromIntent)
-                .flatMap(this::resultFromAction)
+    init {
+        intents.map(actionFromIntent)
+                .flatMap(resultFromAction)
                 .scan(initialState, reducer)
                 .subscribe { mutableState.postValue(it) }
                 .disposeOnCleared()
-
     }
 
-    override fun processIntents(intent: Observable<out I>) {
+
+    fun processIntents(intent: Observable<out I>) {
         intent.subscribe(intents).disposeOnCleared()
     }
 
-    override fun onCleared() {
-        super.onCleared()
+    fun clearDisposables() {
         disposables.clear()
     }
 
