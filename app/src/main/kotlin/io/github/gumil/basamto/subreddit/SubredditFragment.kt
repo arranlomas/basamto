@@ -18,6 +18,7 @@ package io.github.gumil.basamto.subreddit
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -28,8 +29,11 @@ import io.github.gumil.basamto.common.MviView
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_subreddit.subredditList
 import kotlinx.android.synthetic.main.fragment_subreddit.swipeRefreshLayout
+import javax.inject.Inject
 
 internal class SubredditFragment : BaseFragment(), MviView<SubredditIntent, SubredditState> {
+
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override val layoutId: Int
         get() = R.layout.fragment_subreddit
@@ -37,7 +41,7 @@ internal class SubredditFragment : BaseFragment(), MviView<SubredditIntent, Subr
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModel = ViewModelProviders.of(this)[SubredditViewModel::class.java]
+        val viewModel = ViewModelProviders.of(this, viewModelFactory)[SubredditViewModel::class.java]
 
         viewModel.state.observe(this, Observer<SubredditState> {
             it?.render()

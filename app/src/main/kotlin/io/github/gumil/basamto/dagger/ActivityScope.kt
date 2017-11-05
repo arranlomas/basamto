@@ -14,14 +14,10 @@
  * limitations under the License.
  */
 
-package io.github.gumil.basamto.subreddit
+package io.github.gumil.basamto.dagger
 
-internal data class ThreadItem(
-        val title: String,
-        val subreddit: String,
-        val timestamp: Long,
-        val user: String,
-        val numUpvotes: Int,
-        val numComments: Int,
-        val after: String? = null
-)
+import javax.inject.Scope
+
+@Scope
+@Retention(AnnotationRetention.RUNTIME)
+internal annotation class ActivityScope

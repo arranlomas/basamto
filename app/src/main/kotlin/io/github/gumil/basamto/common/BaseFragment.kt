@@ -19,13 +19,13 @@ package io.github.gumil.basamto.common
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import dagger.android.support.DaggerFragment
 import io.github.gumil.core.ui.base.RxLifecycle
 
-abstract class BaseFragment: Fragment() {
+abstract class BaseFragment: DaggerFragment() {
 
     abstract val layoutId: Int
     protected val rxLifecycle = RxLifecycle()

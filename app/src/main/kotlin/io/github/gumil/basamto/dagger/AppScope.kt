@@ -14,21 +14,10 @@
  * limitations under the License.
  */
 
-package io.github.gumil.basamto
+package io.github.gumil.basamto.dagger
 
-import dagger.android.support.DaggerApplication
-import io.github.gumil.basamto.dagger.DaggerAppComponent
-import io.github.gumil.data.Data
-import timber.log.Timber
+import javax.inject.Scope
 
-internal class BasamToApplication : DaggerApplication() {
-
-    override fun onCreate() {
-        super.onCreate()
-        Timber.plant(Timber.DebugTree())
-    }
-
-    override fun applicationInjector() = DaggerAppComponent.builder()
-            .dataComponent(Data.createDataComponent(BuildConfig.DEBUG)).build()
-
-}
+@Scope
+@Retention(AnnotationRetention.RUNTIME)
+internal annotation class AppScope

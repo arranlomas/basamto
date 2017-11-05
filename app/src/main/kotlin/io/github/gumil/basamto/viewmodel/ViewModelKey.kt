@@ -14,25 +14,13 @@
  * limitations under the License.
  */
 
-package io.github.gumil.basamto.main
+package io.github.gumil.basamto.viewmodel
 
 import android.arch.lifecycle.ViewModel
-import android.os.Bundle
-import dagger.android.support.DaggerAppCompatActivity
-import io.github.gumil.basamto.R
-import io.github.gumil.basamto.subreddit.SubredditFragment
+import dagger.MapKey
+import kotlin.reflect.KClass
 
-
-internal class MainActivity : DaggerAppCompatActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, SubredditFragment())
-                .commit()
-    }
-}
-
-internal class MainViewModel: ViewModel()
+@Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER)
+@Retention(AnnotationRetention.RUNTIME)
+@MapKey
+annotation class ViewModelKey(val value: KClass<out ViewModel>)

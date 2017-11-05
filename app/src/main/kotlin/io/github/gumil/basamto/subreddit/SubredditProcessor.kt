@@ -54,3 +54,13 @@ private fun RedditThread.map(): ThreadItem {
             numComments
     )
 }
+
+internal data class ThreadItem(
+        val title: String,
+        val subreddit: String,
+        val timestamp: Long,
+        val user: String,
+        val numUpvotes: Int,
+        val numComments: Int,
+        val after: String? = null
+)
