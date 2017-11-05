@@ -18,9 +18,10 @@ package io.github.gumil.basamto.viewmodel
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import javax.inject.Inject
 import javax.inject.Provider
 
-internal class ViewModelFactory(
+internal class ViewModelFactory @Inject constructor(
         private val creators: @JvmSuppressWildcards Map<Class<out ViewModel>, Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
 

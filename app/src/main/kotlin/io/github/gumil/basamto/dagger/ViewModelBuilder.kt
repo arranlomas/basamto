@@ -14,34 +14,17 @@
  * limitations under the License.
  */
 
-package io.github.gumil.basamto.main
+package io.github.gumil.basamto.dagger
 
-import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
-import dagger.multibindings.IntoMap
 import io.github.gumil.basamto.viewmodel.ViewModelFactory
-import io.github.gumil.basamto.viewmodel.ViewModelKey
-import javax.inject.Provider
-
 
 @Module
-internal abstract class MainActivityModule {
+internal abstract class ViewModelBuilder {
 
-    @Module
-    companion object {
+    @Binds
+    internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
-        @JvmStatic
-        @Provides
-        @IntoMap
-        @ViewModelKey(MainViewModel::class)
-        fun provideMainViewModel(): ViewModel = MainViewModel()
-
-        @Provides
-        @JvmStatic
-        fun provideViewModelFactory(
-                creators: @JvmSuppressWildcards Map<Class<out ViewModel>, Provider<ViewModel>>
-        ): ViewModelProvider.Factory = ViewModelFactory(creators)
-    }
 }

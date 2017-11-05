@@ -20,7 +20,6 @@ import dagger.Module
 import dagger.android.AndroidInjectionModule
 import dagger.android.ContributesAndroidInjector
 import io.github.gumil.basamto.main.MainActivity
-import io.github.gumil.basamto.main.MainActivityModule
 import io.github.gumil.basamto.subreddit.SubredditBuilder
 
 @Module(includes = arrayOf(AndroidInjectionModule::class))
@@ -29,10 +28,11 @@ internal abstract class ActivityBuilder {
     @ActivityScope
     @ContributesAndroidInjector(
             modules = arrayOf(
-                    SubredditBuilder::class,
-                    MainActivityModule::class
+                    ViewModelBuilder::class,
+                    SubredditBuilder::class
             )
     )
+
     internal abstract fun bindMainActivity(): MainActivity
 
 }

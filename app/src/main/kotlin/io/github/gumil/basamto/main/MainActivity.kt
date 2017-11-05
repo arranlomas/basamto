@@ -34,5 +34,3 @@ internal class MainActivity : DaggerAppCompatActivity() {
                 .commit()
     }
 }
-
-internal class MainViewModel: ViewModel()
