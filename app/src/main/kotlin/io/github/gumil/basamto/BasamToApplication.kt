@@ -16,6 +16,8 @@
 
 package io.github.gumil.basamto
 
+import com.jakewharton.threetenabp.AndroidThreeTen
+import com.squareup.leakcanary.LeakCanary
 import dagger.android.support.DaggerApplication
 import io.github.gumil.basamto.dagger.DaggerAppComponent
 import io.github.gumil.data.Data
@@ -26,6 +28,14 @@ internal class BasamToApplication : DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
+        AndroidThreeTen.init(this)
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return
+        }
+        LeakCanary.install(this)
     }
 
     override fun applicationInjector() = DaggerAppComponent.builder()

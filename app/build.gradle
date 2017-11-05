@@ -49,11 +49,14 @@ dependencies {
     implementation dependencies.lifecycleExtensions
 
     implementation dependencies.picasso
+    implementation dependencies.threeTenAbp
 
     androidTestImplementation(dependencies.espresso, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testImplementation dependencies.junit
+
+    debugImplementation dependencies.leakCanary
 }
 
 kotlin {

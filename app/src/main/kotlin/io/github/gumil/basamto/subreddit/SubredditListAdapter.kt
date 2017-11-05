@@ -17,6 +17,7 @@
 package io.github.gumil.basamto.subreddit
 
 import android.annotation.SuppressLint
+import android.text.format.DateUtils
 import android.view.View
 import android.view.ViewGroup
 import io.github.gumil.basamto.R
@@ -27,6 +28,7 @@ import kotlinx.android.synthetic.main.item_subreddit.view.subredditComments
 import kotlinx.android.synthetic.main.item_subreddit.view.subredditSubiitle
 import kotlinx.android.synthetic.main.item_subreddit.view.subredditTitle
 import kotlinx.android.synthetic.main.item_subreddit.view.subredditUpvote
+
 
 internal class SubredditListAdapter: BaseListAdapter<ThreadItem, SubredditListAdapter.ViewHolder>() {
 
@@ -39,10 +41,12 @@ internal class SubredditListAdapter: BaseListAdapter<ThreadItem, SubredditListAd
 
         @SuppressLint("SetTextI18n")
         override fun bind(item: ThreadItem) {
+            val display = DateUtils.getRelativeTimeSpanString(item.timestamp * 1000)
+
             itemView.subredditTitle.text = item.title
             itemView.subredditUpvote.text = item.numUpvotes.toString()
             itemView.subredditComments.text = item.numComments.toString()
-            itemView.subredditSubiitle.text = "${item.subreddit} • ${item.timestamp} • ${item.user}"
+            itemView.subredditSubiitle.text = "${item.subreddit} • ${display} • ${item.user}"
         }
     }
 

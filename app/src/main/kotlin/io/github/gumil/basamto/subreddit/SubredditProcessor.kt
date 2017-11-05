@@ -43,7 +43,7 @@ private fun RedditThread.map(): ThreadItem {
     return ThreadItem(
             title,
             subreddit,
-            created,
+            createdUtc,
             author,
             ups - downs,
             numComments
