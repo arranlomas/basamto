@@ -16,9 +16,16 @@
 
 package io.github.gumil.data
 
+import io.github.gumil.data.dagger.ApiModule
+import io.github.gumil.data.dagger.DaggerDataComponent
+import io.github.gumil.data.dagger.DataComponent
+
 object Data {
 
-    fun createDataComponent() {
-
+    fun createDataComponent(isDebug: Boolean): DataComponent {
+        return DaggerDataComponent
+                .builder()
+                .apiModule(ApiModule(isDebug))
+                .build()
     }
 }

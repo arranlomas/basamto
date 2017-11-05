@@ -22,7 +22,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-internal interface RedditApi {
+interface RedditApi {
 
     companion object {
         private const val SUBREDDIT = "subreddit"

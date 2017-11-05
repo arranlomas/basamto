@@ -20,12 +20,11 @@ import dagger.Module
 import dagger.Provides
 import io.github.gumil.data.ApiFactory
 import io.github.gumil.data.rest.RedditApi
-import javax.inject.Singleton
 
 @Module
 internal class ApiModule(private val isDebug: Boolean) {
 
     @Provides
-    @Singleton
+    @DataScope
     fun provideRedditApi(): RedditApi = ApiFactory.createRedditApi(isDebug)
 }

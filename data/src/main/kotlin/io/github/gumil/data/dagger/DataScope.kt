@@ -16,13 +16,8 @@
 
 package io.github.gumil.data.dagger
 
-import dagger.Component
-import io.github.gumil.data.rest.RedditApi
+import javax.inject.Scope
 
-@DataScope
-@Component(modules = arrayOf(ApiModule::class))
-interface DataComponent {
-
-    fun redditApi(): RedditApi
-
-}
+@Scope
+@Retention(AnnotationRetention.RUNTIME)
+annotation class DataScope

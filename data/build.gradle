@@ -59,7 +59,7 @@ dependencies {
     api dependencies.rxKotlin
     api dependencies.rxAndroid
 
-    implementation dependencies.dagger
+    api dependencies.dagger
     kapt dependencies.daggerApt
 
     testImplementation dependencies.junit
