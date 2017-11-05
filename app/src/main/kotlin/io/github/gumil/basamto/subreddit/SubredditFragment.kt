@@ -23,8 +23,8 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import io.github.gumil.basamto.R
+import io.github.gumil.basamto.common.BaseFragment
 import io.github.gumil.basamto.common.MviView
-import io.github.gumil.core.ui.base.BaseFragment
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_subreddit.subredditList
 import kotlinx.android.synthetic.main.fragment_subreddit.swipeRefreshLayout

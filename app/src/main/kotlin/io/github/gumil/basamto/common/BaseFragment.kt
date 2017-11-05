@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.gumil.core.ui.base
+package io.github.gumil.basamto.common
 
 import android.os.Bundle
 import android.support.annotation.StringRes
@@ -23,6 +23,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import io.github.gumil.core.ui.base.RxLifecycle
 
 abstract class BaseFragment: Fragment() {
 
