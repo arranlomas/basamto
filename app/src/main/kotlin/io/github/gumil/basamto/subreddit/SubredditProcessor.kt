@@ -18,7 +18,6 @@ package io.github.gumil.basamto.subreddit
 
 import io.github.gumil.data.model.RedditThread
 import io.github.gumil.data.repository.subreddit.SubredditRepository
-import io.github.gumil.data.util.just
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -39,10 +38,6 @@ internal fun SubredditRepository.loadThreads(
             .startWith(SubredditResult.InProgress())
 }
 
-internal class DummyRepository : SubredditRepository {
-    override fun getThreadsFrom(subreddit: String, after: String?, limit: Int): Observable<List<RedditThread>> =
-            listOf<RedditThread>().just()
-}
 
 private fun RedditThread.map(): ThreadItem {
     return ThreadItem(

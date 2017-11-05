@@ -22,13 +22,16 @@ import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 import io.github.gumil.basamto.viewmodel.ViewModelKey
+import io.github.gumil.data.repository.subreddit.SubredditRepository
+import io.github.gumil.data.repository.subreddit.SubredditRepositoryModule
 
 @Module
 internal abstract class SubredditBuilder {
 
     @ContributesAndroidInjector(
             modules = arrayOf(
-                    SubredditModule::class
+                    SubredditModule::class,
+                    SubredditRepositoryModule::class
             )
     )
     internal abstract fun subredditFragment(): SubredditFragment
@@ -45,6 +48,8 @@ internal abstract class SubredditModule {
         @Provides
         @IntoMap
         @ViewModelKey(SubredditViewModel::class)
-        fun provideSubredditViewModel(): ViewModel = SubredditViewModel()
+        fun provideSubredditViewModel(
+                subredditRepository: SubredditRepository
+        ): ViewModel = SubredditViewModel(subredditRepository)
     }
 }

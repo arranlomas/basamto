@@ -24,9 +24,9 @@ import io.github.gumil.basamto.common.MviViewModel
 import io.github.gumil.data.repository.subreddit.SubredditRepository
 import io.reactivex.Observable
 
-internal class SubredditViewModel: ViewModel(), MviViewModel<SubredditState, SubredditIntent> {
-
-    private val subredditRepository: SubredditRepository = DummyRepository()
+internal class SubredditViewModel(
+        private val subredditRepository: SubredditRepository
+): ViewModel(), MviViewModel<SubredditState, SubredditIntent> {
 
     override val state: LiveData<SubredditState> get() = stateMachine.state
 

@@ -21,7 +21,7 @@ import dagger.Provides
 import io.github.gumil.data.rest.RedditApi
 
 @Module
-internal class SubredditModule {
+class SubredditRepositoryModule {
 
     @Provides
     fun providesSubredditRespository(redditApi: RedditApi): SubredditRepository =
