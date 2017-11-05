@@ -24,3 +24,5 @@ fun <T> Observable<T>.applySchedulers(): Observable<T> {
     return subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 }
+
+fun <T> T.just() = Observable.just(this)
