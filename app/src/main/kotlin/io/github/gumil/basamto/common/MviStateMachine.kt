@@ -25,10 +25,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Function as RxFunction
 
-internal class MviStateMachine<S : MviState, in I : MviIntent, A : MviAction, R : MviResult>(
+internal class MviStateMachine<S : MviState, in I : MviIntent, R : MviResult>(
         initialState: S,
-        actionFromIntent: (I) -> A,
-        resultFromAction: (A) -> Observable<R>,
+        resultFromIntent: (I) -> Observable<R>,
         reducer: (state: S, result: R) -> S
 
 ) {
@@ -42,8 +41,7 @@ internal class MviStateMachine<S : MviState, in I : MviIntent, A : MviAction, R 
     private val intents: Relay<I> = BehaviorRelay.create()
 
     init {
-        intents.map(actionFromIntent)
-                .flatMap(resultFromAction)
+        intents.flatMap(resultFromIntent)
                 .scan(initialState, reducer)
                 .subscribe { mutableState.postValue(it) }
                 .disposeOnCleared()

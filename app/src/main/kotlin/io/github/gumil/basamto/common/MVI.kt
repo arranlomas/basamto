@@ -33,5 +33,4 @@ internal interface MviViewModel<S : MviState, in I : MviIntent> {
 
 internal interface MviIntent
 internal interface MviState
-internal interface MviAction
 internal interface MviResult

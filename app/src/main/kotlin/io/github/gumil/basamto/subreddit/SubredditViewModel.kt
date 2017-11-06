@@ -31,13 +31,9 @@ internal class SubredditViewModel(
     override val state: LiveData<SubredditState> get() = stateMachine.state
 
     private val stateMachine =
-            MviStateMachine<SubredditState, SubredditIntent, SubredditAction, SubredditResult>(SubredditState.View(), {
+            MviStateMachine<SubredditState, SubredditIntent, SubredditResult>(SubredditState.View(), {
                 when (it) {
-                    is SubredditIntent.Load -> SubredditAction.Load(it.subreddit, it.after, LIMIT)
-                }
-            }, {
-                when (it) {
-                    is SubredditAction.Load -> subredditRepository.loadThreads(it.subreddit, it.after, it.limit)
+                    is SubredditIntent.Load -> subredditRepository.loadThreads(it.subreddit, it.after, LIMIT)
                 }
             }, { _, result ->
                 when (result) {

@@ -16,7 +16,6 @@
 
 package io.github.gumil.basamto.subreddit
 
-import io.github.gumil.basamto.common.MviAction
 import io.github.gumil.basamto.common.MviIntent
 import io.github.gumil.basamto.common.MviResult
 import io.github.gumil.basamto.common.MviState
@@ -38,14 +37,6 @@ internal sealed class SubredditIntent : MviIntent {
             val subreddit: String,
             val after: String
     ) : SubredditIntent()
-}
-
-internal sealed class SubredditAction : MviAction {
-    data class Load(
-            val subreddit: String,
-            val after: String,
-            val limit: Int
-    ) : SubredditAction()
 }
 
 internal sealed class SubredditResult : MviResult {
