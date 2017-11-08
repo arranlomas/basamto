@@ -16,11 +16,10 @@
 
 package io.github.gumil.basamto.main
 
-import android.arch.lifecycle.ViewModel
 import android.os.Bundle
 import dagger.android.support.DaggerAppCompatActivity
 import io.github.gumil.basamto.R
-import io.github.gumil.basamto.subreddit.SubredditFragment
+import io.github.gumil.basamto.reddit.subreddit.SubredditFragment
 
 
 internal class MainActivity : DaggerAppCompatActivity() {

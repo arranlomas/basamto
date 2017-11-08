@@ -20,7 +20,7 @@ import dagger.Module
 import dagger.android.AndroidInjectionModule
 import dagger.android.ContributesAndroidInjector
 import io.github.gumil.basamto.main.MainActivity
-import io.github.gumil.basamto.subreddit.SubredditBuilder
+import io.github.gumil.basamto.reddit.subreddit.SubredditBuilder
 
 @Module(includes = arrayOf(AndroidInjectionModule::class))
 internal abstract class ActivityBuilder {

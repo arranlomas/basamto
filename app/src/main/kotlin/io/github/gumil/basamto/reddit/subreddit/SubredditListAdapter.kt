@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.gumil.basamto.subreddit
+package io.github.gumil.basamto.reddit.subreddit
 
 import android.annotation.SuppressLint
 import android.text.format.DateUtils
