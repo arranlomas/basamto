@@ -48,6 +48,8 @@ dependencies {
     implementation dependencies.lifecycle
     implementation dependencies.lifecycleExtensions
 
+    implementation dependencies.simpleStack
+
     implementation dependencies.picasso
     implementation dependencies.threeTenAbp
 
