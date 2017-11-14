@@ -22,33 +22,26 @@
  * SOFTWARE.
  */
 
-package io.github.gumil.basamto.common
+package io.github.gumil.basamto.common.adapter
 
-import android.os.Bundle
-import android.support.annotation.StringRes
-import android.support.design.widget.Snackbar
-import android.view.LayoutInflater
+import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.view.ViewGroup
-import dagger.android.support.DaggerFragment
 
-abstract class BaseFragment: DaggerFragment() {
+abstract class BaseListAdapter<M, out VH : BaseViewHolder<M>> : RecyclerView.Adapter<BaseViewHolder<M>>() {
 
-    abstract val layoutId: Int
-    protected val rxLifecycle = RxLifecycle()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        lifecycle.addObserver(rxLifecycle)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(layoutId, container, false)
-
-    fun showSnackbarError(@StringRes stringRes: Int) {
-        view?.let {
-            Snackbar.make(it, stringRes, Snackbar.LENGTH_SHORT)
+    var list: List<M> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
         }
+
+    override fun onBindViewHolder(holder: BaseViewHolder<M>, position: Int) {
+        holder.bind(list[position])
     }
+
+    override fun getItemCount() = list.size
+}
+
+abstract class BaseViewHolder<in M>(view: View) : RecyclerView.ViewHolder(view) {
+    abstract fun bind(item: M)
 }

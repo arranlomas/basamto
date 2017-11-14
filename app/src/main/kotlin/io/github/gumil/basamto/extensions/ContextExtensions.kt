@@ -22,33 +22,32 @@
  * SOFTWARE.
  */
 
-package io.github.gumil.basamto.common
+package io.github.gumil.basamto.extensions
 
-import android.os.Bundle
-import android.support.annotation.StringRes
-import android.support.design.widget.Snackbar
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import dagger.android.support.DaggerFragment
+import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
+import android.graphics.drawable.Drawable
+import android.support.annotation.ColorRes
+import android.support.v4.content.ContextCompat
+import io.github.gumil.basamto.R
+import java.lang.IllegalStateException
 
-abstract class BaseFragment: DaggerFragment() {
-
-    abstract val layoutId: Int
-    protected val rxLifecycle = RxLifecycle()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        lifecycle.addObserver(rxLifecycle)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(layoutId, container, false)
-
-    fun showSnackbarError(@StringRes stringRes: Int) {
-        view?.let {
-            Snackbar.make(it, stringRes, Snackbar.LENGTH_SHORT)
-        }
+internal fun Context.findActivity(): Activity {
+    return if (this is Activity) {
+        this
+    } else {
+        val contextWrapper = this as ContextWrapper
+        val baseContext = contextWrapper.baseContext ?: throw IllegalStateException("Activity was not found as base context of view!")
+        baseContext.findActivity()
     }
 }
+
+internal fun Context.getSelectableItemBackground(): Drawable {
+    val typedArray = this.obtainStyledAttributes(intArrayOf(R.attr.selectableItemBackground))
+    return typedArray.getDrawable(0).apply {
+        typedArray.recycle()
+    }
+}
+
+internal fun Context.getColorRes(@ColorRes color: Int): Int = ContextCompat.getColor(this, color)

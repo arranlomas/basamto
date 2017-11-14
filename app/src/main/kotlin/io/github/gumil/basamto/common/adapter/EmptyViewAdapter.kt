@@ -22,33 +22,33 @@
  * SOFTWARE.
  */
 
-package io.github.gumil.basamto.common
+package io.github.gumil.basamto.common.adapter
 
-import android.os.Bundle
-import android.support.annotation.StringRes
-import android.support.design.widget.Snackbar
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import dagger.android.support.DaggerFragment
+import io.github.gumil.basamto.R
+import io.github.gumil.basamto.extensions.inflateLayout
+import kotlinx.android.synthetic.main.view_empty.view.emptyViewImage
+import kotlinx.android.synthetic.main.view_empty.view.emptyViewText
 
-abstract class BaseFragment: DaggerFragment() {
+open class EmptyViewAdapter: BaseListAdapter<Unit, EmptyViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Unit> =
+            EmptyViewHolder(parent.inflateLayout(R.layout.view_empty))
 
-    abstract val layoutId: Int
-    protected val rxLifecycle = RxLifecycle()
+}
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+class EmptyViewHolder(
+        view: View,
+        drawableRes: Int = R.drawable.ic_sentiment_dissatisfied_black_24dp,
+        messageRes: Int = R.string.empty_list
+) : BaseViewHolder<Unit>(view) {
 
-        lifecycle.addObserver(rxLifecycle)
+    init {
+        itemView.emptyViewImage.setImageResource(drawableRes)
+        itemView.emptyViewText.setText(messageRes)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(layoutId, container, false)
-
-    fun showSnackbarError(@StringRes stringRes: Int) {
-        view?.let {
-            Snackbar.make(it, stringRes, Snackbar.LENGTH_SHORT)
-        }
+    override fun bind(item: Unit) {
+        //do nothing
     }
 }

@@ -32,8 +32,10 @@ dependencies {
     def dependencies = rootProject.ext.dependencies
 
     implementation project(':data')
-    implementation project(':core-ui')
 
+    implementation dependencies.recyclerView
+    implementation dependencies.appCompat
+    implementation dependencies.constraintLayout
     implementation dependencies.design
     implementation dependencies.cardView
 

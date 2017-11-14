@@ -29,9 +29,9 @@ import android.text.format.DateUtils
 import android.view.View
 import android.view.ViewGroup
 import io.github.gumil.basamto.R
-import io.github.gumil.core.ui.adapter.BaseListAdapter
-import io.github.gumil.core.ui.adapter.BaseViewHolder
-import io.github.gumil.core.ui.extensions.inflateLayout
+import io.github.gumil.basamto.common.adapter.BaseListAdapter
+import io.github.gumil.basamto.common.adapter.BaseViewHolder
+import io.github.gumil.basamto.extensions.inflateLayout
 import kotlinx.android.synthetic.main.item_subreddit.view.subredditComments
 import kotlinx.android.synthetic.main.item_subreddit.view.subredditSubiitle
 import kotlinx.android.synthetic.main.item_subreddit.view.subredditTitle

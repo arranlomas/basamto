@@ -22,33 +22,23 @@
  * SOFTWARE.
  */
 
-package io.github.gumil.basamto.common
+package io.github.gumil.basamto.extensions
 
-import android.os.Bundle
-import android.support.annotation.StringRes
-import android.support.design.widget.Snackbar
+import android.os.Build
+import android.support.annotation.LayoutRes
+import android.support.annotation.StyleRes
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import dagger.android.support.DaggerFragment
+import android.widget.TextView
 
-abstract class BaseFragment: DaggerFragment() {
+fun ViewGroup.inflateLayout(@LayoutRes layout: Int, addToRoot: Boolean = false) =
+        LayoutInflater.from(context).inflate(layout, this, addToRoot)
 
-    abstract val layoutId: Int
-    protected val rxLifecycle = RxLifecycle()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        lifecycle.addObserver(rxLifecycle)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(layoutId, container, false)
-
-    fun showSnackbarError(@StringRes stringRes: Int) {
-        view?.let {
-            Snackbar.make(it, stringRes, Snackbar.LENGTH_SHORT)
-        }
+@Suppress("deprecation")
+internal fun TextView.textAppearance(@StyleRes style: Int) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        setTextAppearance(style)
+    } else {
+        setTextAppearance(context, style)
     }
 }
