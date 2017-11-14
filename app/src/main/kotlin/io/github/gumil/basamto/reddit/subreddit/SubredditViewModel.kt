@@ -42,6 +42,7 @@ internal class SubredditViewModel(
             MviStateMachine<SubredditState, SubredditIntent, SubredditResult>(SubredditState.View(), {
                 when (it) {
                     is SubredditIntent.Load -> subredditRepository.loadThreads(it.subreddit, it.after, LIMIT)
+                    is SubredditIntent.OnItemClick -> TODO()
                 }
             }, { _, result ->
                 when (result) {

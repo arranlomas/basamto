@@ -24,31 +24,34 @@
 
 package io.github.gumil.basamto.common.adapter
 
-import android.view.View
-import android.view.ViewGroup
-import io.github.gumil.basamto.R
-import io.github.gumil.basamto.extensions.inflateLayout
-import kotlinx.android.synthetic.main.view_empty.view.emptyViewImage
-import kotlinx.android.synthetic.main.view_empty.view.emptyViewText
+import io.reactivex.Observable
+import io.reactivex.Observer
+import io.reactivex.android.MainThreadDisposable
 
-internal open class EmptyViewAdapter: BaseListAdapter<Unit, EmptyViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Unit> =
-            EmptyViewHolder(parent.inflateLayout(R.layout.view_empty))
+internal class OnItemClickObservable<T>(
+        private val adapter: BaseListAdapter<T, *>
+): Observable<T>() {
 
-}
+    override fun subscribeActual(observer: Observer<in T>?) {
+        observer?.let {
+            adapter.onItemClick = Listener(adapter, it)
+        }
 
-internal class EmptyViewHolder(
-        view: View,
-        drawableRes: Int = R.drawable.ic_sentiment_dissatisfied_black_24dp,
-        messageRes: Int = R.string.empty_list
-) : BaseViewHolder<Unit>(view) {
-
-    init {
-        itemView.emptyViewImage.setImageResource(drawableRes)
-        itemView.emptyViewText.setText(messageRes)
     }
 
-    override fun bind(item: Unit) {
-        //do nothing
+    internal class Listener<in T>(
+            private val adapter: BaseListAdapter<T, *>,
+            private val observer: Observer<in T>
+    ) : MainThreadDisposable(), Function1<T, Unit> {
+
+        override fun invoke(p1: T) {
+            if (!isDisposed) {
+                observer.onNext(p1)
+            }
+        }
+
+        override fun onDispose() {
+            adapter.onItemClick = null
+        }
     }
 }

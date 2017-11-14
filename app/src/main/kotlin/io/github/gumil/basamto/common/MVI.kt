@@ -28,7 +28,7 @@ import android.arch.lifecycle.LiveData
 import io.reactivex.Observable
 
 internal interface MviView<I : MviIntent, in S : MviState> {
-    fun S.render()
+    fun S.render(): Any?
     fun intents(): Observable<I>
 }
 

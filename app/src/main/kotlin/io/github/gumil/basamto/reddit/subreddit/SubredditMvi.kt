@@ -45,6 +45,10 @@ internal sealed class SubredditIntent : MviIntent {
             val subreddit: String,
             val after: String
     ) : SubredditIntent()
+
+    class OnItemClick(
+            val item: ThreadItem
+    ) : SubredditIntent()
 }
 
 internal sealed class SubredditResult : MviResult {
@@ -56,8 +60,4 @@ internal sealed class SubredditResult : MviResult {
     class Error : SubredditResult()
 
     class InProgress : SubredditResult()
-}
-
-enum class RequestStatus {
-    SUCCESS, FAILURE, IN_PROGRESS
 }

@@ -37,6 +37,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground"
         android:paddingBottom="@dimen/default_half_padding"
         android:paddingEnd="@dimen/default_padding"
         android:paddingStart="@dimen/default_padding">

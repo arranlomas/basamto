@@ -27,7 +27,7 @@ package io.github.gumil.basamto.common.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.View
 
-abstract class BaseListAdapter<M, out VH : BaseViewHolder<M>> : RecyclerView.Adapter<BaseViewHolder<M>>() {
+internal abstract class BaseListAdapter<M, out VH : BaseViewHolder<M>> : RecyclerView.Adapter<BaseViewHolder<M>>() {
 
     var list: List<M> = emptyList()
         set(value) {
@@ -35,13 +35,18 @@ abstract class BaseListAdapter<M, out VH : BaseViewHolder<M>> : RecyclerView.Ada
             notifyDataSetChanged()
         }
 
+    var onItemClick: ((M) -> Unit)? = null
+
     override fun onBindViewHolder(holder: BaseViewHolder<M>, position: Int) {
         holder.bind(list[position])
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(list[position])
+        }
     }
 
     override fun getItemCount() = list.size
 }
 
-abstract class BaseViewHolder<in M>(view: View) : RecyclerView.ViewHolder(view) {
+internal abstract class BaseViewHolder<in M>(view: View) : RecyclerView.ViewHolder(view) {
     abstract fun bind(item: M)
 }
