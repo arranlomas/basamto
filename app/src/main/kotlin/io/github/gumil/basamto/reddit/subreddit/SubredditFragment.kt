@@ -34,6 +34,7 @@ import android.view.View
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.common.BaseFragment
 import io.github.gumil.basamto.common.MviView
+import io.github.gumil.basamto.common.adapter.OnItemClickObservable
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_subreddit.subredditList
 import kotlinx.android.synthetic.main.fragment_subreddit.swipeRefreshLayout
@@ -42,6 +43,8 @@ import javax.inject.Inject
 internal class SubredditFragment : BaseFragment(), MviView<SubredditIntent, SubredditState> {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val adapter = SubredditListAdapter()
 
     override val layoutId: Int
         get() = R.layout.fragment_subreddit
@@ -66,23 +69,22 @@ internal class SubredditFragment : BaseFragment(), MviView<SubredditIntent, Subr
         }
     }
 
-    override fun intents(): Observable<SubredditIntent> = getLoadIntent()
+    override fun intents(): Observable<SubredditIntent> = Observable.merge(
+            getLoadIntent(),
+            OnItemClickObservable(adapter).map { SubredditIntent.OnItemClick(it) }
+    )
 
-    override fun SubredditState.render() {
-        when (this) {
-            is SubredditState.View -> {
-                swipeRefreshLayout.isRefreshing = isLoading
+    override fun SubredditState.render() = when (this) {
+        is SubredditState.View -> {
+            swipeRefreshLayout.isRefreshing = isLoading
 
-                if (subredditList.adapter == null) {
-                    subredditList.layoutManager = LinearLayoutManager(context)
-                    subredditList.adapter = SubredditListAdapter()
-                }
-
-                (subredditList.adapter as? SubredditListAdapter)?.let {
-                    it.list = threads
-                }
+            if (subredditList.adapter == null) {
+                subredditList.layoutManager = LinearLayoutManager(context)
+                subredditList.adapter = adapter
             }
-            is SubredditState.Error -> showSnackbarError(message)
+
+            adapter.list = threads
         }
+        is SubredditState.Error -> showSnackbarError(message)
     }
 }
