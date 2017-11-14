@@ -25,6 +25,7 @@
 package io.github.gumil.basamto.reddit.subreddit
 
 import android.arch.lifecycle.ViewModel
+import com.zhuinden.simplestack.Backstack
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -57,7 +58,8 @@ internal abstract class SubredditModule {
         @IntoMap
         @ViewModelKey(SubredditViewModel::class)
         fun provideSubredditViewModel(
-                subredditRepository: SubredditRepository
-        ): ViewModel = SubredditViewModel(subredditRepository)
+                subredditRepository: SubredditRepository,
+                backstack: Backstack
+        ): ViewModel = SubredditViewModel(subredditRepository, backstack)
     }
 }

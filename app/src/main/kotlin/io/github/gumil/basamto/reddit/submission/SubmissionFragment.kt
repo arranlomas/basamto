@@ -30,6 +30,6 @@ import io.github.gumil.basamto.common.BaseFragment
 internal class SubmissionFragment : BaseFragment() {
 
     override val layoutId: Int
-        get() = R.layout.fragment_subreddit
+        get() = R.layout.fragment_submission
 
 }

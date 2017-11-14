@@ -26,14 +26,18 @@ package io.github.gumil.basamto.reddit.subreddit
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
+import com.zhuinden.simplestack.Backstack
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.common.MviStateMachine
 import io.github.gumil.basamto.common.MviViewModel
+import io.github.gumil.basamto.reddit.submission.SubmissionKey
 import io.github.gumil.data.repository.subreddit.SubredditRepository
+import io.github.gumil.data.util.just
 import io.reactivex.Observable
 
 internal class SubredditViewModel(
-        private val subredditRepository: SubredditRepository
+        private val subredditRepository: SubredditRepository,
+        private val backstack: Backstack
 ): ViewModel(), MviViewModel<SubredditState, SubredditIntent> {
 
     override val state: LiveData<SubredditState> get() = stateMachine.state
@@ -42,13 +46,17 @@ internal class SubredditViewModel(
             MviStateMachine<SubredditState, SubredditIntent, SubredditResult>(SubredditState.View(), {
                 when (it) {
                     is SubredditIntent.Load -> subredditRepository.loadThreads(it.subreddit, it.after, LIMIT)
-                    is SubredditIntent.OnItemClick -> TODO()
+                    is SubredditIntent.OnItemClick -> SubredditResult.GoTo(SubmissionKey()).just()
                 }
             }, { _, result ->
                 when (result) {
                     is SubredditResult.Success -> SubredditState.View(result.threads, false)
                     is SubredditResult.Error -> SubredditState.Error(R.string.error_subreddit_list)
                     is SubredditResult.InProgress -> SubredditState.View()
+                    is SubredditResult.GoTo -> {
+                        backstack.goTo(result.key)
+                        SubredditState.Void()
+                    }
                 }
             })
 

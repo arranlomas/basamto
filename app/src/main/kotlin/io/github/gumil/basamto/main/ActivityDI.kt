@@ -30,6 +30,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.AndroidInjectionModule
 import dagger.android.ContributesAndroidInjector
+import io.github.gumil.basamto.reddit.submission.SubmissionBuilder
 import io.github.gumil.basamto.reddit.subreddit.SubredditBuilder
 import io.github.gumil.basamto.viewmodel.ViewModelBuilder
 
@@ -41,6 +42,7 @@ internal abstract class ActivityBuilder {
             modules = arrayOf(
                     ViewModelBuilder::class,
                     SubredditBuilder::class,
+                    SubmissionBuilder::class,
                     ActivityModule::class
             )
     )

@@ -27,6 +27,7 @@ package io.github.gumil.basamto.reddit.subreddit
 import io.github.gumil.basamto.common.MviIntent
 import io.github.gumil.basamto.common.MviResult
 import io.github.gumil.basamto.common.MviState
+import io.github.gumil.basamto.reddit.submission.SubmissionKey
 
 internal sealed class SubredditState: MviState {
 
@@ -38,6 +39,8 @@ internal sealed class SubredditState: MviState {
     data class Error(
             val message: Int
     ) : SubredditState()
+
+    class Void : SubredditState()
 }
 
 internal sealed class SubredditIntent : MviIntent {
@@ -60,4 +63,8 @@ internal sealed class SubredditResult : MviResult {
     class Error : SubredditResult()
 
     class InProgress : SubredditResult()
+
+    class GoTo(
+            val key: SubmissionKey
+    ) : SubredditResult()
 }

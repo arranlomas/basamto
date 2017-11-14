@@ -86,5 +86,6 @@ internal class SubredditFragment : BaseFragment(), MviView<SubredditIntent, Subr
             adapter.list = threads
         }
         is SubredditState.Error -> showSnackbarError(message)
+        is SubredditState.Void -> {}
     }
 }
