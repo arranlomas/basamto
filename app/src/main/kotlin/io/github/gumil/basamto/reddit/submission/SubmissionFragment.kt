@@ -22,10 +22,14 @@
  * SOFTWARE.
  */
 
-package io.github.gumil.basamto.dagger
+package io.github.gumil.basamto.reddit.submission
 
-import javax.inject.Scope
+import io.github.gumil.basamto.R
+import io.github.gumil.basamto.common.BaseFragment
 
-@Scope
-@Retention(AnnotationRetention.RUNTIME)
-internal annotation class ActivityScope
+internal class SubmissionFragment : BaseFragment() {
+
+    override val layoutId: Int
+        get() = R.layout.fragment_subreddit
+
+}

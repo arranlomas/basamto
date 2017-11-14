@@ -22,28 +22,16 @@
  * SOFTWARE.
  */
 
-package io.github.gumil.basamto.main
+package io.github.gumil.basamto.viewmodel
 
-import android.os.Bundle
-import com.zhuinden.simplestack.HistoryBuilder
-import com.zhuinden.simplestack.navigator.Navigator
-import dagger.android.support.DaggerAppCompatActivity
-import io.github.gumil.basamto.R
-import io.github.gumil.basamto.navigation.FragmentStateChanger
-import io.github.gumil.basamto.reddit.subreddit.SubredditKey
-import kotlinx.android.synthetic.main.activity_main.fragmentContainer
+import android.arch.lifecycle.ViewModelProvider
+import dagger.Binds
+import dagger.Module
 
+@Module
+internal abstract class ViewModelBuilder {
 
-internal class MainActivity : DaggerAppCompatActivity() {
+    @Binds
+    internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        Navigator.configure()
-                .setStateChanger(FragmentStateChanger(supportFragmentManager, R.id.fragmentContainer))
-                .setShouldPersistContainerChild(false)
-                .install(this, fragmentContainer, HistoryBuilder.single(SubredditKey()))
-
-    }
 }

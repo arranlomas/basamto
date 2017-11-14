@@ -22,25 +22,10 @@
  * SOFTWARE.
  */
 
-package io.github.gumil.basamto.dagger
+package io.github.gumil.basamto.main
 
-import dagger.Module
-import dagger.android.AndroidInjectionModule
-import dagger.android.ContributesAndroidInjector
-import io.github.gumil.basamto.main.MainActivity
-import io.github.gumil.basamto.reddit.subreddit.SubredditBuilder
+import javax.inject.Scope
 
-@Module(includes = arrayOf(AndroidInjectionModule::class))
-internal abstract class ActivityBuilder {
-
-    @ActivityScope
-    @ContributesAndroidInjector(
-            modules = arrayOf(
-                    ViewModelBuilder::class,
-                    SubredditBuilder::class
-            )
-    )
-
-    internal abstract fun bindMainActivity(): MainActivity
-
-}
+@Scope
+@Retention(AnnotationRetention.RUNTIME)
+internal annotation class ActivityScope

@@ -22,17 +22,17 @@
  * SOFTWARE.
  */
 
-package io.github.gumil.basamto.dagger
+package io.github.gumil.basamto.reddit.submission
 
-import android.arch.lifecycle.ViewModelProvider
-import dagger.Binds
-import dagger.Module
-import io.github.gumil.basamto.viewmodel.ViewModelFactory
+import android.annotation.SuppressLint
+import io.github.gumil.basamto.common.BaseFragment
+import io.github.gumil.basamto.navigation.BaseKey
+import kotlinx.android.parcel.Parcelize
 
-@Module
-internal abstract class ViewModelBuilder {
+@SuppressLint("ParcelCreator")
+@Parcelize
+internal class SubmissionKey : BaseKey() {
 
-    @Binds
-    internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+    override fun createFragment(): BaseFragment = SubmissionFragment()
 
 }

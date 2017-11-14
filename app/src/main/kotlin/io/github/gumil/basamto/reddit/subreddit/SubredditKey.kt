@@ -22,28 +22,17 @@
  * SOFTWARE.
  */
 
-package io.github.gumil.basamto.main
+package io.github.gumil.basamto.reddit.subreddit
 
-import android.os.Bundle
-import com.zhuinden.simplestack.HistoryBuilder
-import com.zhuinden.simplestack.navigator.Navigator
-import dagger.android.support.DaggerAppCompatActivity
-import io.github.gumil.basamto.R
-import io.github.gumil.basamto.navigation.FragmentStateChanger
-import io.github.gumil.basamto.reddit.subreddit.SubredditKey
-import kotlinx.android.synthetic.main.activity_main.fragmentContainer
+import android.annotation.SuppressLint
+import io.github.gumil.basamto.common.BaseFragment
+import io.github.gumil.basamto.navigation.BaseKey
+import kotlinx.android.parcel.Parcelize
 
+@SuppressLint("ParcelCreator")
+@Parcelize
+internal class SubredditKey : BaseKey() {
 
-internal class MainActivity : DaggerAppCompatActivity() {
+    override fun createFragment(): BaseFragment = SubredditFragment()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        Navigator.configure()
-                .setStateChanger(FragmentStateChanger(supportFragmentManager, R.id.fragmentContainer))
-                .setShouldPersistContainerChild(false)
-                .install(this, fragmentContainer, HistoryBuilder.single(SubredditKey()))
-
-    }
 }

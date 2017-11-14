@@ -24,26 +24,33 @@
 
 package io.github.gumil.basamto.main
 
-import android.os.Bundle
-import com.zhuinden.simplestack.HistoryBuilder
+import com.zhuinden.simplestack.Backstack
 import com.zhuinden.simplestack.navigator.Navigator
-import dagger.android.support.DaggerAppCompatActivity
-import io.github.gumil.basamto.R
-import io.github.gumil.basamto.navigation.FragmentStateChanger
-import io.github.gumil.basamto.reddit.subreddit.SubredditKey
-import kotlinx.android.synthetic.main.activity_main.fragmentContainer
+import dagger.Module
+import dagger.Provides
+import dagger.android.AndroidInjectionModule
+import dagger.android.ContributesAndroidInjector
+import io.github.gumil.basamto.reddit.subreddit.SubredditBuilder
+import io.github.gumil.basamto.viewmodel.ViewModelBuilder
 
+@Module(includes = arrayOf(AndroidInjectionModule::class))
+internal abstract class ActivityBuilder {
 
-internal class MainActivity : DaggerAppCompatActivity() {
+    @ActivityScope
+    @ContributesAndroidInjector(
+            modules = arrayOf(
+                    ViewModelBuilder::class,
+                    SubredditBuilder::class,
+                    ActivityModule::class
+            )
+    )
+    internal abstract fun bindMainActivity(): MainActivity
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+}
 
-        Navigator.configure()
-                .setStateChanger(FragmentStateChanger(supportFragmentManager, R.id.fragmentContainer))
-                .setShouldPersistContainerChild(false)
-                .install(this, fragmentContainer, HistoryBuilder.single(SubredditKey()))
+@Module
+internal class ActivityModule {
 
-    }
+    @Provides
+    fun provideBackstack(activity: MainActivity): Backstack = Navigator.getBackstack(activity)
 }

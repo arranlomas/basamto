@@ -29,6 +29,7 @@ import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import dagger.android.support.DaggerApplication
 import io.github.gumil.basamto.BasamToApplication
+import io.github.gumil.basamto.main.ActivityBuilder
 import io.github.gumil.data.dagger.DataComponent
 
 
