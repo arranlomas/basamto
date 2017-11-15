@@ -16,6 +16,7 @@ ext {
     okHttpVersion = '3.9.0'
     moshiVersion = '1.5.0'
     rxBindingVersion = '2.0.0'
+    spekVersion = '1.1.5'
 
     dependencies = [
 
@@ -29,13 +30,17 @@ ext {
             dataBindingCompiler : "com.android.databinding:compiler:${gradleVersion}",
 
             lifecycle           : "android.arch.lifecycle:runtime:${archVersion}",
-            lifecycleExtensions : "android.arch.lifecycle:extensions:${archVersion}-beta1",
+            lifecycleExtensions : "android.arch.lifecycle:extensions:${archVersion}",
+            coreTesting         : "android.arch.core:core-testing:${archVersion}",
 
             //Debug Tools
             timber              : "com.jakewharton.timber:timber:4.5.1",
             leakCanary          : "com.squareup.leakcanary:leakcanary-android:1.5.4",
 
+            //Kotlin
             kotlin              : "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
+            kotlinReflect       : "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}",
+
             threeTenAbp         : "com.jakewharton.threetenabp:threetenabp:1.0.5",
 
             //Network
@@ -82,6 +87,10 @@ ext {
             junit               : "junit:junit:4.12",
             espresso            : "com.android.support.test.espresso:espresso-core:2.2.2",
             mockWebServer       : "com.squareup.okhttp3:mockwebserver:${okHttpVersion}",
-            mockitoKotlin       : "com.nhaarman:mockito-kotlin-kt1.1:1.5.9"
+            mockitoKotlin       : "com.nhaarman:mockito-kotlin-kt1.1:1.5.9",
+            spek                : "org.jetbrains.spek:spek-api:$spekVersion",
+            spekEngine          : "org.jetbrains.spek:spek-junit-platform-engine:$spekVersion",
+            junit5Engine        : "org.junit.platform:junit-platform-engine:1.0.1",
+            kluent              : "org.amshove.kluent:kluent-android:1.30"
     ]
 }

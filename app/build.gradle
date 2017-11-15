@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "de.mannodermaus.android-junit5"
 
 androidExtensions {
     experimental = true
@@ -25,6 +26,15 @@ android {
     }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+    }
+}
+
+junitPlatform {
+    filters {
+        engines {
+            include 'spek'
+        }
     }
 }
 
@@ -40,7 +50,6 @@ dependencies {
     implementation dependencies.cardView
 
     implementation dependencies.rxRelay
-    implementation dependencies.rxBinding
     implementation dependencies.rxBindingKotlin
 
     implementation dependencies.daggerAndroidSupport
@@ -58,13 +67,18 @@ dependencies {
     androidTestImplementation(dependencies.espresso, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testImplementation dependencies.junit
+    testImplementation dependencies.kluent
+
+    testImplementation(dependencies.spek) {
+        exclude group: "org.jetbrains.kotlin"
+    }
+    testImplementation(dependencies.spekEngine) {
+        exclude group: "org.junit.platform"
+        exclude group: "org.jetbrains.kotlin"
+    }
+    testImplementation dependencies.kotlinReflect
+    testImplementation dependencies.junit5Engine
+    testImplementation dependencies.coreTesting
 
     debugImplementation dependencies.leakCanary
-}
-
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
 }
