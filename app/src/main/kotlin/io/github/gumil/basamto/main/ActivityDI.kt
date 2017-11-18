@@ -28,13 +28,13 @@ import com.zhuinden.simplestack.Backstack
 import com.zhuinden.simplestack.navigator.Navigator
 import dagger.Module
 import dagger.Provides
-import dagger.android.AndroidInjectionModule
 import dagger.android.ContributesAndroidInjector
+import dagger.android.support.AndroidSupportInjectionModule
 import io.github.gumil.basamto.reddit.submission.SubmissionBuilder
 import io.github.gumil.basamto.reddit.subreddit.SubredditBuilder
 import io.github.gumil.basamto.viewmodel.ViewModelBuilder
 
-@Module(includes = arrayOf(AndroidInjectionModule::class))
+@Module(includes = arrayOf(AndroidSupportInjectionModule::class))
 internal abstract class ActivityBuilder {
 
     @ActivityScope
