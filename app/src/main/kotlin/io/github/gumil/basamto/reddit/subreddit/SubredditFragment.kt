@@ -58,7 +58,7 @@ internal class SubredditFragment : BaseFragment(), MviView<SubredditIntent, Subr
             it?.render()
         })
 
-        viewModel?.processIntents(intents())
+        viewModel.processIntents(intents())
     }
 
     private fun getLoadIntent(): Observable<SubredditIntent> {
