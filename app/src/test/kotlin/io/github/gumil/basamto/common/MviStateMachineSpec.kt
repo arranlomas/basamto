@@ -27,6 +27,7 @@ package io.github.gumil.basamto.common
 import android.arch.lifecycle.Observer
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
+import io.github.gumil.data.util.just
 import org.amshove.kluent.mock
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
@@ -39,17 +40,16 @@ internal object MviStateMachineSpec : Spek({
 
         val stateMachine = createTestStateMachine()
         val observer = mock<Observer<TestState>>()
-        val intentObservable = TestIntentObservable<TestIntent>()
 
         stateMachine.state.observeForever(observer)
-        stateMachine.processIntents(intentObservable)
+        //stateMachine.processIntents(intentObservable)
 
         it("should emit initial state") {
             verify(observer).onChanged(TestState.State1)
         }
 
         on("Intent1") {
-            intentObservable.sendIntent(TestIntent.Intent1)
+            stateMachine.processIntents(TestIntent.Intent1.just())
 
             it("should emit state1") {
                 // we have 2 emissions here since the emission from initial state is considered
@@ -58,7 +58,7 @@ internal object MviStateMachineSpec : Spek({
         }
 
         on("Intent2") {
-            intentObservable.sendIntent(TestIntent.Intent2)
+            stateMachine.processIntents(TestIntent.Intent2.just())
 
             it("should emit state2") {
                 verify(observer).onChanged(TestState.State2)
@@ -66,7 +66,7 @@ internal object MviStateMachineSpec : Spek({
         }
 
         on("Intent3") {
-            intentObservable.sendIntent(TestIntent.Intent3)
+            stateMachine.processIntents(TestIntent.Intent3.just())
 
             it("should emit state3") {
                 verify(observer).onChanged(TestState.State3)
