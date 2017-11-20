@@ -40,7 +40,7 @@ internal sealed class SubredditState: MviState {
             val message: Int
     ) : SubredditState()
 
-    class Void : SubredditState()
+    object Void : SubredditState()
 }
 
 internal sealed class SubredditIntent : MviIntent {
@@ -60,9 +60,9 @@ internal sealed class SubredditResult : MviResult {
             val threads: List<ThreadItem> = emptyList()
     ) : SubredditResult()
 
-    class Error : SubredditResult()
+    object Error : SubredditResult()
 
-    class InProgress : SubredditResult()
+    object InProgress : SubredditResult()
 
     class GoTo(
             val key: SubmissionKey

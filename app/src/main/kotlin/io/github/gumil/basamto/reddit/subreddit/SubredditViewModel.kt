@@ -55,7 +55,7 @@ internal class SubredditViewModel(
                     is SubredditResult.InProgress -> SubredditState.View()
                     is SubredditResult.GoTo -> {
                         backstack.goTo(result.key)
-                        SubredditState.Void()
+                        SubredditState.Void
                     }
                 }
             })

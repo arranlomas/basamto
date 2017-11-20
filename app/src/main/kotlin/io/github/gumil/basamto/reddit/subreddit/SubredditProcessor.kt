@@ -40,10 +40,10 @@ internal fun SubredditRepository.loadThreads(
                 SubredditResult.Success(it.map { it.map() })
             }
             .ofType(SubredditResult::class.java)
-            .onErrorReturn { SubredditResult.Error() }
+            .onErrorReturn { SubredditResult.Error }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .startWith(SubredditResult.InProgress())
+            .startWith(SubredditResult.InProgress)
 }
 
 
