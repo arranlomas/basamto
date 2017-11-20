@@ -26,6 +26,8 @@ package io.github.gumil.basamto.common
 
 import android.arch.core.executor.ArchTaskExecutor
 import android.arch.core.executor.TaskExecutor
+import io.reactivex.android.plugins.RxAndroidPlugins
+import io.reactivex.schedulers.Schedulers
 import org.jetbrains.spek.api.dsl.Spec
 
 fun Spec.rule(start: () -> Unit, finish: () -> Unit) {
@@ -67,5 +69,16 @@ class InstantTaskRule : SpekRule(
         },
         {
             ArchTaskExecutor.getInstance().setDelegate(null)
+        }
+)
+
+class RxRule : SpekRule(
+        {
+            RxAndroidPlugins.setInitMainThreadSchedulerHandler {
+                Schedulers.trampoline()
+            }
+        },
+        {
+            RxAndroidPlugins.reset()
         }
 )
