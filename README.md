@@ -1,5 +1,6 @@
 # basamto
-Reddit client
+Work in progress Reddit client.
+Proof of concept and playground!
 
 ### MVI
 ![MVI](https://raw.githubusercontent.com/gumil/basamto/master/art/mvi.png)
