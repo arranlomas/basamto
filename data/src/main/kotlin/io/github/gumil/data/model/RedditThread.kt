@@ -24,38 +24,38 @@
 
 package io.github.gumil.data.model
 
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.TypeConverters
 import com.squareup.moshi.Json
 import io.github.gumil.data.model.base.Created
 import io.github.gumil.data.model.base.Distinguish
 import io.github.gumil.data.model.base.Votable
+import io.github.gumil.data.persistence.Converters
 
+@Entity
+@TypeConverters(Converters::class)
 data class RedditThread(
 
-        @Json(name = "id")
-        val id: String?,
+        @PrimaryKey
+        val id: String,
 
-        @Json(name = "name")
         val name: String?,
 
-        @Json(name = "ups")
         override val ups: Int,
 
-        @Json(name = "downs")
         override val downs: Int,
 
         @Json(name = "likes")
         override val isLiked: Boolean?,
 
-        @Json(name = "created")
         override val created: Long,
 
         @Json(name = "created_utc")
         override val createdUtc: Long,
 
-        @Json(name = "domain")
         val domain: String,
 
-        @Json(name = "subreddit")
         val subreddit: String,
 
         @Json(name = "subreddit_id")
@@ -70,16 +70,13 @@ data class RedditThread(
         @Json(name = "link_flair_text")
         val flair: String?,
 
-        @Json(name = "title")
         val title: String,
 
-        @Json(name = "score")
         val score: Int = 0,
 
         @Json(name = "over_18")
         val nsfw: Boolean = false,
 
-        @Json(name = "thumbnail")
         val thumbnail: String,
 
         @Json(name = "thumbnail_width")
@@ -88,7 +85,6 @@ data class RedditThread(
         @Json(name = "thumbnail_height")
         val thumbnailHeight: Int?,
 
-        @Json(name = "gilded")
         val gilded: Int,
 
         @Json(name = "stickied")
@@ -97,7 +93,6 @@ data class RedditThread(
         @Json(name = "spoiler")
         val isSpoiler: Boolean = false,
 
-        @Json(name = "permalink")
         val permalink: String,
 
         @Json(name = "locked")
@@ -106,10 +101,8 @@ data class RedditThread(
         @Json(name = "hide_score")
         val hideScore: Boolean = false,
 
-        @Json(name = "url")
         val url: String,
 
-        @Json(name = "author")
         val author: String,
 
         @Json(name = "num_comments")
@@ -118,7 +111,6 @@ data class RedditThread(
         @Json(name = "is_self")
         val isSelf: Boolean = false,
 
-        @Json(name = "distinguished")
         val distinguished: Distinguish? = null
 
 ) : Votable, Created

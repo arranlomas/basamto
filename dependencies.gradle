@@ -33,10 +33,10 @@ ext {
             lifecycleExtensions : "android.arch.lifecycle:extensions:${archVersion}",
             coreTesting         : "android.arch.core:core-testing:${archVersion}",
 
-            room                : "android.arch.persistence.room:runtime:${archVersion}",
-            roomCompiler        : "android.arch.persistence.room:compiler:${archVersion}",
-            roomRx              : "android.arch.persistence.room:rxjava2:${archVersion}",
-            roomTest            : "android.arch.persistence.room:testing:${archVersion}",
+            room                : "android.arch.persistence.room:runtime:${archVersion}-rc1",
+            roomCompiler        : "android.arch.persistence.room:compiler:${archVersion}-rc1",
+            roomRx              : "android.arch.persistence.room:rxjava2:${archVersion}-rc1",
+            roomTest            : "android.arch.persistence.room:testing:${archVersion}-rc1",
 
             //Debug Tools
             timber              : "com.jakewharton.timber:timber:4.5.1",
