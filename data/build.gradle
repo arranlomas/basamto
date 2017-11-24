@@ -25,6 +25,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: "de.mannodermaus.android-junit5"
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -48,6 +49,14 @@ android {
     }
 }
 
+junitPlatform {
+    filters {
+        engines {
+            include 'spek'
+        }
+    }
+}
+
 dependencies {
     def dependencies = rootProject.ext.dependencies
 
@@ -63,7 +72,10 @@ dependencies {
     implementation dependencies.okHttp
     implementation dependencies.okHttpLogger
 
-    api dependencies.rxJava
+    implementation dependencies.room
+    implementation dependencies.roomRx
+    kapt dependencies.roomCompiler
+
     api dependencies.rxKotlin
     api dependencies.rxAndroid
 
@@ -72,4 +84,18 @@ dependencies {
 
     testImplementation dependencies.junit
     testImplementation dependencies.mockWebServer
+    testImplementation dependencies.roomTest
+
+    //spek
+    testImplementation dependencies.kluent
+
+    testImplementation(dependencies.spek) {
+        exclude group: "org.jetbrains.kotlin"
+    }
+    testImplementation(dependencies.spekEngine) {
+        exclude group: "org.junit.platform"
+        exclude group: "org.jetbrains.kotlin"
+    }
+    testImplementation dependencies.kotlinReflect
+    testImplementation dependencies.junit5Engine
 }
