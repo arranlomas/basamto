@@ -36,16 +36,56 @@ internal class RedditThreadDaoTest : DbTest() {
 
     @Test
     fun insertAndLoad() {
-        val thread = Creators.createRedditThread()
+        val thread = Creators.createRedditThread("1", 123,"test")
         db.redditThreadDao().insert(thread)
 
+        val allSubscriber = TestObserver<List<RedditThread>>()
+        db.redditThreadDao().getAll().subscribe(allSubscriber)
+
+        allSubscriber.assertNoErrors()
+        allSubscriber.assertNoTimeout()
+        allSubscriber.assertComplete()
+        allSubscriber.assertValue(listOf(thread))
+    }
+
+    @Test
+    fun getFirstTenFromTwentySameSubreddit() {
+        val subreddit = "test"
+        val list = (1..20).map {
+            Creators.createRedditThread(it.toString(), 20 - it.toLong(), subreddit)
+        }
+        val expected = list.subList(0, 10)
+
+        testInsertGet(list, subreddit, expected)
+    }
+
+    @Test
+    fun getTenFromTwoSubreddits() {
+        val subreddit = "test"
+        val subreddit2 = "test2"
+
+        val list = mutableListOf<RedditThread>()
+        (1..10).forEach {
+            list.add(Creators.createRedditThread(it.toString(), it.toLong(), subreddit))
+            list.add(Creators.createRedditThread((10 + it).toString(), it.toLong(), subreddit2))
+        }
+
+        val expected = list.filter { it.subreddit == subreddit }.reversed()
+
+        testInsertGet(list, subreddit, expected)
+    }
+
+    private fun testInsertGet(list: List<RedditThread>, subreddit: String, expected: List<RedditThread>) {
+        db.redditThreadDao().insert(*list.toTypedArray())
+
         val subscriber = TestObserver<List<RedditThread>>()
-        db.redditThreadDao().getAll().subscribe(subscriber)
+        db.redditThreadDao().getThreadsFrom(subreddit).subscribe(subscriber)
 
         subscriber.assertNoErrors()
         subscriber.assertNoTimeout()
         subscriber.assertComplete()
-        subscriber.assertValue(listOf(thread))
+
+        subscriber.assertValue(expected)
     }
 
 }

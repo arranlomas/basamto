@@ -34,8 +34,18 @@ import io.reactivex.Single
 @Dao
 internal interface RedditThreadDao {
 
-    @Query("SELECT * FROM RedditThread")
-    fun getAll(): Single<List<RedditThread>>
+    @Query("SELECT * FROM RedditThread" +
+            " WHERE subreddit = :subreddit" +
+            " ORDER BY createdUtc DESC"+
+            " LIMIT :limit" +
+            " OFFSET :offset")
+    fun getThreadsFrom(subreddit: String, offset: Int = 0, limit: Int = 10): Single<List<RedditThread>>
+
+    @Query("SELECT * FROM RedditThread" +
+            " ORDER BY createdUtc DESC"+
+            " LIMIT :limit" +
+            " OFFSET :offset")
+    fun getAll(offset: Int = 0, limit: Int = 10): Single<List<RedditThread>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg redditThread: RedditThread)
