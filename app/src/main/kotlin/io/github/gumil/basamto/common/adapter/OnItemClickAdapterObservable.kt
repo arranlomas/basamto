@@ -28,7 +28,7 @@ import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.MainThreadDisposable
 
-internal class OnItemClickObservable<T>(
+internal class OnItemClickAdapterObservable<T>(
         private val adapter: BaseListAdapter<T, *>
 ): Observable<T>() {
 
