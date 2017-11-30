@@ -36,7 +36,7 @@ interface RedditApi {
         private const val SUBREDDIT = "subreddit"
     }
 
-    @GET("r/{$SUBREDDIT}/top.json")
+    @GET("r/{$SUBREDDIT}.json")
     fun getSubreddit(
             @Path(SUBREDDIT) subreddit: String,
             @Query("after") after: String? = null,
