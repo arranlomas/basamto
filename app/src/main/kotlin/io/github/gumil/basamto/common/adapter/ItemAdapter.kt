@@ -41,11 +41,10 @@ internal class ItemAdapter<M>(
 
     private var _footerItem: ViewItem<*>? = null
 
-    var list: List<M> = emptyList()
+    var list: List<M>
+        get() = _list
         set(value) {
-            field = value
-            _list.clear()
-            _list.addAll(value)
+            _list = value.toMutableList()
             notifyDataSetChanged()
         }
 

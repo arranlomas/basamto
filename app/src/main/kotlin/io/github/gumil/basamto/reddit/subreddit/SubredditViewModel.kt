@@ -34,7 +34,6 @@ import io.github.gumil.basamto.reddit.submission.SubmissionKey
 import io.github.gumil.data.repository.subreddit.SubredditRepository
 import io.github.gumil.data.util.just
 import io.reactivex.Observable
-import timber.log.Timber
 
 internal class SubredditViewModel(
         private val subredditRepository: SubredditRepository,
@@ -47,7 +46,7 @@ internal class SubredditViewModel(
             MviStateMachine<SubredditState, SubredditIntent, SubredditResult>(SubredditState.Initial(), {
                 when (it) {
                     is SubredditIntent.Initial -> {
-                        subredditRepository.loadThreads(it.subreddit, "", LIMIT, SubredditResult.Mode.REFRESH)
+                        subredditRepository.loadThreads(it.subreddit, null, LIMIT, SubredditResult.Mode.REFRESH)
                     }
                     is SubredditIntent.Load -> {
                         subredditRepository.loadThreads(it.subreddit, it.after, LIMIT, SubredditResult.Mode.LOAD_MORE)
@@ -57,7 +56,6 @@ internal class SubredditViewModel(
             }, { _, result ->
                 when (result) {
                     is SubredditResult.Success -> {
-                        Timber.tag("tantrums").d("success ${result.mode}")
                         renderListLoading(result.mode, result.threads, false)
                     }
                     is SubredditResult.Error -> SubredditState.Error(R.string.error_subreddit_list)

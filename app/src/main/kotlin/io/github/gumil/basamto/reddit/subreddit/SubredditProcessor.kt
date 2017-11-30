@@ -32,7 +32,7 @@ import io.reactivex.schedulers.Schedulers
 
 internal fun SubredditRepository.loadThreads(
         subreddit: String,
-        after: String,
+        after: String?,
         limit: Int,
         mode: SubredditResult.Mode
 ): Observable<SubredditResult> {
@@ -56,7 +56,7 @@ private fun RedditThread.map(): ThreadItem {
             author,
             ups - downs,
             numComments,
-            id
+            name
     )
 }
 

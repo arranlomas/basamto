@@ -40,7 +40,7 @@ data class RedditThread(
         @PrimaryKey
         val id: String,
 
-        val name: String?,
+        val name: String,
 
         override val ups: Int,
 
