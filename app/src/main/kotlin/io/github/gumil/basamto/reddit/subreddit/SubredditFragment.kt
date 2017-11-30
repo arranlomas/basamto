@@ -34,7 +34,10 @@ import android.view.View
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.common.BaseFragment
 import io.github.gumil.basamto.common.MviView
-import io.github.gumil.basamto.common.adapter.OnItemClickObservable
+import io.github.gumil.basamto.common.adapter.FooterItem
+import io.github.gumil.basamto.common.adapter.ItemAdapter
+import io.github.gumil.basamto.common.adapter.itemClick
+import io.github.gumil.basamto.common.adapter.prefetch
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_subreddit.subredditList
 import kotlinx.android.synthetic.main.fragment_subreddit.swipeRefreshLayout
@@ -44,7 +47,10 @@ internal class SubredditFragment : BaseFragment(), MviView<SubredditIntent, Subr
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val adapter = SubredditListAdapter()
+    private val subredditViewItem = SubredditViewItem()
+    private val adapter = ItemAdapter(subredditViewItem).apply {
+        footerItem = FooterItem(R.layout.item_progress)
+    }
 
     override val layoutId: Int
         get() = R.layout.fragment_subreddit
@@ -65,17 +71,22 @@ internal class SubredditFragment : BaseFragment(), MviView<SubredditIntent, Subr
         return rxLifecycle.filter {
             it == Lifecycle.Event.ON_START
         }.map {
-            SubredditIntent.Load("androiddev", "asd")
+            SubredditIntent.Initial("androiddev")
         }
     }
 
     override fun intents(): Observable<SubredditIntent> = Observable.merge(
             getLoadIntent(),
-            OnItemClickObservable(adapter).map { SubredditIntent.OnItemClick(it) }
+            subredditViewItem.itemClick().map { SubredditIntent.OnItemClick(it) },
+            adapter.prefetch().map {
+                adapter.list.last().after
+            }.map {
+                SubredditIntent.Load("androiddev", it)
+            }
     )
 
     override fun SubredditState.render() = when (this) {
-        is SubredditState.View -> {
+        is SubredditState.Initial -> {
             swipeRefreshLayout.isRefreshing = isLoading
 
             if (subredditList.adapter == null) {
@@ -84,6 +95,13 @@ internal class SubredditFragment : BaseFragment(), MviView<SubredditIntent, Subr
             }
 
             adapter.list = threads
+        }
+        is SubredditState.LoadMore -> {
+            if (isLoading) {
+                adapter.showFooter()
+            } else {
+                adapter.addItems(threads)
+            }
         }
         is SubredditState.Error -> showSnackbarError(message)
         is SubredditState.Void -> {}

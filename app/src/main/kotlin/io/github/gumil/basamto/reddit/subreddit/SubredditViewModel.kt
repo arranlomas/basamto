@@ -34,6 +34,7 @@ import io.github.gumil.basamto.reddit.submission.SubmissionKey
 import io.github.gumil.data.repository.subreddit.SubredditRepository
 import io.github.gumil.data.util.just
 import io.reactivex.Observable
+import timber.log.Timber
 
 internal class SubredditViewModel(
         private val subredditRepository: SubredditRepository,
@@ -43,22 +44,41 @@ internal class SubredditViewModel(
     override val state: LiveData<SubredditState> get() = stateMachine.state
 
     private val stateMachine =
-            MviStateMachine<SubredditState, SubredditIntent, SubredditResult>(SubredditState.View(), {
+            MviStateMachine<SubredditState, SubredditIntent, SubredditResult>(SubredditState.Initial(), {
                 when (it) {
-                    is SubredditIntent.Load -> subredditRepository.loadThreads(it.subreddit, it.after, LIMIT)
+                    is SubredditIntent.Initial -> {
+                        subredditRepository.loadThreads(it.subreddit, "", LIMIT, SubredditResult.Mode.REFRESH)
+                    }
+                    is SubredditIntent.Load -> {
+                        subredditRepository.loadThreads(it.subreddit, it.after, LIMIT, SubredditResult.Mode.LOAD_MORE)
+                    }
                     is SubredditIntent.OnItemClick -> SubredditResult.GoTo(SubmissionKey()).just()
                 }
             }, { _, result ->
                 when (result) {
-                    is SubredditResult.Success -> SubredditState.View(result.threads, false)
+                    is SubredditResult.Success -> {
+                        Timber.tag("tantrums").d("success ${result.mode}")
+                        renderListLoading(result.mode, result.threads, false)
+                    }
                     is SubredditResult.Error -> SubredditState.Error(R.string.error_subreddit_list)
-                    is SubredditResult.InProgress -> SubredditState.View()
+                    is SubredditResult.InProgress -> {
+                        renderListLoading(result.mode, emptyList(), true)
+                    }
                     is SubredditResult.GoTo -> {
                         backstack.goTo(result.key)
                         SubredditState.Void
                     }
                 }
             })
+
+    private fun renderListLoading(
+            mode: SubredditResult.Mode,
+            list: List<ThreadItem>,
+            isLoading: Boolean
+    ): SubredditState = when (mode) {
+        SubredditResult.Mode.REFRESH -> SubredditState.Initial(list, isLoading)
+        SubredditResult.Mode.LOAD_MORE -> SubredditState.LoadMore(list, isLoading)
+    }
 
     override fun processIntents(intent: Observable<out SubredditIntent>) {
         stateMachine.processIntents(intent)

@@ -59,7 +59,7 @@ internal object SubredditViewModelSpec : Spek({
         subredditViewModel.state.observeForever(observer)
 
         it("should emit initial state") {
-            verify(observer).onChanged(SubredditState.View())
+            verify(observer).onChanged(SubredditState.Initial())
         }
 
         context("Load Intent") {
@@ -73,8 +73,8 @@ internal object SubredditViewModelSpec : Spek({
                 subredditViewModel.processIntents(SubredditIntent.Load("test", "qwer").just())
 
                 it("should emit a View with list of threads") {
-                    verify(observer, times(2)).onChanged(SubredditState.View(emptyList(), true))
-                    verify(observer).onChanged(SubredditState.View(threadItems, false))
+                    verify(observer, times(2)).onChanged(SubredditState.Initial(emptyList(), true))
+                    verify(observer).onChanged(SubredditState.Initial(threadItems, false))
                 }
             }
 
@@ -83,7 +83,7 @@ internal object SubredditViewModelSpec : Spek({
                         .thenReturn(RuntimeException().error())
                 subredditViewModel.processIntents(SubredditIntent.Load("test", "qwer").just())
                 it("should emit a View with list of threads") {
-                    verify(observer, times(3)).onChanged(SubredditState.View(emptyList(), true))
+                    verify(observer, times(3)).onChanged(SubredditState.Initial(emptyList(), true))
                     verify(observer).onChanged(SubredditState.Error(R.string.error_subreddit_list))
                 }
             }

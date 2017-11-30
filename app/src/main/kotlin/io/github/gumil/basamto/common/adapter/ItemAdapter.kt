@@ -44,9 +44,12 @@ internal class ItemAdapter<M>(
     var list: List<M> = emptyList()
         set(value) {
             field = value
-            _footerItem = null
+            _list.clear()
+            _list.addAll(value)
             notifyDataSetChanged()
         }
+
+    private var _list: MutableList<M> = mutableListOf()
 
     private var currentListSize = 0
 
@@ -56,22 +59,22 @@ internal class ItemAdapter<M>(
             object : RecyclerView.ViewHolder(parent.inflateLayout(viewType)) {}
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (position < list.size) {
-            defaultItem.bind(holder.itemView, list[position])
+        if (position < _list.size) {
+            defaultItem.bind(holder.itemView, _list[position])
         }
 
-        if (list.size > currentListSize && position == (list.size - prefetchDistance)) {
-            currentListSize = list.size
+        if (_list.size > currentListSize && position == (_list.size - prefetchDistance)) {
+            currentListSize = _list.size
             Handler().post {
                 onPrefetch?.invoke()
             }
         }
     }
 
-    override fun getItemCount(): Int = list.size + (_footerItem?.let { 1 } ?: 0)
+    override fun getItemCount(): Int = _list.size + (_footerItem?.let { 1 } ?: 0)
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == list.size) {
+        return if (position == _list.size) {
             _footerItem?.layout ?: 0
         } else {
             defaultItem.layout
@@ -80,7 +83,14 @@ internal class ItemAdapter<M>(
 
     fun showFooter() {
         _footerItem = footerItem
-        notifyItemInserted(currentListSize)
+        notifyItemInserted(currentListSize + 10)
+    }
+
+    fun addItems(items: List<M>) {
+        _footerItem = null
+        _list.addAll(items)
+        notifyItemChanged(currentListSize)
+        notifyItemRangeInserted(currentListSize + 1, currentListSize + items.size)
     }
 }
 

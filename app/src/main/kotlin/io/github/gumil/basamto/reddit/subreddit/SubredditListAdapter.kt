@@ -31,6 +31,7 @@ import android.view.ViewGroup
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.common.adapter.BaseListAdapter
 import io.github.gumil.basamto.common.adapter.BaseViewHolder
+import io.github.gumil.basamto.common.adapter.ViewItem
 import io.github.gumil.basamto.extensions.inflateLayout
 import kotlinx.android.synthetic.main.item_subreddit.view.subredditComments
 import kotlinx.android.synthetic.main.item_subreddit.view.subredditSubiitle
@@ -38,7 +39,7 @@ import kotlinx.android.synthetic.main.item_subreddit.view.subredditTitle
 import kotlinx.android.synthetic.main.item_subreddit.view.subredditUpvote
 
 
-internal class SubredditListAdapter: BaseListAdapter<ThreadItem, SubredditListAdapter.ViewHolder>() {
+internal class SubredditListAdapter : BaseListAdapter<ThreadItem, SubredditListAdapter.ViewHolder>() {
 
     val after get() = list.lastOrNull()?.after
 
@@ -58,4 +59,25 @@ internal class SubredditListAdapter: BaseListAdapter<ThreadItem, SubredditListAd
         }
     }
 
+}
+
+internal class SubredditViewItem : ViewItem<ThreadItem> {
+
+    override var onItemClick: ((ThreadItem) -> Unit)? = null
+
+    override val layout: Int = R.layout.item_subreddit
+
+    @SuppressLint("SetTextI18n")
+    override fun bind(view: View, item: ThreadItem) {
+        val display = DateUtils.getRelativeTimeSpanString(item.timestamp * 1000)
+
+        view.subredditTitle.text = item.title
+        view.subredditUpvote.text = item.numUpvotes.toString()
+        view.subredditComments.text = item.numComments.toString()
+        view.subredditSubiitle.text = "${item.subreddit} • $display • ${item.user}"
+
+        view.setOnClickListener {
+            onItemClick?.invoke(item)
+        }
+    }
 }

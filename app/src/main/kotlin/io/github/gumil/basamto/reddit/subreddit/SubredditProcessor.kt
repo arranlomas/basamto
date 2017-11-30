@@ -33,17 +33,18 @@ import io.reactivex.schedulers.Schedulers
 internal fun SubredditRepository.loadThreads(
         subreddit: String,
         after: String,
-        limit: Int
+        limit: Int,
+        mode: SubredditResult.Mode
 ): Observable<SubredditResult> {
     return getThreadsFrom(subreddit, after, limit)
             .map {
-                SubredditResult.Success(it.map { it.map() })
+                SubredditResult.Success(it.map { it.map() }, mode)
             }
             .ofType(SubredditResult::class.java)
             .onErrorReturn { SubredditResult.Error }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .startWith(SubredditResult.InProgress)
+            .startWith(SubredditResult.InProgress(mode))
 }
 
 
@@ -54,7 +55,8 @@ private fun RedditThread.map(): ThreadItem {
             createdUtc,
             author,
             ups - downs,
-            numComments
+            numComments,
+            id
     )
 }
 
@@ -65,5 +67,5 @@ internal data class ThreadItem(
         val user: String,
         val numUpvotes: Int,
         val numComments: Int,
-        val after: String? = null
+        val after: String
 )
