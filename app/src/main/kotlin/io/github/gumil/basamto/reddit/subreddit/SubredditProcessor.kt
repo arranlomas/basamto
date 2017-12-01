@@ -24,6 +24,7 @@
 
 package io.github.gumil.basamto.reddit.subreddit
 
+import io.github.gumil.data.model.Preview
 import io.github.gumil.data.model.Submission
 import io.github.gumil.data.repository.subreddit.SubredditRepository
 import io.reactivex.Observable
@@ -54,9 +55,10 @@ private fun Submission.map(): SubmissionItem {
             subreddit,
             createdUtc,
             author,
-            ups - downs,
+            score,
             numComments,
-            name
+            name,
+            preview
     )
 }
 
@@ -67,5 +69,6 @@ internal data class SubmissionItem(
         val user: String,
         val numUpvotes: Int,
         val numComments: Int,
-        val after: String
+        val after: String,
+        val preview: Preview? = null
 )

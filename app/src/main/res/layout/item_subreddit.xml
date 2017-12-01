@@ -29,7 +29,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/default_quarter_padding"
+    android:layout_marginBottom="@dimen/default_half_padding"
     android:layout_marginEnd="@dimen/default_half_padding"
     android:layout_marginStart="@dimen/default_half_padding"
     app:layout_goneMarginBottom="@dimen/default_quarter_padding">
@@ -38,9 +38,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/selectableItemBackground"
-        android:paddingBottom="@dimen/default_half_padding"
-        android:paddingEnd="@dimen/default_padding"
-        android:paddingStart="@dimen/default_padding">
+        android:paddingBottom="@dimen/default_half_padding">
+
+        <ImageView
+            android:id="@+id/subredditPreview"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:contentDescription="@null"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:id="@+id/containerTitle"
@@ -48,7 +53,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="@dimen/default_half_padding"
-            android:paddingTop="@dimen/default_padding">
+            android:paddingEnd="@dimen/default_padding"
+            android:paddingStart="@dimen/default_padding"
+            android:paddingTop="@dimen/default_padding"
+            app:layout_constraintTop_toBottomOf="@id/subredditPreview">
 
             <TextView
                 android:id="@+id/subredditTitle"
@@ -58,7 +66,7 @@
                 tools:text="Hello World"/>
 
             <TextView
-                android:id="@+id/subredditSubiitle"
+                android:id="@+id/subredditSubtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="/r/androiddev • 3h • gumil"/>
@@ -67,6 +75,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/default_padding"
+            android:paddingStart="@dimen/default_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/containerTitle"
             tools:ignore="UseCompoundDrawables">

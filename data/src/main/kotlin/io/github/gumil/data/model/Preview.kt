@@ -22,26 +22,20 @@
  * SOFTWARE.
  */
 
-package io.github.gumil.data.persistence
+package io.github.gumil.data.model
 
-import android.arch.persistence.room.TypeConverter
-import io.github.gumil.data.ApiFactory
-import io.github.gumil.data.model.Preview
-import io.github.gumil.data.model.base.Distinguish
-
-internal class Converters {
-
-    @TypeConverter
-    fun toDistinguished(value: Int): Distinguish = Distinguish.values()[value]
-
-    @TypeConverter
-    fun fromDistinguished(value: Distinguish): Int = value.ordinal
-
-    @TypeConverter
-    fun toPreview(value: String): Preview? = ApiFactory.createMoshi()
-            .adapter(Preview::class.java).fromJson(value)
-
-    @TypeConverter
-    fun fromPreview(value: Preview): String? = ApiFactory.createMoshi()
-            .adapter(Preview::class.java).toJson(value).toString()
+data class Preview(
+        val images: List<Image>,
+        val enabled: Boolean
+) {
+    data class Image(
+            val source: Source,
+            val resolutions: List<Source>
+    )
 }
+
+data class Source(
+        val url: String,
+        val width: Int,
+        val height: Int
+)

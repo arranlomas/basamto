@@ -24,6 +24,7 @@
 
 package io.github.gumil.data.model
 
+import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import android.arch.persistence.room.TypeConverters
@@ -111,6 +112,7 @@ data class Submission(
         @Json(name = "is_self")
         val isSelf: Boolean = false,
 
-        val distinguished: Distinguish? = null
+        val distinguished: Distinguish? = null,
 
+        val preview: Preview? = null
 ) : Votable, Created

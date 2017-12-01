@@ -29,7 +29,10 @@ import android.support.annotation.LayoutRes
 import android.support.annotation.StyleRes
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import com.squareup.picasso.Picasso
+import timber.log.Timber
 
 fun ViewGroup.inflateLayout(@LayoutRes layout: Int, addToRoot: Boolean = false) =
         LayoutInflater.from(context).inflate(layout, this, addToRoot)
@@ -41,4 +44,21 @@ internal fun TextView.textAppearance(@StyleRes style: Int) {
     } else {
         setTextAppearance(context, style)
     }
+}
+
+internal fun ImageView.load(url: String?) {
+    post {
+        url?.let {
+            Picasso.with(context)
+                    .load(it)
+                    .apply {
+                        if (width > 0 && height > 0) {
+                            resize(width, height)
+                                    .centerCrop()
+                        }
+                    }
+                    .into(this)
+        }
+    }
+
 }

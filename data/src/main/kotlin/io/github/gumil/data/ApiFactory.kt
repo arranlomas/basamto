@@ -68,8 +68,12 @@ internal object ApiFactory {
 
     private fun makeConverter(): Converter.Factory {
         return MoshiConverterFactory.create(
-                    Moshi.Builder()
-                            .add(KotlinJsonAdapterFactory())
-                            .build())
+                createMoshi())
+    }
+
+    fun createMoshi(): Moshi {
+        return Moshi.Builder()
+                .add(KotlinJsonAdapterFactory())
+                .build()
     }
 }

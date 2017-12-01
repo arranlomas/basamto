@@ -27,39 +27,14 @@ package io.github.gumil.basamto.reddit.subreddit
 import android.annotation.SuppressLint
 import android.text.format.DateUtils
 import android.view.View
-import android.view.ViewGroup
 import io.github.gumil.basamto.R
-import io.github.gumil.basamto.common.adapter.BaseListAdapter
-import io.github.gumil.basamto.common.adapter.BaseViewHolder
 import io.github.gumil.basamto.common.adapter.ViewItem
-import io.github.gumil.basamto.extensions.inflateLayout
+import io.github.gumil.basamto.extensions.load
 import kotlinx.android.synthetic.main.item_subreddit.view.subredditComments
-import kotlinx.android.synthetic.main.item_subreddit.view.subredditSubiitle
+import kotlinx.android.synthetic.main.item_subreddit.view.subredditPreview
+import kotlinx.android.synthetic.main.item_subreddit.view.subredditSubtitle
 import kotlinx.android.synthetic.main.item_subreddit.view.subredditTitle
 import kotlinx.android.synthetic.main.item_subreddit.view.subredditUpvote
-
-
-internal class SubredditListAdapter : BaseListAdapter<SubmissionItem, SubredditListAdapter.ViewHolder>() {
-
-    val after get() = list.lastOrNull()?.after
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<SubmissionItem> =
-            ViewHolder(parent.inflateLayout(R.layout.item_subreddit))
-
-    inner class ViewHolder(view: View) : BaseViewHolder<SubmissionItem>(view) {
-
-        @SuppressLint("SetTextI18n")
-        override fun bind(item: SubmissionItem) {
-            val display = DateUtils.getRelativeTimeSpanString(item.timestamp * 1000)
-
-            itemView.subredditTitle.text = item.title
-            itemView.subredditUpvote.text = item.numUpvotes.toString()
-            itemView.subredditComments.text = item.numComments.toString()
-            itemView.subredditSubiitle.text = "${item.subreddit} • ${display} • ${item.user}"
-        }
-    }
-
-}
 
 internal class SubredditViewItem : ViewItem<SubmissionItem> {
 
@@ -74,10 +49,16 @@ internal class SubredditViewItem : ViewItem<SubmissionItem> {
         view.subredditTitle.text = item.title
         view.subredditUpvote.text = item.numUpvotes.toString()
         view.subredditComments.text = item.numComments.toString()
-        view.subredditSubiitle.text = "${item.subreddit} • $display • ${item.user}"
+        view.subredditSubtitle.text = "${item.subreddit} • $display • ${item.user}"
 
         view.setOnClickListener {
             onItemClick?.invoke(item)
+        }
+
+        item.preview?.let {
+            view.subredditPreview.visibility = View.VISIBLE
+            val source = it.images.firstOrNull()?.source
+            view.subredditPreview.load(source?.url)
         }
     }
 }
