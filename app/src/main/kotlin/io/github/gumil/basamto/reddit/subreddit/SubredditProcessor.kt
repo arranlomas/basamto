@@ -24,7 +24,7 @@
 
 package io.github.gumil.basamto.reddit.subreddit
 
-import io.github.gumil.data.model.RedditThread
+import io.github.gumil.data.model.Submission
 import io.github.gumil.data.repository.subreddit.SubredditRepository
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -48,8 +48,8 @@ internal fun SubredditRepository.loadThreads(
 }
 
 
-private fun RedditThread.map(): ThreadItem {
-    return ThreadItem(
+private fun Submission.map(): SubmissionItem {
+    return SubmissionItem(
             title,
             subreddit,
             createdUtc,
@@ -60,7 +60,7 @@ private fun RedditThread.map(): ThreadItem {
     )
 }
 
-internal data class ThreadItem(
+internal data class SubmissionItem(
         val title: String,
         val subreddit: String,
         val timestamp: Long,

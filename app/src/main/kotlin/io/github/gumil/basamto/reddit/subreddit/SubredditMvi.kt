@@ -32,12 +32,12 @@ import io.github.gumil.basamto.reddit.submission.SubmissionKey
 internal sealed class SubredditState: MviState {
 
     data class Initial(
-            val threads: List<ThreadItem> = emptyList(),
+            val threads: List<SubmissionItem> = emptyList(),
             val isLoading: Boolean = true
     ) : SubredditState()
 
     data class LoadMore(
-            val threads: List<ThreadItem> = emptyList(),
+            val threads: List<SubmissionItem> = emptyList(),
             val isLoading: Boolean = true
     ) : SubredditState()
 
@@ -59,14 +59,14 @@ internal sealed class SubredditIntent : MviIntent {
     ) : SubredditIntent()
 
     data class OnItemClick(
-            val item: ThreadItem
+            val item: SubmissionItem
     ) : SubredditIntent()
 }
 
 internal sealed class SubredditResult : MviResult {
 
     data class Success(
-            val threads: List<ThreadItem> = emptyList(),
+            val threads: List<SubmissionItem> = emptyList(),
             val mode: Mode
     ) : SubredditResult()
 

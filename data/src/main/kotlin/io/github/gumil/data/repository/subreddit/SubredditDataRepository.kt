@@ -24,7 +24,7 @@
 
 package io.github.gumil.data.repository.subreddit
 
-import io.github.gumil.data.model.RedditThread
+import io.github.gumil.data.model.Submission
 import io.github.gumil.data.rest.RedditApi
 import io.github.gumil.data.util.applySchedulers
 import io.reactivex.Observable
@@ -33,7 +33,7 @@ internal class SubredditDataRepository(
         private val redditApi: RedditApi
 ) : SubredditRepository {
 
-    override fun getThreadsFrom(subreddit: String, after: String?, limit: Int): Observable<List<RedditThread>> {
+    override fun getThreadsFrom(subreddit: String, after: String?, limit: Int): Observable<List<Submission>> {
         return redditApi.getSubreddit(subreddit, after, limit).map {
             it.data.children.map {
                 it.data

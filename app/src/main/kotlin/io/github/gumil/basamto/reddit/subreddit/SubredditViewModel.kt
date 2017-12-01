@@ -71,7 +71,7 @@ internal class SubredditViewModel(
 
     private fun renderListLoading(
             mode: SubredditResult.Mode,
-            list: List<ThreadItem>,
+            list: List<SubmissionItem>,
             isLoading: Boolean
     ): SubredditState = when (mode) {
         SubredditResult.Mode.REFRESH -> SubredditState.Initial(list, isLoading)

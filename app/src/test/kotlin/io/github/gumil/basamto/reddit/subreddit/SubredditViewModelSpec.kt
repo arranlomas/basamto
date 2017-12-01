@@ -65,8 +65,8 @@ internal object SubredditViewModelSpec : Spek({
         context("Load Intent") {
 
             on("success") {
-                val redditThreads = SubredditObjects.createListOfRedditThread()
-                val threadItems = listOf(SubredditObjects.createThreadItem())
+                val redditThreads = SubredditObjects.createListOfSubmissions()
+                val threadItems = listOf(SubredditObjects.createSubmissionItem())
 
                 whenever(subredditRepository.getThreadsFrom("test", "qwer", 10))
                         .thenReturn(redditThreads.just())
@@ -91,7 +91,7 @@ internal object SubredditViewModelSpec : Spek({
 
         on("OnItemClick Intent") {
             subredditViewModel.processIntents(SubredditIntent.OnItemClick(
-                    SubredditObjects.createThreadItem()
+                    SubredditObjects.createSubmissionItem()
             ).just())
 
             it("should emit a Void state go to Submission Page") {

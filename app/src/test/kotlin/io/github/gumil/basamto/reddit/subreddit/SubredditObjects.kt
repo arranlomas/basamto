@@ -24,13 +24,13 @@
 
 package io.github.gumil.basamto.reddit.subreddit
 
-import io.github.gumil.data.model.RedditThread
+import io.github.gumil.data.model.Submission
 import io.github.gumil.data.model.base.Distinguish
 
 internal object SubredditObjects {
 
-    fun createListOfRedditThread() = listOf(
-            RedditThread(
+    fun createListOfSubmissions() = listOf(
+            Submission(
                     "74ulnb", "t3_74ulnb",
                     1, 0, null,
                     1507408247, 1507379447,
@@ -55,11 +55,11 @@ internal object SubredditObjects {
             )
     )
 
-    fun createThreadItem() = ThreadItem(
+    fun createSubmissionItem() = SubmissionItem(
             "App Feedback Thread - October 07, 2017",
             "androiddev",
             1507379447,
             "AutoModerator",
-            1, 0
+            1, 0, ""
     )
 }

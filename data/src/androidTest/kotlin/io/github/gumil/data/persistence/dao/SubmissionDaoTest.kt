@@ -26,21 +26,21 @@ package io.github.gumil.data.persistence.dao
 
 import android.support.test.runner.AndroidJUnit4
 import io.github.gumil.data.Creators
-import io.github.gumil.data.model.RedditThread
+import io.github.gumil.data.model.Submission
 import io.reactivex.observers.TestObserver
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-internal class RedditThreadDaoTest : DbTest() {
+internal class SubmissionDaoTest : DbTest() {
 
     @Test
     fun insertAndLoad() {
-        val thread = Creators.createRedditThread("1", 123,"test")
-        db.redditThreadDao().insert(thread)
+        val thread = Creators.createSubmission("1", 123,"test")
+        db.submissionDao().insert(thread)
 
-        val allSubscriber = TestObserver<List<RedditThread>>()
-        db.redditThreadDao().getAll().subscribe(allSubscriber)
+        val allSubscriber = TestObserver<List<Submission>>()
+        db.submissionDao().getAll().subscribe(allSubscriber)
 
         allSubscriber.assertNoErrors()
         allSubscriber.assertNoTimeout()
@@ -52,7 +52,7 @@ internal class RedditThreadDaoTest : DbTest() {
     fun getFirstTenFromTwentySameSubreddit() {
         val subreddit = "test"
         val list = (1..20).map {
-            Creators.createRedditThread(it.toString(), 20 - it.toLong(), subreddit)
+            Creators.createSubmission(it.toString(), 20 - it.toLong(), subreddit)
         }
         val expected = list.subList(0, 10)
 
@@ -64,10 +64,10 @@ internal class RedditThreadDaoTest : DbTest() {
         val subreddit = "test"
         val subreddit2 = "test2"
 
-        val list = mutableListOf<RedditThread>()
+        val list = mutableListOf<Submission>()
         (1..10).forEach {
-            list.add(Creators.createRedditThread(it.toString(), it.toLong(), subreddit))
-            list.add(Creators.createRedditThread((10 + it).toString(), it.toLong(), subreddit2))
+            list.add(Creators.createSubmission(it.toString(), it.toLong(), subreddit))
+            list.add(Creators.createSubmission((10 + it).toString(), it.toLong(), subreddit2))
         }
 
         val expected = list.filter { it.subreddit == subreddit }.reversed()
@@ -75,11 +75,11 @@ internal class RedditThreadDaoTest : DbTest() {
         testInsertGet(list, subreddit, expected)
     }
 
-    private fun testInsertGet(list: List<RedditThread>, subreddit: String, expected: List<RedditThread>) {
-        db.redditThreadDao().insert(*list.toTypedArray())
+    private fun testInsertGet(list: List<Submission>, subreddit: String, expected: List<Submission>) {
+        db.submissionDao().insert(*list.toTypedArray())
 
-        val subscriber = TestObserver<List<RedditThread>>()
-        db.redditThreadDao().getThreadsFrom(subreddit).subscribe(subscriber)
+        val subscriber = TestObserver<List<Submission>>()
+        db.submissionDao().getThreadsFrom(subreddit).subscribe(subscriber)
 
         subscriber.assertNoErrors()
         subscriber.assertNoTimeout()

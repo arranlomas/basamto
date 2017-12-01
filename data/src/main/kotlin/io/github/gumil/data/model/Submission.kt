@@ -35,7 +35,7 @@ import io.github.gumil.data.persistence.Converters
 
 @Entity
 @TypeConverters(Converters::class)
-data class RedditThread(
+data class Submission(
 
         @PrimaryKey
         val id: String,

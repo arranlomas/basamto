@@ -39,9 +39,9 @@ data class Subreddit(
         override val modHash: String?,
 
         @Json(name = "children")
-        override val children: List<ThreadResponse>,
+        override val children: List<SubmissionResponse>,
 
         @Json(name = "whitelist_status")
         val whiteListStatus: String = "all_ads"
 
-) : Listing<ThreadResponse>
+) : Listing<SubmissionResponse>

@@ -24,16 +24,16 @@
 
 package io.github.gumil.data
 
-import io.github.gumil.data.model.RedditThread
+import io.github.gumil.data.model.Submission
 import io.github.gumil.data.model.base.Distinguish
 
 internal object Creators {
 
-    fun createRedditThread(
+    fun createSubmission(
             id: String = "74ulnb",
             createdUtc: Long,
             subreddit: String
-    ) = RedditThread(
+    ) = Submission(
             id, "name", 1, 0, null, 0, createdUtc, subreddit,
             subreddit, "id", null, null, null, "Test $id",
             1, false, "self", null, null,

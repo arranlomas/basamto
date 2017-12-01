@@ -28,25 +28,25 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
-import io.github.gumil.data.model.RedditThread
+import io.github.gumil.data.model.Submission
 import io.reactivex.Single
 
 @Dao
-internal interface RedditThreadDao {
+internal interface SubmissionDao {
 
-    @Query("SELECT * FROM RedditThread" +
+    @Query("SELECT * FROM Submission" +
             " WHERE subreddit = :subreddit" +
             " ORDER BY createdUtc DESC"+
             " LIMIT :limit" +
             " OFFSET :offset")
-    fun getThreadsFrom(subreddit: String, offset: Int = 0, limit: Int = 10): Single<List<RedditThread>>
+    fun getThreadsFrom(subreddit: String, offset: Int = 0, limit: Int = 10): Single<List<Submission>>
 
-    @Query("SELECT * FROM RedditThread" +
+    @Query("SELECT * FROM Submission" +
             " ORDER BY createdUtc DESC"+
             " LIMIT :limit" +
             " OFFSET :offset")
-    fun getAll(offset: Int = 0, limit: Int = 10): Single<List<RedditThread>>
+    fun getAll(offset: Int = 0, limit: Int = 10): Single<List<Submission>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg redditThread: RedditThread)
+    fun insert(vararg redditThread: Submission)
 }

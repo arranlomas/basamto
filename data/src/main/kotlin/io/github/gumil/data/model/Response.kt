@@ -26,4 +26,4 @@ package io.github.gumil.data.model
 
 data class SubredditResponse(val data: Subreddit)
 
-data class ThreadResponse(val data: RedditThread)
+data class SubmissionResponse(val data: Submission)

@@ -39,17 +39,17 @@ import kotlinx.android.synthetic.main.item_subreddit.view.subredditTitle
 import kotlinx.android.synthetic.main.item_subreddit.view.subredditUpvote
 
 
-internal class SubredditListAdapter : BaseListAdapter<ThreadItem, SubredditListAdapter.ViewHolder>() {
+internal class SubredditListAdapter : BaseListAdapter<SubmissionItem, SubredditListAdapter.ViewHolder>() {
 
     val after get() = list.lastOrNull()?.after
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<ThreadItem> =
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<SubmissionItem> =
             ViewHolder(parent.inflateLayout(R.layout.item_subreddit))
 
-    inner class ViewHolder(view: View) : BaseViewHolder<ThreadItem>(view) {
+    inner class ViewHolder(view: View) : BaseViewHolder<SubmissionItem>(view) {
 
         @SuppressLint("SetTextI18n")
-        override fun bind(item: ThreadItem) {
+        override fun bind(item: SubmissionItem) {
             val display = DateUtils.getRelativeTimeSpanString(item.timestamp * 1000)
 
             itemView.subredditTitle.text = item.title
@@ -61,14 +61,14 @@ internal class SubredditListAdapter : BaseListAdapter<ThreadItem, SubredditListA
 
 }
 
-internal class SubredditViewItem : ViewItem<ThreadItem> {
+internal class SubredditViewItem : ViewItem<SubmissionItem> {
 
-    override var onItemClick: ((ThreadItem) -> Unit)? = null
+    override var onItemClick: ((SubmissionItem) -> Unit)? = null
 
     override val layout: Int = R.layout.item_subreddit
 
     @SuppressLint("SetTextI18n")
-    override fun bind(view: View, item: ThreadItem) {
+    override fun bind(view: View, item: SubmissionItem) {
         val display = DateUtils.getRelativeTimeSpanString(item.timestamp * 1000)
 
         view.subredditTitle.text = item.title

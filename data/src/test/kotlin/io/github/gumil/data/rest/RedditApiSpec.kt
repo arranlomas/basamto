@@ -26,7 +26,7 @@ package io.github.gumil.data.rest
 
 import io.github.gumil.data.ApiFactory
 import io.github.gumil.data.createMockResponse
-import io.github.gumil.data.model.RedditThread
+import io.github.gumil.data.model.Submission
 import io.github.gumil.data.model.SubredditResponse
 import io.github.gumil.data.model.base.Distinguish
 import io.github.gumil.data.readFromFile
@@ -60,7 +60,7 @@ internal object RedditApiSpec: Spek({
                 (subscriber.events[0][0] as? SubredditResponse)?.let {
                     it.data.children.size shouldEqualTo 10
                     it.data.children.last().data.id shouldEqual "74poqy"
-                    it.data.children.first().data shouldEqual RedditThread(
+                    it.data.children.first().data shouldEqual Submission(
                             "74ulnb", "t3_74ulnb",
                             1, 0, null,
                             1507408247, 1507379447,
