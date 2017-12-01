@@ -28,6 +28,7 @@ import android.os.Build
 import android.support.annotation.LayoutRes
 import android.support.annotation.StyleRes
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -60,4 +61,12 @@ internal fun ImageView.load(url: String?) {
         }
     }
 
+}
+
+internal fun View.setVisible(visible: Boolean) {
+    if (visible) {
+        visibility = View.VISIBLE
+    } else {
+        visibility = View.GONE
+    }
 }

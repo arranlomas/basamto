@@ -30,6 +30,7 @@ import android.view.View
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.common.adapter.ViewItem
 import io.github.gumil.basamto.extensions.load
+import io.github.gumil.basamto.extensions.setVisible
 import kotlinx.android.synthetic.main.item_subreddit.view.subredditComments
 import kotlinx.android.synthetic.main.item_subreddit.view.subredditPreview
 import kotlinx.android.synthetic.main.item_subreddit.view.subredditSubtitle
@@ -55,8 +56,9 @@ internal class SubredditViewItem : ViewItem<SubmissionItem> {
             onItemClick?.invoke(item)
         }
 
+        view.subredditPreview.setVisible(item.preview != null)
+
         item.preview?.let {
-            view.subredditPreview.visibility = View.VISIBLE
             val source = it.images.firstOrNull()?.source
             view.subredditPreview.load(source?.url)
         }
