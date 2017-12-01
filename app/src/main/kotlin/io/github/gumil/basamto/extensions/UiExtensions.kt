@@ -32,7 +32,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
-import timber.log.Timber
 
 fun ViewGroup.inflateLayout(@LayoutRes layout: Int, addToRoot: Boolean = false) =
         LayoutInflater.from(context).inflate(layout, this, addToRoot)
