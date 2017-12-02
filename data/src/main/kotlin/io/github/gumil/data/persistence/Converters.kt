@@ -38,10 +38,11 @@ internal class Converters {
     fun fromDistinguished(value: Distinguish): Int = value.ordinal
 
     @TypeConverter
-    fun toPreview(value: String): Preview? = ApiFactory.createMoshi()
-            .adapter(Preview::class.java).fromJson(value)
+    fun toPreview(value: String?): Preview? = value?.let {
+        ApiFactory.createMoshi().adapter(Preview::class.java).fromJson(value)
+    }
 
     @TypeConverter
-    fun fromPreview(value: Preview): String? = ApiFactory.createMoshi()
+    fun fromPreview(value: Preview?): String? = ApiFactory.createMoshi()
             .adapter(Preview::class.java).toJson(value).toString()
 }
