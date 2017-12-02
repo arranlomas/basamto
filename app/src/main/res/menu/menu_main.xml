@@ -23,19 +23,12 @@
   ~ SOFTWARE.
   -->
 
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<android.support.v4.widget.SwipeRefreshLayout
-    android:id="@+id/swipeRefreshLayout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/subredditList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/default_padding"
-        android:clipToPadding="false"/>
-
-</android.support.v4.widget.SwipeRefreshLayout>
-
+    <item
+        android:id="@+id/menu_theme"
+        android:title="@string/menu_theme"
+        android:icon="@drawable/ic_brightness_medium_white_24dp"
+        app:showAsAction="always"/>
+</menu>

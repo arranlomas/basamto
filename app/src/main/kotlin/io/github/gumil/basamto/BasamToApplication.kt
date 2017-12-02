@@ -24,6 +24,7 @@
 
 package io.github.gumil.basamto
 
+import android.support.v7.app.AppCompatDelegate
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.leakcanary.LeakCanary
 import dagger.android.support.DaggerApplication
@@ -32,6 +33,8 @@ import io.github.gumil.data.Data
 import timber.log.Timber
 
 internal class BasamToApplication : DaggerApplication() {
+
+    private var isNightMode = false
 
     override fun onCreate() {
         super.onCreate()
@@ -49,4 +52,15 @@ internal class BasamToApplication : DaggerApplication() {
     override fun applicationInjector() = DaggerAppComponent.builder()
             .dataComponent(Data.createDataComponent(BuildConfig.DEBUG)).build()
 
+    fun toggleNightMode() {
+        isNightMode = !isNightMode
+        AppCompatDelegate.setDefaultNightMode(
+                if (isNightMode) {
+                    AppCompatDelegate.MODE_NIGHT_YES
+                } else {
+                    AppCompatDelegate.MODE_NIGHT_NO
+                }
+        )
+
+    }
 }

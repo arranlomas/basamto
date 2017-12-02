@@ -25,9 +25,12 @@
 package io.github.gumil.basamto.main
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import com.zhuinden.simplestack.HistoryBuilder
 import com.zhuinden.simplestack.navigator.Navigator
 import dagger.android.support.DaggerAppCompatActivity
+import io.github.gumil.basamto.BasamToApplication
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.navigation.FragmentStateChanger
 import io.github.gumil.basamto.reddit.subreddit.SubredditKey
@@ -36,15 +39,39 @@ import kotlinx.android.synthetic.main.activity_main.fragmentContainer
 
 internal class MainActivity : DaggerAppCompatActivity() {
 
+    var title: String = ""
+        set(value) {
+            field = value
+            supportActionBar?.title = title
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        supportActionBar?.setDisplayUseLogoEnabled(true)
 
         Navigator.configure()
                 .setStateChanger(FragmentStateChanger(supportFragmentManager, R.id.fragmentContainer))
                 .setShouldPersistContainerChild(false)
                 .install(this, fragmentContainer, HistoryBuilder.single(SubredditKey()))
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId) {
+        R.id.menu_theme -> {
+            (application as? BasamToApplication)?.toggleNightMode()
+            recreate()
+            true
+        }
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onBackPressed() {

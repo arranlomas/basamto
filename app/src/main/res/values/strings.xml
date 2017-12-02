@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Basamto</string>
 
+    <string name="menu_theme">Theme</string>
+
     <string name="empty_list">The list is empty. Nothing to do here.</string>
 
     <string name="error_subreddit_list">Error loading submissions</string>
