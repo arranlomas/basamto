@@ -24,14 +24,10 @@
 
 package io.github.gumil.data.model
 
-import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import android.arch.persistence.room.TypeConverters
 import com.squareup.moshi.Json
-import io.github.gumil.data.model.base.Created
-import io.github.gumil.data.model.base.Distinguish
-import io.github.gumil.data.model.base.Votable
 import io.github.gumil.data.persistence.Converters
 
 @Entity
@@ -115,4 +111,4 @@ data class Submission(
         val distinguished: Distinguish? = null,
 
         val preview: Preview? = null
-) : Votable, Created
+) : Votable, Created, Thing
