@@ -24,7 +24,7 @@
 
 package io.github.gumil.data.rest
 
-import io.github.gumil.data.model.SubredditResponse
+import io.github.gumil.data.rest.model.RedditResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -40,5 +40,5 @@ interface RedditApi {
     fun getSubreddit(
             @Path(SUBREDDIT) subreddit: String,
             @Query("after") after: String? = null,
-            @Query("limit") limit: Int = 10): Single<SubredditResponse>
+            @Query("limit") limit: Int = 10): Single<RedditResponse>
 }
