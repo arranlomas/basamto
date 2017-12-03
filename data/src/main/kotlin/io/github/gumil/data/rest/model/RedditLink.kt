@@ -32,14 +32,10 @@ import com.squareup.moshi.Moshi
 @AutoValue
 internal abstract class RedditLink : RedditSubmission() {
 
-    abstract fun clicked(): Boolean
-
-    abstract fun domain(): String?
-
-    abstract fun hidden(): Boolean
+    abstract fun domain(): String
 
     @Json(name = "is_self")
-    abstract val isSelf: Boolean
+    abstract fun isSelf(): Boolean
 
     @Json(name = "link_flair_text")
     abstract fun linkFlairText(): String?
@@ -61,8 +57,6 @@ internal abstract class RedditLink : RedditSubmission() {
     abstract fun title(): String
 
     abstract fun url(): String
-
-    abstract fun visited(): Boolean
 
     companion object {
         @JvmStatic

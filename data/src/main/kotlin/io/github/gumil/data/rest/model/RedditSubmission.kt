@@ -30,12 +30,6 @@ internal abstract class RedditSubmission : RedditThing() {
 
     abstract fun author(): String
 
-    @Json(name = "author_flair_text")
-    abstract fun authorFlairText(): String?
-
-    @Json(name = "banned_by")
-    abstract fun bannedBy(): String?
-
     abstract fun created(): Long
 
     @Json(name = "created_utc")
@@ -46,8 +40,6 @@ internal abstract class RedditSubmission : RedditThing() {
     abstract fun id(): String
 
     abstract fun name(): String
-
-    abstract fun saved(): Boolean
 
     abstract fun score(): Int
 
