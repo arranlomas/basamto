@@ -24,23 +24,23 @@
 
 package io.github.gumil.data.model
 
-interface Submission {
+import com.squareup.moshi.Json
 
-    val author: String
+data class Listing(
 
-    val created: Long
+        @Json(name = "before")
+        val before: String?,
 
-    val createdUtc: Long
+        @Json(name = "after")
+        val after: String?,
 
-    val gilded: Int
+        @Json(name = "modhash")
+        val modHash: String?,
 
-    val id: String
+        @Json(name = "children")
+        val children: List<Thing>,
 
-    val name: String
+        @Json(name = "whitelist_status")
+        val whiteListStatus: String = "all_ads"
 
-    val score: Int
-
-    val subreddit: String
-
-    val ups: Int
-}
+) : Thing

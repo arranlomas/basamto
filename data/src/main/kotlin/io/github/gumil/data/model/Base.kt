@@ -25,23 +25,30 @@
 package io.github.gumil.data.model
 
 import com.squareup.moshi.Json
-import io.github.gumil.data.model.base.Listing
+import io.github.gumil.data.R
+import org.w3c.dom.Comment
 
-data class Subreddit(
+interface Thing
 
-        @Json(name = "before")
-        override val before: String?,
+enum class Distinguish(val color: Int) {
+    moderator(R.color.distinguish_mod),
+    admin(R.color.distinguish_admin),
+    special(R.color.distinguish_admin);
+}
 
-        @Json(name = "after")
-        override val after: String?,
+internal enum class RedditType constructor(val derivedClass: Class<*>) {
 
-        @Json(name = "modhash")
-        override val modHash: String?,
+    @Json(name = "t1")
+    T1(Comment::class.java),
 
-        @Json(name = "children")
-        override val children: List<SubmissionResponse>,
+    @Json(name = "t3")
+    T3(Link::class.java),
 
-        @Json(name = "whitelist_status")
-        val whiteListStatus: String = "all_ads"
+    @Json(name = "Listing")
+    LISTING(Listing::class.java),
 
-) : Listing<SubmissionResponse>
+//    @Json(name = "more")
+//    MORE(RedditMore::class.java)
+}
+
+data class RedditResponse(val data: Listing)
