@@ -24,22 +24,19 @@
 
 package io.github.gumil.data
 
-import io.github.gumil.data.model.Submission
-import io.github.gumil.data.model.base.Distinguish
+import io.github.gumil.data.model.Link
 
 internal object Creators {
 
-    fun createSubmission(
+    fun createSubmissionLink(
             id: String = "74ulnb",
             createdUtc: Long,
             subreddit: String
-    ) = Submission(
-            id, "name", 1, 0, null, 0, createdUtc, subreddit,
-            subreddit, "id", null, null, null, "Test $id",
-            1, false, "self", null, null,
-            0, true, false, "permalink", false,
-            false, "url", "AutoModerator", 0, true,
-            Distinguish.moderator
+    ) = Link(
+            id, "name", subreddit, "AutoModerator", 0, createdUtc,
+            "test $id", "url", "domain", "permalink", "selftext",
+            "selftexthtml", false, "self", 1, 0,
+            0, 0, false, "thumbnail"
     )
 
 }

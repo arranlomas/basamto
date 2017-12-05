@@ -26,8 +26,8 @@ package io.github.gumil.data.persistence
 
 import android.arch.persistence.room.TypeConverter
 import io.github.gumil.data.ApiFactory
+import io.github.gumil.data.model.Distinguish
 import io.github.gumil.data.model.Preview
-import io.github.gumil.data.model.base.Distinguish
 
 internal class Converters {
 

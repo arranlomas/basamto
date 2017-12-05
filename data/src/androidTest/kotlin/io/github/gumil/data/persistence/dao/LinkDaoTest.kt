@@ -26,21 +26,22 @@ package io.github.gumil.data.persistence.dao
 
 import android.support.test.runner.AndroidJUnit4
 import io.github.gumil.data.Creators
+import io.github.gumil.data.model.Link
 import io.github.gumil.data.model.Submission
 import io.reactivex.observers.TestObserver
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-internal class SubmissionDaoTest : DbTest() {
+internal class LinkDaoTest : DbTest() {
 
     @Test
     fun insertAndLoad() {
-        val thread = Creators.createSubmission("1", 123,"test")
-        db.submissionDao().insert(thread)
+        val thread = Creators.createSubmissionLink("1", 123,"test")
+        db.linkDao().insert(thread)
 
-        val allSubscriber = TestObserver<List<Submission>>()
-        db.submissionDao().getAll().subscribe(allSubscriber)
+        val allSubscriber = TestObserver<List<Link>>()
+        db.linkDao().getAll().subscribe(allSubscriber)
 
         allSubscriber.assertNoErrors()
         allSubscriber.assertNoTimeout()
@@ -52,7 +53,7 @@ internal class SubmissionDaoTest : DbTest() {
     fun getFirstTenFromTwentySameSubreddit() {
         val subreddit = "test"
         val list = (1..20).map {
-            Creators.createSubmission(it.toString(), 20 - it.toLong(), subreddit)
+            Creators.createSubmissionLink(it.toString(), 20 - it.toLong(), subreddit)
         }
         val expected = list.subList(0, 10)
 
@@ -64,10 +65,10 @@ internal class SubmissionDaoTest : DbTest() {
         val subreddit = "test"
         val subreddit2 = "test2"
 
-        val list = mutableListOf<Submission>()
+        val list = mutableListOf<Link>()
         (1..10).forEach {
-            list.add(Creators.createSubmission(it.toString(), it.toLong(), subreddit))
-            list.add(Creators.createSubmission((10 + it).toString(), it.toLong(), subreddit2))
+            list.add(Creators.createSubmissionLink(it.toString(), it.toLong(), subreddit))
+            list.add(Creators.createSubmissionLink((10 + it).toString(), it.toLong(), subreddit2))
         }
 
         val expected = list.filter { it.subreddit == subreddit }.reversed()
@@ -75,11 +76,11 @@ internal class SubmissionDaoTest : DbTest() {
         testInsertGet(list, subreddit, expected)
     }
 
-    private fun testInsertGet(list: List<Submission>, subreddit: String, expected: List<Submission>) {
-        db.submissionDao().insert(*list.toTypedArray())
+    private fun testInsertGet(list: List<Link>, subreddit: String, expected: List<Submission>) {
+        db.linkDao().insert(*list.toTypedArray())
 
         val subscriber = TestObserver<List<Submission>>()
-        db.submissionDao().getThreadsFrom(subreddit).subscribe(subscriber)
+        db.linkDao().getFrom(subreddit).subscribe(subscriber)
 
         subscriber.assertNoErrors()
         subscriber.assertNoTimeout()

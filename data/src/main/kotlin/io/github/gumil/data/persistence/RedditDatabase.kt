@@ -26,11 +26,11 @@ package io.github.gumil.data.persistence
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
-import io.github.gumil.data.model.Submission
-import io.github.gumil.data.persistence.dao.SubmissionDao
+import io.github.gumil.data.model.Link
+import io.github.gumil.data.persistence.dao.LinkDao
 
-@Database(entities = arrayOf(Submission::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(Link::class), version = 1, exportSchema = false)
 internal abstract class RedditDatabase : RoomDatabase() {
 
-    abstract fun submissionDao(): SubmissionDao
+    abstract fun linkDao(): LinkDao
 }
