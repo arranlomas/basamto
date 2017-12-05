@@ -24,7 +24,7 @@
 
 package io.github.gumil.data.model
 
-interface Submission {
+interface Submission : Thing {
 
     val author: String
 

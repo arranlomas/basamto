@@ -65,5 +65,6 @@ data class Link(
         override val score: Int,
         override val ups: Int,
         val stickied: Boolean,
-        val thumbnail: String
-) : Submission, Thing
+        val thumbnail: String,
+        val preview: Preview? = null
+) : Submission

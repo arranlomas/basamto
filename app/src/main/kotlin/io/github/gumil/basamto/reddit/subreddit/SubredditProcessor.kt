@@ -24,8 +24,7 @@
 
 package io.github.gumil.basamto.reddit.subreddit
 
-import io.github.gumil.data.model.Preview
-import io.github.gumil.data.model.Submission
+import io.github.gumil.data.model.Link
 import io.github.gumil.data.repository.subreddit.SubredditRepository
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -49,16 +48,16 @@ internal fun SubredditRepository.loadThreads(
 }
 
 
-private fun Submission.map(): SubmissionItem {
+private fun Link.map(): SubmissionItem {
     return SubmissionItem(
             title,
             subreddit,
             createdUtc,
             author,
             score,
-            numComments,
+            commentsCount,
             name,
-            preview
+            preview?.images?.firstOrNull()?.source?.url
     )
 }
 
@@ -70,5 +69,5 @@ internal data class SubmissionItem(
         val numUpvotes: Int,
         val numComments: Int,
         val after: String,
-        val preview: Preview? = null
+        val preview: String? = null
 )

@@ -47,8 +47,8 @@ internal enum class RedditType constructor(val derivedClass: Class<*>) {
     @Json(name = "Listing")
     LISTING(Listing::class.java),
 
-//    @Json(name = "more")
-//    MORE(RedditMore::class.java)
+    @Json(name = "more")
+    MORE(More::class.java)
 }
 
 data class RedditResponse(val data: Listing)

@@ -25,43 +25,13 @@
 package io.github.gumil.data.model
 
 import com.squareup.moshi.Json
-import io.github.gumil.data.rest.model.RedditThing
 
-data class Comment(
-        override val id: String,
-
-        override val name: String,
-
-        override val subreddit: String,
-
-        override val author: String,
-
-        override val created: Long,
-
-        @Json(name = "created_utc")
-        override val createdUtc: Long,
-
-        val body: String,
-
-        @Json(name = "body_html")
-        val bodyHtml: String,
-
-        val controversiality: Int,
-
-        val depth: Int,
-
-        @Json(name = "link_id")
-        val linkId: String,
+data class More(
+        val id: String,
+        val name: String,
+        val children: List<String>,
+        val count: Int,
 
         @Json(name = "parent_id")
-        val parentId: String,
-
-        val replies: RedditThing,
-
-        @Json(name = "subreddit_id")
-        val subredditId: String,
-
-        override val gilded: Int,
-        override val score: Int,
-        override val ups: Int
-) : Submission
+        val parentId: String
+) : Thing

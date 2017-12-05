@@ -24,10 +24,10 @@
 
 package io.github.gumil.data.repository.subreddit
 
-import io.github.gumil.data.model.Submission
+import io.github.gumil.data.model.Link
 import io.reactivex.Observable
 
 interface SubredditRepository {
 
-    fun getThreadsFrom(subreddit: String, after: String? = null, limit: Int = 10): Observable<List<Submission>>
+    fun getThreadsFrom(subreddit: String, after: String? = null, limit: Int = 10): Observable<List<Link>>
 }

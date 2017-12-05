@@ -59,8 +59,7 @@ internal class SubredditViewItem : ViewItem<SubmissionItem> {
         view.subredditPreview.setVisible(item.preview != null)
 
         item.preview?.let {
-            val source = it.images.firstOrNull()?.source
-            view.subredditPreview.load(source?.url)
+            view.subredditPreview.load(it)
         }
     }
 }
