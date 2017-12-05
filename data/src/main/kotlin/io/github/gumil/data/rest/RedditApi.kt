@@ -24,7 +24,7 @@
 
 package io.github.gumil.data.rest
 
-import io.github.gumil.data.rest.model.RedditResponse
+import io.github.gumil.data.model.RedditResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

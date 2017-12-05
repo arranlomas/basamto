@@ -24,10 +24,10 @@
 
 package io.github.gumil.data
 
+import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
-import io.github.gumil.data.rest.RedditAdapterFactory
 import io.github.gumil.data.rest.RedditApi
-import io.github.gumil.data.rest.model.RedditObjectFactory
+import io.github.gumil.data.rest.RedditMoshiFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
@@ -74,8 +74,8 @@ internal object ApiFactory {
 
     fun createMoshi(): Moshi {
         return Moshi.Builder()
-                .add(RedditAdapterFactory.create())
-                .add(RedditObjectFactory.getInstance())
+                .add(KotlinJsonAdapterFactory())
+                .add(RedditMoshiFactory.getInstance())
                 .build()
     }
 }
