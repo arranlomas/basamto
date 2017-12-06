@@ -30,7 +30,7 @@ import com.zhuinden.simplestack.Backstack
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.common.MviStateMachine
 import io.github.gumil.basamto.common.MviViewModel
-import io.github.gumil.basamto.reddit.submission.SubmissionKey
+import io.github.gumil.basamto.reddit.submission.CommentsKey
 import io.github.gumil.data.repository.subreddit.SubredditRepository
 import io.github.gumil.data.util.just
 import io.reactivex.Observable
@@ -51,7 +51,7 @@ internal class SubredditViewModel(
                     is SubredditIntent.Load -> {
                         subredditRepository.loadThreads(it.subreddit, it.after, LIMIT, SubredditResult.Mode.LOAD_MORE)
                     }
-                    is SubredditIntent.OnItemClick -> SubredditResult.GoTo(SubmissionKey()).just()
+                    is SubredditIntent.OnItemClick -> SubredditResult.GoTo(CommentsKey(it.item.id)).just()
                 }
             }, { _, result ->
                 when (result) {

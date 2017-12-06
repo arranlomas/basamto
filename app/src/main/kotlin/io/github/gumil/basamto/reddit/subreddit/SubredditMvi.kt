@@ -27,7 +27,7 @@ package io.github.gumil.basamto.reddit.subreddit
 import io.github.gumil.basamto.common.MviIntent
 import io.github.gumil.basamto.common.MviResult
 import io.github.gumil.basamto.common.MviState
-import io.github.gumil.basamto.reddit.submission.SubmissionKey
+import io.github.gumil.basamto.reddit.submission.CommentsKey
 
 internal sealed class SubredditState: MviState {
 
@@ -77,7 +77,7 @@ internal sealed class SubredditResult : MviResult {
     ) : SubredditResult()
 
     data class GoTo(
-            val key: SubmissionKey
+            val key: CommentsKey
     ) : SubredditResult()
 
     enum class Mode {

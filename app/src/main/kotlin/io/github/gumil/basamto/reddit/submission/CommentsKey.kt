@@ -31,8 +31,10 @@ import kotlinx.android.parcel.Parcelize
 
 @SuppressLint("ParcelCreator")
 @Parcelize
-internal class SubmissionKey : BaseKey() {
+internal data class CommentsKey(
+        private val id: String
+) : BaseKey() {
 
-    override fun createFragment(): BaseFragment = SubmissionFragment()
+    override fun createFragment(): BaseFragment = CommentsFragment.newInstance(id)
 
 }

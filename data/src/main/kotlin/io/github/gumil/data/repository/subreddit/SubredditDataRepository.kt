@@ -24,6 +24,7 @@
 
 package io.github.gumil.data.repository.subreddit
 
+import io.github.gumil.data.model.Comment
 import io.github.gumil.data.model.Link
 import io.github.gumil.data.rest.RedditApi
 import io.github.gumil.data.util.applySchedulers
@@ -39,4 +40,10 @@ internal class SubredditDataRepository(
         }.toObservable().applySchedulers()
     }
 
+    override fun getCommentsFrom(subreddit: String, id: String): Observable<Pair<Link, List<Comment>>> {
+        return redditApi.getComments(subreddit, id).map {
+            it[0].data.children.filterIsInstance<Link>().first() to
+                    it[1].data.children.filterIsInstance<Comment>()
+        }.toObservable().applySchedulers()
+    }
 }

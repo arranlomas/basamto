@@ -35,7 +35,7 @@ import io.github.gumil.basamto.common.InstantTaskRule
 import io.github.gumil.basamto.common.RxRule
 import io.github.gumil.basamto.common.addRules
 import io.github.gumil.basamto.navigation.BaseKey
-import io.github.gumil.basamto.reddit.submission.SubmissionKey
+import io.github.gumil.basamto.reddit.submission.CommentsKey
 import io.github.gumil.data.repository.subreddit.SubredditRepository
 import io.github.gumil.data.util.error
 import io.github.gumil.data.util.just
@@ -49,7 +49,7 @@ import org.jetbrains.spek.api.dsl.on
 
 internal object SubredditViewModelSpec : Spek({
     addRules(InstantTaskRule(), RxRule())
-    MockitoKotlin.registerInstanceCreator <BaseKey> { SubmissionKey() }
+    MockitoKotlin.registerInstanceCreator <BaseKey> { CommentsKey("test") }
     given("a SubredditViewModel") {
         val subredditRepository = mock<SubredditRepository>()
         val backstack = mock<Backstack>()

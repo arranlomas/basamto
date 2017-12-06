@@ -26,11 +26,16 @@ package io.github.gumil.basamto.reddit.submission
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import io.github.gumil.data.repository.subreddit.SubredditRepositoryModule
 
 @Module
-internal abstract class SubmissionBuilder {
+internal abstract class CommentsBuilder {
 
-    @ContributesAndroidInjector
-    internal abstract fun subredditFragment(): SubmissionFragment
+    @ContributesAndroidInjector(
+            modules = arrayOf(
+                    SubredditRepositoryModule::class
+            )
+    )
+    internal abstract fun commentsFragment(): CommentsFragment
 
 }

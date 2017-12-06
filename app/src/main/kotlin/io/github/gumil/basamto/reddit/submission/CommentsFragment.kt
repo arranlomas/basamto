@@ -24,12 +24,35 @@
 
 package io.github.gumil.basamto.reddit.submission
 
+import android.os.Bundle
+import android.view.View
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.common.BaseFragment
+import io.github.gumil.data.repository.subreddit.SubredditRepository
+import kotlinx.android.synthetic.main.fragment_comments.text
+import javax.inject.Inject
 
-internal class SubmissionFragment : BaseFragment() {
+internal class CommentsFragment : BaseFragment() {
 
     override val layoutId: Int
-        get() = R.layout.fragment_submission
+        get() = R.layout.fragment_comments
 
+    @Inject
+    lateinit var repository: SubredditRepository
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        repository.getCommentsFrom("androiddev", arguments.getString(ARG_ID)).subscribe({
+            text.text = it.toString()
+        })
+    }
+
+    companion object {
+        private const val ARG_ID = "comments_id"
+
+        fun newInstance(id: String) = CommentsFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARG_ID, id)
+            }
+        }
+    }
 }

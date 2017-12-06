@@ -50,6 +50,7 @@ internal fun SubredditRepository.loadThreads(
 
 private fun Link.map(): SubmissionItem {
     return SubmissionItem(
+            id,
             title,
             subreddit,
             createdUtc,
@@ -62,6 +63,7 @@ private fun Link.map(): SubmissionItem {
 }
 
 internal data class SubmissionItem(
+        val id: String,
         val title: String,
         val subreddit: String,
         val timestamp: Long,

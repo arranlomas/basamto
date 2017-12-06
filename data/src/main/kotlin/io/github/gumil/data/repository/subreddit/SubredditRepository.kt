@@ -24,10 +24,13 @@
 
 package io.github.gumil.data.repository.subreddit
 
+import io.github.gumil.data.model.Comment
 import io.github.gumil.data.model.Link
 import io.reactivex.Observable
 
 interface SubredditRepository {
 
     fun getThreadsFrom(subreddit: String, after: String? = null, limit: Int = 10): Observable<List<Link>>
+
+    fun getCommentsFrom(subreddit: String, id: String): Observable<Pair<Link, List<Comment>>>
 }

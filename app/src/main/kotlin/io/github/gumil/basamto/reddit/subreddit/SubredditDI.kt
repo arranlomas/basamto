@@ -48,18 +48,13 @@ internal abstract class SubredditBuilder {
 }
 
 @Module
-internal abstract class SubredditModule {
+internal class SubredditModule {
 
-    @Module
-    companion object {
-
-        @JvmStatic
-        @Provides
-        @IntoMap
-        @ViewModelKey(SubredditViewModel::class)
-        fun provideSubredditViewModel(
-                subredditRepository: SubredditRepository,
-                backstack: Backstack
-        ): ViewModel = SubredditViewModel(subredditRepository, backstack)
-    }
+    @Provides
+    @IntoMap
+    @ViewModelKey(SubredditViewModel::class)
+    fun provideSubredditViewModel(
+            subredditRepository: SubredditRepository,
+            backstack: Backstack
+    ): ViewModel = SubredditViewModel(subredditRepository, backstack)
 }
