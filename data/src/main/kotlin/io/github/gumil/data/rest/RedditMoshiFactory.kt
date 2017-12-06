@@ -51,7 +51,13 @@ internal class RedditMoshiFactory : JsonAdapter.Factory {
             @Throws(IOException::class)
             override fun fromJson(reader: JsonReader): Any? {
                 val jsonValue = reader.readJsonValue()
-                return jsonValue as? String ?: (jsonValue as? Map<String, Any>)?.let { map ->
+                return (jsonValue as? String)?.let {
+                    /**
+                     * replies return [String] instead of a [Thing] when there are no replies
+                     * return null to handle this state
+                     */
+                    null
+                } ?:(jsonValue as? Map<String, Any>)?.let { map ->
                     map["kind"]?.let {
                         moshi.adapter(RedditType.valueOf((it as String).toUpperCase()).derivedClass)
                                 ?.fromJsonValue(map["data"]) ?: throw JsonDataException()

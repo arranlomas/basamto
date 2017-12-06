@@ -26,7 +26,6 @@ package io.github.gumil.data.model
 
 import com.squareup.moshi.Json
 import io.github.gumil.data.R
-import org.w3c.dom.Comment
 
 interface Thing
 

@@ -34,11 +34,19 @@ interface RedditApi {
 
     companion object {
         private const val SUBREDDIT = "subreddit"
+        private const val LINK_ID = "id"
     }
 
     @GET("r/{$SUBREDDIT}.json")
     fun getSubreddit(
             @Path(SUBREDDIT) subreddit: String,
             @Query("after") after: String? = null,
-            @Query("limit") limit: Int = 10): Single<RedditResponse>
+            @Query("limit") limit: Int = 10
+    ): Single<RedditResponse>
+
+    @GET("r/{$SUBREDDIT}/comments/{$LINK_ID}.json")
+    fun getComments(
+            @Path(SUBREDDIT) subreddit: String,
+            @Path(LINK_ID) id: String
+    ): Single<List<RedditResponse>>
 }

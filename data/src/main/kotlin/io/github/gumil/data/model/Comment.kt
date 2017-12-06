@@ -25,7 +25,6 @@
 package io.github.gumil.data.model
 
 import com.squareup.moshi.Json
-import io.github.gumil.data.rest.model.RedditThing
 
 data class Comment(
         override val id: String,
@@ -56,7 +55,7 @@ data class Comment(
         @Json(name = "parent_id")
         val parentId: String,
 
-        val replies: RedditThing,
+        val replies: Thing?,
 
         @Json(name = "subreddit_id")
         val subredditId: String,
