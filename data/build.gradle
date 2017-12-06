@@ -72,13 +72,8 @@ dependencies {
 
     implementation dependencies.kotlin
 
-    compileOnly dependencies.autoValue
-    kapt dependencies.autoValue
-
     implementation dependencies.moshi
     implementation dependencies.moshiKotlin
-    kapt dependencies.moshiAutoValue
-    compileOnly dependencies.moshiAnnotation
 
     implementation dependencies.retrofit
     implementation dependencies.retrofitConverter
