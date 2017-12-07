@@ -35,13 +35,8 @@ import io.github.gumil.data.dagger.DataComponent
 
 @AppScope
 @Component(
-        modules = arrayOf(
-                AndroidSupportInjectionModule::class,
-                ActivityBuilder::class
-        ),
-        dependencies = arrayOf(
-                DataComponent::class
-        )
+        modules = [AndroidSupportInjectionModule::class, ActivityBuilder::class],
+        dependencies = [DataComponent::class]
 )
 internal interface AppComponent : AndroidInjector<DaggerApplication> {
 

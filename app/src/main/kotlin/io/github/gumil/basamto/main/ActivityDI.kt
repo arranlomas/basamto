@@ -34,17 +34,17 @@ import io.github.gumil.basamto.reddit.submission.CommentsBuilder
 import io.github.gumil.basamto.reddit.subreddit.SubredditBuilder
 import io.github.gumil.basamto.viewmodel.ViewModelBuilder
 
-@Module(includes = arrayOf(AndroidSupportInjectionModule::class))
+@Module(includes = [AndroidSupportInjectionModule::class])
 internal abstract class ActivityBuilder {
 
     @ActivityScope
     @ContributesAndroidInjector(
-            modules = arrayOf(
-                    ViewModelBuilder::class,
-                    SubredditBuilder::class,
-                    CommentsBuilder::class,
-                    ActivityModule::class
-            )
+            modules = [
+                ViewModelBuilder::class,
+                SubredditBuilder::class,
+                CommentsBuilder::class,
+                ActivityModule::class
+            ]
     )
     internal abstract fun bindMainActivity(): MainActivity
 

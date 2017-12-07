@@ -38,10 +38,7 @@ import io.github.gumil.data.repository.subreddit.SubredditRepositoryModule
 internal abstract class SubredditBuilder {
 
     @ContributesAndroidInjector(
-            modules = arrayOf(
-                    SubredditModule::class,
-                    SubredditRepositoryModule::class
-            )
+            modules = [SubredditModule::class, SubredditRepositoryModule::class]
     )
     internal abstract fun subredditFragment(): SubredditFragment
 

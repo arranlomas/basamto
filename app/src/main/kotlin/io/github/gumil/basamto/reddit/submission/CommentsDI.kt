@@ -32,9 +32,7 @@ import io.github.gumil.data.repository.subreddit.SubredditRepositoryModule
 internal abstract class CommentsBuilder {
 
     @ContributesAndroidInjector(
-            modules = arrayOf(
-                    SubredditRepositoryModule::class
-            )
+            modules = [SubredditRepositoryModule::class]
     )
     internal abstract fun commentsFragment(): CommentsFragment
 

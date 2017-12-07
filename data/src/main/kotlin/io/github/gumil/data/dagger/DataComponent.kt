@@ -28,7 +28,7 @@ import dagger.Component
 import io.github.gumil.data.rest.RedditApi
 
 @DataScope
-@Component(modules = arrayOf(ApiModule::class))
+@Component(modules = [ApiModule::class])
 interface DataComponent {
 
     fun redditApi(): RedditApi
