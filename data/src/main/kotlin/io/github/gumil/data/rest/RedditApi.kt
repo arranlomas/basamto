@@ -44,7 +44,7 @@ interface RedditApi {
             @Query("limit") limit: Int = 10
     ): Single<RedditResponse>
 
-    @GET("r/{$SUBREDDIT}/comments/{$LINK_ID}.json")
+    @GET("r/{$SUBREDDIT}/comments/{$LINK_ID}.json?depth=4")
     fun getComments(
             @Path(SUBREDDIT) subreddit: String,
             @Path(LINK_ID) id: String

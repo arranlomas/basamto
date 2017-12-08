@@ -29,7 +29,7 @@ import android.view.View
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.common.BaseFragment
 import io.github.gumil.data.repository.subreddit.SubredditRepository
-import timber.log.Timber
+import kotlinx.android.synthetic.main.fragment_comments.text
 import javax.inject.Inject
 
 internal class CommentsFragment : BaseFragment() {
@@ -42,8 +42,7 @@ internal class CommentsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         repository.getCommentsFrom("androiddev", arguments.getString(ARG_ID)).subscribe({
-            Timber.tag("tantrums").d("$it")
-            //text.text = it.toString()
+            text.text = it.toString()
         })
     }
 
