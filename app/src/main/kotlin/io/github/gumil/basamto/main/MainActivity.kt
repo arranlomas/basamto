@@ -79,4 +79,12 @@ internal class MainActivity : DaggerAppCompatActivity() {
             super.onBackPressed()
         }
     }
+
+    fun showToolbar(show: Boolean) {
+        if (show) {
+            supportActionBar?.show()
+        } else {
+            supportActionBar?.hide()
+        }
+    }
 }

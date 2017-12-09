@@ -24,11 +24,14 @@
 
 package io.github.gumil.basamto.reddit.subreddit
 
+import android.annotation.SuppressLint
+import android.os.Parcelable
 import io.github.gumil.data.model.Link
 import io.github.gumil.data.repository.subreddit.SubredditRepository
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.parcel.Parcelize
 
 internal fun SubredditRepository.loadThreads(
         subreddit: String,
@@ -62,6 +65,8 @@ private fun Link.map(): SubmissionItem {
     )
 }
 
+@Parcelize
+@SuppressLint("ParcelCreator")
 internal data class SubmissionItem(
         val id: String,
         val title: String,
@@ -72,4 +77,4 @@ internal data class SubmissionItem(
         val numComments: Int,
         val after: String,
         val preview: String? = null
-)
+) : Parcelable

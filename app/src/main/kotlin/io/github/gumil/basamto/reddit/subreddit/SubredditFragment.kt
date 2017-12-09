@@ -38,6 +38,7 @@ import io.github.gumil.basamto.common.adapter.FooterItem
 import io.github.gumil.basamto.common.adapter.ItemAdapter
 import io.github.gumil.basamto.common.adapter.itemClick
 import io.github.gumil.basamto.common.adapter.prefetch
+import io.github.gumil.basamto.main.MainActivity
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_subreddit.subredditList
 import kotlinx.android.synthetic.main.fragment_subreddit.swipeRefreshLayout
@@ -57,6 +58,7 @@ internal class SubredditFragment : BaseFragment(), MviView<SubredditIntent, Subr
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as? MainActivity)?.showToolbar(true)
 
         val viewModel = ViewModelProviders.of(this, viewModelFactory)[SubredditViewModel::class.java]
 
