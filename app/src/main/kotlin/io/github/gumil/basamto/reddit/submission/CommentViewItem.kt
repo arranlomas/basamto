@@ -24,42 +24,22 @@
 
 package io.github.gumil.basamto.reddit.submission
 
-import io.github.gumil.basamto.reddit.subreddit.map
-import io.github.gumil.data.model.Comment
-import io.github.gumil.data.repository.subreddit.SubredditRepository
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import android.view.View
+import io.github.gumil.basamto.R
+import io.github.gumil.basamto.common.adapter.ViewItem
+import io.github.gumil.basamto.extensions.fromHtml
+import kotlinx.android.synthetic.main.item_comment.view.author
+import kotlinx.android.synthetic.main.item_comment.view.body
 
-internal fun SubredditRepository.loadComments(
-        subreddit: String,
-        submissionId: String
-): Observable<CommentsResult> {
-    return getCommentsFrom(subreddit, submissionId)
-            .map {
-                CommentsResult.Success(it.first.map(), it.second.map { it.map() })
-            }
-            .ofType(CommentsResult::class.java)
-            .onErrorReturn { CommentsResult.Error }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .startWith(CommentsResult.InProgress)
+internal class CommentViewItem : ViewItem<CommentItem> {
+
+    override var onItemClick: ((CommentItem) -> Unit)? = null
+
+    override val layout: Int get() = R.layout.item_comment
+
+    override fun bind(view: View, item: CommentItem) {
+        view.author.text = item.user
+        view.body.fromHtml(item.body.fromHtml().toString())
+    }
+
 }
-
-private fun Comment.map(): CommentItem {
-    return CommentItem(
-            id,
-            createdUtc,
-            author,
-            score,
-            bodyHtml
-    )
-}
-
-internal data class CommentItem(
-        val id: String,
-        val timestamp: Long,
-        val user: String,
-        val score: Int,
-        val body: String
-)

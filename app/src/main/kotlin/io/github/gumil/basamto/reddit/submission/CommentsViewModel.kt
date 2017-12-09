@@ -24,11 +24,39 @@
 
 package io.github.gumil.basamto.reddit.submission
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
+import io.github.gumil.basamto.R
+import io.github.gumil.basamto.common.MviStateMachine
+import io.github.gumil.basamto.common.MviViewModel
 import io.github.gumil.data.repository.subreddit.SubredditRepository
+import io.reactivex.Observable
 
 internal class CommentsViewModel(
         private val repository: SubredditRepository
-) : ViewModel() {
+) : ViewModel(), MviViewModel<CommentsState, CommentsIntent> {
 
+    override val state: LiveData<CommentsState> get() = stateMachine.state
+
+    private val stateMachine =
+            MviStateMachine<CommentsState, CommentsIntent, CommentsResult>(CommentsState.View(), {
+                when (it) {
+                    is CommentsIntent.Load -> repository.loadComments(it.subreddit, it.submissionId)
+                }
+            }, { _, result ->
+                when (result) {
+                    is CommentsResult.Success -> CommentsState.View(result.submissionItem, result.comments, false)
+                    CommentsResult.Error -> CommentsState.Error(R.string.error_comments_list)
+                    CommentsResult.InProgress -> CommentsState.View()
+                }
+            })
+
+    override fun processIntents(intent: Observable<out CommentsIntent>) {
+        stateMachine.processIntents(intent)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        stateMachine.clearDisposables()
+    }
 }

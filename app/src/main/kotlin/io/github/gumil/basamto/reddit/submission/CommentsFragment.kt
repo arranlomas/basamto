@@ -24,46 +24,71 @@
 
 package io.github.gumil.basamto.reddit.submission
 
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.common.BaseFragment
 import io.github.gumil.basamto.common.MviView
+import io.github.gumil.basamto.common.adapter.ItemAdapter
 import io.github.gumil.basamto.extensions.load
 import io.github.gumil.basamto.main.MainActivity
 import io.github.gumil.basamto.reddit.subreddit.SubmissionItem
-import io.github.gumil.basamto.reddit.subreddit.SubredditState
-import io.github.gumil.data.repository.subreddit.SubredditRepository
 import io.reactivex.Observable
+import kotlinx.android.synthetic.main.fragment_comments.commentsList
 import kotlinx.android.synthetic.main.fragment_comments.commentsPreview
-import kotlinx.android.synthetic.main.fragment_comments.text
+import kotlinx.android.synthetic.main.fragment_comments.swipeRefreshLayout
 import javax.inject.Inject
 
-internal class CommentsFragment : BaseFragment(), MviView<CommentsIntent, SubredditState> {
+internal class CommentsFragment : BaseFragment(), MviView<CommentsIntent, CommentsState> {
 
     override val layoutId: Int
         get() = R.layout.fragment_comments
 
-    @Inject
-    lateinit var repository: SubredditRepository
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val submission by lazy {
+        arguments.getParcelable<SubmissionItem>(ARG_SUBMISSION)
+    }
+
+    private val adapter = ItemAdapter(CommentViewItem())
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         (activity as? MainActivity)?.showToolbar(false)
 
-        val submission = arguments.getParcelable<SubmissionItem>(ARG_SUBMISSION)
+        val viewModel = ViewModelProviders.of(this, viewModelFactory)[CommentsViewModel::class.java]
 
-        repository.getCommentsFrom(submission.subreddit, submission.id).subscribe({
-            text.text = it.toString()
-            commentsPreview.load(it.first.preview?.images?.get(0)?.source?.url)
+        viewModel.state.observe(this, Observer<CommentsState> {
+            it?.render()
         })
+
+        viewModel.processIntents(intents())
     }
 
-    override fun SubredditState.render(): Any? {
-        throw UnsupportedOperationException("not implemented")
+    override fun CommentsState.render() = when (this) {
+        is CommentsState.View -> {
+            swipeRefreshLayout.isRefreshing = isLoading
+
+            if (commentsList.adapter == null) {
+                commentsList.layoutManager = LinearLayoutManager(context)
+                commentsList.adapter = adapter
+            }
+
+            adapter.list = comments
+
+            commentsPreview.load(submissionItem?.preview)
+        }
+        is CommentsState.Error -> showSnackbarError(message)
     }
 
-    override fun intents(): Observable<CommentsIntent> {
-        throw UnsupportedOperationException("not implemented")
+    override fun intents(): Observable<CommentsIntent> = rxLifecycle.filter {
+        it == Lifecycle.Event.ON_START
+    }.map {
+        CommentsIntent.Load(submission.subreddit, submission.id)
     }
 
     companion object {

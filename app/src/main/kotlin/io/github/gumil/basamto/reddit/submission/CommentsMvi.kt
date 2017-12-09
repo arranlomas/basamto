@@ -31,7 +31,7 @@ import io.github.gumil.basamto.reddit.subreddit.SubmissionItem
 
 internal sealed class CommentsState: MviState {
 
-    data class Initial(
+    data class View(
             val submissionItem: SubmissionItem? = null,
             val comments: List<CommentItem> = emptyList(),
             val isLoading: Boolean = true
@@ -43,7 +43,7 @@ internal sealed class CommentsState: MviState {
 }
 
 internal sealed class CommentsIntent : MviIntent {
-    data class Initial(
+    data class Load(
             val subreddit: String,
             val submissionId: String
     ) : CommentsIntent()
@@ -55,4 +55,8 @@ internal sealed class CommentsResult : MviResult {
             val submissionItem: SubmissionItem? = null,
             val comments: List<CommentItem> = emptyList()
     ) : CommentsResult()
+
+    object Error : CommentsResult()
+
+    object InProgress : CommentsResult()
 }

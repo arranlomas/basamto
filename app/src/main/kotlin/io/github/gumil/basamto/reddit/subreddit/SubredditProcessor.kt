@@ -50,8 +50,7 @@ internal fun SubredditRepository.loadThreads(
             .startWith(SubredditResult.InProgress(mode))
 }
 
-
-private fun Link.map(): SubmissionItem {
+internal fun Link.map(): SubmissionItem {
     return SubmissionItem(
             id,
             title,
