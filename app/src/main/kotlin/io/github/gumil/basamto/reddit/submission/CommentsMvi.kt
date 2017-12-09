@@ -24,32 +24,35 @@
 
 package io.github.gumil.basamto.reddit.submission
 
-import android.arch.lifecycle.ViewModel
-import dagger.Module
-import dagger.Provides
-import dagger.android.ContributesAndroidInjector
-import dagger.multibindings.IntoMap
-import io.github.gumil.basamto.viewmodel.ViewModelKey
-import io.github.gumil.data.repository.subreddit.SubredditRepository
-import io.github.gumil.data.repository.subreddit.SubredditRepositoryModule
+import io.github.gumil.basamto.common.MviIntent
+import io.github.gumil.basamto.common.MviResult
+import io.github.gumil.basamto.common.MviState
+import io.github.gumil.basamto.reddit.subreddit.SubmissionItem
 
-@Module
-internal abstract class CommentsBuilder {
+internal sealed class CommentsState: MviState {
 
-    @ContributesAndroidInjector(
-            modules = [SubredditRepositoryModule::class, CommentsModule::class]
-    )
-    internal abstract fun commentsFragment(): CommentsFragment
+    data class Initial(
+            val submissionItem: SubmissionItem? = null,
+            val comments: List<CommentItem> = emptyList(),
+            val isLoading: Boolean = true
+    ) : CommentsState()
 
+    data class Error(
+            val message: Int
+    ) : CommentsState()
 }
 
-@Module
-internal class CommentsModule {
+internal sealed class CommentsIntent : MviIntent {
+    data class Initial(
+            val subreddit: String,
+            val submissionId: String
+    ) : CommentsIntent()
+}
 
-    @Provides
-    @IntoMap
-    @ViewModelKey(CommentsViewModel::class)
-    fun provideCommentsViewModel(
-            subredditRepository: SubredditRepository
-    ): ViewModel = CommentsViewModel(subredditRepository)
+internal sealed class CommentsResult : MviResult {
+
+    data class Success(
+            val submissionItem: SubmissionItem? = null,
+            val comments: List<CommentItem> = emptyList()
+    ) : CommentsResult()
 }

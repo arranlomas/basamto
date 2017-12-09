@@ -27,14 +27,15 @@ package io.github.gumil.basamto.reddit.submission
 import android.annotation.SuppressLint
 import io.github.gumil.basamto.common.BaseFragment
 import io.github.gumil.basamto.navigation.BaseKey
+import io.github.gumil.basamto.reddit.subreddit.SubmissionItem
 import kotlinx.android.parcel.Parcelize
 
 @SuppressLint("ParcelCreator")
 @Parcelize
 internal data class CommentsKey(
-        private val id: String
+        private val item: SubmissionItem
 ) : BaseKey() {
 
-    override fun createFragment(): BaseFragment = CommentsFragment.newInstance(id)
+    override fun createFragment(): BaseFragment = CommentsFragment.newInstance(item)
 
 }

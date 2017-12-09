@@ -24,32 +24,22 @@
 
 package io.github.gumil.basamto.reddit.submission
 
-import android.arch.lifecycle.ViewModel
-import dagger.Module
-import dagger.Provides
-import dagger.android.ContributesAndroidInjector
-import dagger.multibindings.IntoMap
-import io.github.gumil.basamto.viewmodel.ViewModelKey
-import io.github.gumil.data.repository.subreddit.SubredditRepository
-import io.github.gumil.data.repository.subreddit.SubredditRepositoryModule
+import io.github.gumil.data.model.Comment
 
-@Module
-internal abstract class CommentsBuilder {
-
-    @ContributesAndroidInjector(
-            modules = [SubredditRepositoryModule::class, CommentsModule::class]
+private fun Comment.map(): CommentItem {
+    return CommentItem(
+            id,
+            createdUtc,
+            author,
+            score,
+            body
     )
-    internal abstract fun commentsFragment(): CommentsFragment
-
 }
 
-@Module
-internal class CommentsModule {
-
-    @Provides
-    @IntoMap
-    @ViewModelKey(CommentsViewModel::class)
-    fun provideCommentsViewModel(
-            subredditRepository: SubredditRepository
-    ): ViewModel = CommentsViewModel(subredditRepository)
-}
+internal data class CommentItem(
+        val id: String,
+        val timestamp: Long,
+        val user: String,
+        val score: Int,
+        val body: String
+)

@@ -51,7 +51,7 @@ internal class SubredditViewModel(
                     is SubredditIntent.Load -> {
                         subredditRepository.loadThreads(it.subreddit, it.after, LIMIT, SubredditResult.Mode.LOAD_MORE)
                     }
-                    is SubredditIntent.OnItemClick -> SubredditResult.GoTo(CommentsKey(it.item.id)).just()
+                    is SubredditIntent.OnItemClick -> SubredditResult.GoTo(CommentsKey(it.item)).just()
                 }
             }, { _, result ->
                 when (result) {

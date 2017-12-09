@@ -28,11 +28,18 @@ import android.os.Bundle
 import android.view.View
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.common.BaseFragment
+import io.github.gumil.basamto.common.MviView
+import io.github.gumil.basamto.extensions.load
+import io.github.gumil.basamto.main.MainActivity
+import io.github.gumil.basamto.reddit.subreddit.SubmissionItem
+import io.github.gumil.basamto.reddit.subreddit.SubredditState
 import io.github.gumil.data.repository.subreddit.SubredditRepository
+import io.reactivex.Observable
+import kotlinx.android.synthetic.main.fragment_comments.commentsPreview
 import kotlinx.android.synthetic.main.fragment_comments.text
 import javax.inject.Inject
 
-internal class CommentsFragment : BaseFragment() {
+internal class CommentsFragment : BaseFragment(), MviView<CommentsIntent, SubredditState> {
 
     override val layoutId: Int
         get() = R.layout.fragment_comments
@@ -41,17 +48,30 @@ internal class CommentsFragment : BaseFragment() {
     lateinit var repository: SubredditRepository
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        repository.getCommentsFrom("androiddev", arguments.getString(ARG_ID)).subscribe({
+        (activity as? MainActivity)?.showToolbar(false)
+
+        val submission = arguments.getParcelable<SubmissionItem>(ARG_SUBMISSION)
+
+        repository.getCommentsFrom(submission.subreddit, submission.id).subscribe({
             text.text = it.toString()
+            commentsPreview.load(it.first.preview?.images?.get(0)?.source?.url)
         })
     }
 
-    companion object {
-        private const val ARG_ID = "comments_id"
+    override fun SubredditState.render(): Any? {
+        throw UnsupportedOperationException("not implemented")
+    }
 
-        fun newInstance(id: String) = CommentsFragment().apply {
+    override fun intents(): Observable<CommentsIntent> {
+        throw UnsupportedOperationException("not implemented")
+    }
+
+    companion object {
+        private const val ARG_SUBMISSION = "comments_submission"
+
+        fun newInstance(submissionItem: SubmissionItem) = CommentsFragment().apply {
             arguments = Bundle().apply {
-                putString(ARG_ID, id)
+                putParcelable(ARG_SUBMISSION, submissionItem)
             }
         }
     }
