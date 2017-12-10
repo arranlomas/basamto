@@ -27,7 +27,6 @@ package io.github.gumil.basamto.extensions
 import android.os.Build
 import android.support.annotation.LayoutRes
 import android.support.annotation.StyleRes
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,13 +48,6 @@ internal fun TextView.textAppearance(@StyleRes style: Int) {
 
 internal fun TextView.fromHtml(html: String) {
     text = html.fromHtml()
-}
-
-@Suppress("deprecation")
-internal fun String.fromHtml() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-    Html.fromHtml(this, Html.FROM_HTML_MODE_COMPACT)
-} else {
-    Html.fromHtml(this)
 }
 
 internal fun ImageView.load(url: String?) {
