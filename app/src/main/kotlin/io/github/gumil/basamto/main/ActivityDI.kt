@@ -30,7 +30,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
-import io.github.gumil.basamto.reddit.submission.CommentsBuilder
+import io.github.gumil.basamto.reddit.comments.CommentsBuilder
 import io.github.gumil.basamto.reddit.subreddit.SubredditBuilder
 import io.github.gumil.basamto.viewmodel.ViewModelBuilder
 

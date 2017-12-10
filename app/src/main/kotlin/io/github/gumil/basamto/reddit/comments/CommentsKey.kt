@@ -22,34 +22,20 @@
  * SOFTWARE.
  */
 
-package io.github.gumil.basamto.reddit.submission
+package io.github.gumil.basamto.reddit.comments
 
-import android.arch.lifecycle.ViewModel
-import dagger.Module
-import dagger.Provides
-import dagger.android.ContributesAndroidInjector
-import dagger.multibindings.IntoMap
-import io.github.gumil.basamto.viewmodel.ViewModelKey
-import io.github.gumil.data.repository.subreddit.SubredditRepository
-import io.github.gumil.data.repository.subreddit.SubredditRepositoryModule
+import android.annotation.SuppressLint
+import io.github.gumil.basamto.common.BaseFragment
+import io.github.gumil.basamto.navigation.BaseKey
+import io.github.gumil.basamto.reddit.subreddit.SubmissionItem
+import kotlinx.android.parcel.Parcelize
 
-@Module
-internal abstract class CommentsBuilder {
+@SuppressLint("ParcelCreator")
+@Parcelize
+internal data class CommentsKey(
+        private val item: SubmissionItem
+) : BaseKey() {
 
-    @ContributesAndroidInjector(
-            modules = [SubredditRepositoryModule::class, CommentsModule::class]
-    )
-    internal abstract fun commentsFragment(): CommentsFragment
+    override fun createFragment(): BaseFragment = CommentsFragment.newInstance(item)
 
-}
-
-@Module
-internal class CommentsModule {
-
-    @Provides
-    @IntoMap
-    @ViewModelKey(CommentsViewModel::class)
-    fun provideCommentsViewModel(
-            subredditRepository: SubredditRepository
-    ): ViewModel = CommentsViewModel(subredditRepository)
 }

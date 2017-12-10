@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package io.github.gumil.basamto.reddit.submission
+package io.github.gumil.basamto.reddit.comments
 
 import io.github.gumil.basamto.common.MviIntent
 import io.github.gumil.basamto.common.MviResult

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package io.github.gumil.basamto.reddit.submission
+package io.github.gumil.basamto.reddit.comments
 
 import io.github.gumil.basamto.reddit.subreddit.map
 import io.github.gumil.data.model.Comment

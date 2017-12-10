@@ -22,24 +22,34 @@
  * SOFTWARE.
  */
 
-package io.github.gumil.basamto.reddit.submission
+package io.github.gumil.basamto.reddit.comments
 
-import android.view.View
-import io.github.gumil.basamto.R
-import io.github.gumil.basamto.common.adapter.ViewItem
-import io.github.gumil.basamto.extensions.fromHtml
-import kotlinx.android.synthetic.main.item_comment.view.author
-import kotlinx.android.synthetic.main.item_comment.view.body
+import android.arch.lifecycle.ViewModel
+import dagger.Module
+import dagger.Provides
+import dagger.android.ContributesAndroidInjector
+import dagger.multibindings.IntoMap
+import io.github.gumil.basamto.viewmodel.ViewModelKey
+import io.github.gumil.data.repository.subreddit.SubredditRepository
+import io.github.gumil.data.repository.subreddit.SubredditRepositoryModule
 
-internal class CommentViewItem : ViewItem<CommentItem> {
+@Module
+internal abstract class CommentsBuilder {
 
-    override var onItemClick: ((CommentItem) -> Unit)? = null
+    @ContributesAndroidInjector(
+            modules = [SubredditRepositoryModule::class, CommentsModule::class]
+    )
+    internal abstract fun commentsFragment(): CommentsFragment
 
-    override val layout: Int get() = R.layout.item_comment
+}
 
-    override fun bind(view: View, item: CommentItem) {
-        view.author.text = item.user
-        view.body.fromHtml(item.body.fromHtml().toString())
-    }
+@Module
+internal class CommentsModule {
 
+    @Provides
+    @IntoMap
+    @ViewModelKey(CommentsViewModel::class)
+    fun provideCommentsViewModel(
+            subredditRepository: SubredditRepository
+    ): ViewModel = CommentsViewModel(subredditRepository)
 }

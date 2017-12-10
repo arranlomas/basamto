@@ -30,7 +30,7 @@ import com.zhuinden.simplestack.Backstack
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.common.MviStateMachine
 import io.github.gumil.basamto.common.MviViewModel
-import io.github.gumil.basamto.reddit.submission.CommentsKey
+import io.github.gumil.basamto.reddit.comments.CommentsKey
 import io.github.gumil.data.repository.subreddit.SubredditRepository
 import io.github.gumil.data.util.just
 import io.reactivex.Observable

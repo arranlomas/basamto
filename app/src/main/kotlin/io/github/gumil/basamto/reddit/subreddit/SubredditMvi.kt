@@ -27,7 +27,7 @@ package io.github.gumil.basamto.reddit.subreddit
 import io.github.gumil.basamto.common.MviIntent
 import io.github.gumil.basamto.common.MviResult
 import io.github.gumil.basamto.common.MviState
-import io.github.gumil.basamto.reddit.submission.CommentsKey
+import io.github.gumil.basamto.reddit.comments.CommentsKey
 
 internal sealed class SubredditState: MviState {
 

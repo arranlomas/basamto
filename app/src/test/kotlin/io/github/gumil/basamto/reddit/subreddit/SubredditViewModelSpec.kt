@@ -35,7 +35,7 @@ import io.github.gumil.basamto.common.InstantTaskRule
 import io.github.gumil.basamto.common.RxRule
 import io.github.gumil.basamto.common.addRules
 import io.github.gumil.basamto.navigation.BaseKey
-import io.github.gumil.basamto.reddit.submission.CommentsKey
+import io.github.gumil.basamto.reddit.comments.CommentsKey
 import io.github.gumil.data.repository.subreddit.SubredditRepository
 import io.github.gumil.data.util.error
 import io.github.gumil.data.util.just

@@ -22,20 +22,24 @@
  * SOFTWARE.
  */
 
-package io.github.gumil.basamto.reddit.submission
+package io.github.gumil.basamto.reddit.comments
 
-import android.annotation.SuppressLint
-import io.github.gumil.basamto.common.BaseFragment
-import io.github.gumil.basamto.navigation.BaseKey
-import io.github.gumil.basamto.reddit.subreddit.SubmissionItem
-import kotlinx.android.parcel.Parcelize
+import android.view.View
+import io.github.gumil.basamto.R
+import io.github.gumil.basamto.common.adapter.ViewItem
+import io.github.gumil.basamto.extensions.fromHtml
+import kotlinx.android.synthetic.main.item_comment.view.author
+import kotlinx.android.synthetic.main.item_comment.view.body
 
-@SuppressLint("ParcelCreator")
-@Parcelize
-internal data class CommentsKey(
-        private val item: SubmissionItem
-) : BaseKey() {
+internal class CommentViewItem : ViewItem<CommentItem> {
 
-    override fun createFragment(): BaseFragment = CommentsFragment.newInstance(item)
+    override var onItemClick: ((CommentItem) -> Unit)? = null
+
+    override val layout: Int get() = R.layout.item_comment
+
+    override fun bind(view: View, item: CommentItem) {
+        view.author.text = item.user
+        view.body.fromHtml(item.body.fromHtml().toString())
+    }
 
 }
