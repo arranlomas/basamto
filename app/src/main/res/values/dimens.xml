@@ -31,4 +31,6 @@
     <dimen name="empty_view_image_size">72dp</dimen>
 
     <dimen name="small_icon_size">12dp</dimen>
+
+    <dimen name="divider_height">2dp</dimen>
 </resources>
