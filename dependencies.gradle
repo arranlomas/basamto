@@ -28,6 +28,7 @@ ext {
             supportAnnotations  : "com.android.support:support-annotations:${supportVersion}",
             constraintLayout    : "com.android.support.constraint:constraint-layout:1.0.2",
             dataBindingCompiler : "com.android.databinding:compiler:${gradleVersion}",
+            customTabs          : "com.android.support:customtabs:${supportVersion}",
 
             lifecycle           : "android.arch.lifecycle:runtime:${archVersion}",
             lifecycleExtensions : "android.arch.lifecycle:extensions:${archVersion}",

@@ -48,6 +48,7 @@ dependencies {
     implementation dependencies.constraintLayout
     implementation dependencies.design
     implementation dependencies.cardView
+    implementation dependencies.customTabs
 
     implementation dependencies.rxRelay
     implementation dependencies.rxBindingKotlin
@@ -63,6 +64,8 @@ dependencies {
 
     implementation dependencies.picasso
     implementation dependencies.threeTenAbp
+
+    implementation 'org.jsoup:jsoup:1.11.2'
 
     androidTestImplementation(dependencies.espresso, {
         exclude group: 'com.android.support', module: 'support-annotations'
