@@ -56,6 +56,8 @@ internal class SubredditFragment : BaseFragment(), MviView<SubredditIntent, Subr
     override val layoutId: Int
         get() = R.layout.fragment_subreddit
 
+    private val subreddit = "test"
+
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as? MainActivity)?.showToolbar(true)
@@ -73,7 +75,7 @@ internal class SubredditFragment : BaseFragment(), MviView<SubredditIntent, Subr
         return rxLifecycle.filter {
             it == Lifecycle.Event.ON_START
         }.map {
-            SubredditIntent.Initial("androiddev")
+            SubredditIntent.Initial(subreddit)
         }
     }
 
@@ -83,7 +85,7 @@ internal class SubredditFragment : BaseFragment(), MviView<SubredditIntent, Subr
             adapter.prefetch().map {
                 adapter.list.last().after
             }.map {
-                SubredditIntent.Load("androiddev", it)
+                SubredditIntent.Load(subreddit, it)
             }
     )
 
