@@ -30,6 +30,7 @@ import io.github.gumil.basamto.common.adapter.ViewItem
 import io.github.gumil.basamto.extensions.fromHtml
 import kotlinx.android.synthetic.main.item_comment.view.author
 import kotlinx.android.synthetic.main.item_comment.view.body
+import org.jsoup.Jsoup
 
 internal class CommentViewItem : ViewItem<CommentItem> {
 
@@ -39,7 +40,7 @@ internal class CommentViewItem : ViewItem<CommentItem> {
 
     override fun bind(view: View, item: CommentItem) {
         view.author.text = item.user
-        view.body.fromHtml(item.body.fromHtml().toString())
+        view.body.populate(Jsoup.parse(item.body.fromHtml().toString()))
     }
 
 }
