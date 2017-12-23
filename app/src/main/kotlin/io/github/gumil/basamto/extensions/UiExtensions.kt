@@ -47,7 +47,7 @@ internal fun TextView.textAppearance(@StyleRes style: Int) {
 }
 
 internal fun TextView.fromHtml(html: String) {
-    text = html.fromHtml()
+    text = html.fromHtml().trim()
 }
 
 internal fun ImageView.load(url: String?) {
@@ -68,9 +68,14 @@ internal fun ImageView.load(url: String?) {
 }
 
 internal fun View.setVisible(visible: Boolean) {
-    if (visible) {
-        visibility = View.VISIBLE
+    visibility = if (visible) {
+        View.VISIBLE
     } else {
-        visibility = View.GONE
+        View.GONE
     }
+}
+
+internal fun View.setPadding(dp: Int) {
+    val dip = context.dip(dp)
+    setPadding(dip, dip, dip, dip)
 }

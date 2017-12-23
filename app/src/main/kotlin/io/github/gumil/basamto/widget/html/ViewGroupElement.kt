@@ -22,26 +22,31 @@
  * SOFTWARE.
  */
 
-package io.github.gumil.basamto.reddit.comments
+package io.github.gumil.basamto.widget.html
 
-import android.view.View
-import io.github.gumil.basamto.R
-import io.github.gumil.basamto.common.adapter.ViewItem
-import io.github.gumil.basamto.extensions.decodeHtml
-import kotlinx.android.synthetic.main.item_comment.view.author
-import kotlinx.android.synthetic.main.item_comment.view.body
-import org.jsoup.Jsoup
+import android.view.ViewGroup
 
-internal class CommentViewItem : ViewItem<CommentItem> {
+internal class ViewGroupElement(
+        override val tag: String,
+        val viewGroup: ViewGroup
+) : ViewElement {
 
-    override var onItemClick: ((CommentItem) -> Unit)? = null
-
-    override val layout: Int get() = R.layout.item_comment
-
-    override fun bind(view: View, item: CommentItem) {
-        view.author.text = item.user
-
-        view.body.populate(Jsoup.parse(item.body.decodeHtml()))
+    init {
+        when(tag) {
+            Tags.CELL -> {}
+            Tags.HEADING -> {}
+            Tags.PARAGRAPH -> {}
+            Tags.ITEM -> {}
+            Tags.CODE -> {}
+        }
     }
 
+    override fun add(element: ViewElement) {
+        when (element) {
+            is TextViewElement -> viewGroup.addView(element.textView)
+            is ViewGroupElement -> viewGroup.addView(element.viewGroup)
+        }
+    }
+
+    override fun toString(): String = tag
 }

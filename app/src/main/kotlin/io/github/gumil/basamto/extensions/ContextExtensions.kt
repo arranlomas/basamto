@@ -51,3 +51,5 @@ internal fun Context.getSelectableItemBackground(): Drawable {
 }
 
 internal fun Context.getColorRes(@ColorRes color: Int): Int = ContextCompat.getColor(this, color)
+
+internal fun Context.dip(value: Int): Int = (value * resources.displayMetrics.density).toInt()

@@ -36,12 +36,15 @@ private const val TABLE_END_TAG = "</table>"
 
 @Suppress("deprecation")
 internal fun String.fromHtml() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-    Html.fromHtml(this, Html.FROM_HTML_MODE_COMPACT)
+    Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
 } else {
     Html.fromHtml(this)
 }
 
-internal fun String.decodeHtml() = fromHtml().toString().fromHtml()
+internal fun String.decodeHtml() = this.replace("&amp;", "&")
+        .replace("&lt;", "<")
+        .replace("&gt;", ">")
+        .replace("\n","<br/>")
 
 /**
  * Parses html and returns a list corresponding to blocks of text to be

@@ -22,26 +22,22 @@
  * SOFTWARE.
  */
 
-package io.github.gumil.basamto.reddit.comments
+package io.github.gumil.basamto.widget.html
 
-import android.view.View
-import io.github.gumil.basamto.R
-import io.github.gumil.basamto.common.adapter.ViewItem
-import io.github.gumil.basamto.extensions.decodeHtml
-import kotlinx.android.synthetic.main.item_comment.view.author
-import kotlinx.android.synthetic.main.item_comment.view.body
-import org.jsoup.Jsoup
-
-internal class CommentViewItem : ViewItem<CommentItem> {
-
-    override var onItemClick: ((CommentItem) -> Unit)? = null
-
-    override val layout: Int get() = R.layout.item_comment
-
-    override fun bind(view: View, item: CommentItem) {
-        view.author.text = item.user
-
-        view.body.populate(Jsoup.parse(item.body.decodeHtml()))
-    }
-
+object Tags {
+    internal const val BODY = "body"
+    internal const val TABLE = "table"
+    internal const val THEAD = "thead"
+    internal const val TBODY = "tbody"
+    internal const val ROW = "tr"
+    internal const val HEADING = "th"
+    internal const val CELL = "td"
+    internal const val BLOCK = "blockquote"
+    internal const val UNORDERED = "ul"
+    internal const val ORDERED = "ol"
+    internal const val ITEM = "li"
+    internal const val PRE = "pre"
+    internal const val CODE = "code"
+    internal const val PARAGRAPH = "p"
+    internal const val HR = "hr"
 }

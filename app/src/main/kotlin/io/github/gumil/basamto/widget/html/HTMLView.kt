@@ -25,20 +25,14 @@
 package io.github.gumil.basamto.widget.html
 
 import android.content.Context
-import android.text.method.LinkMovementMethod
 import android.util.AttributeSet
-import android.view.ViewGroup
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import android.widget.TableLayout
 import android.widget.TableRow
-import android.widget.TextView
-import io.github.gumil.basamto.extensions.fromHtml
-import io.github.gumil.basamto.widget.textview.LinkTransformationMethod
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Node
 import org.jsoup.select.NodeVisitor
-import timber.log.Timber
 import java.util.*
 
 internal class HTMLView : LinearLayout, NodeVisitor {
@@ -52,6 +46,7 @@ internal class HTMLView : LinearLayout, NodeVisitor {
     private val viewStack = Stack<ViewElement>()
 
     fun populate(document: Document) {
+        removeAllViews()
         document.body().traverse(this)
     }
 
@@ -68,25 +63,16 @@ internal class HTMLView : LinearLayout, NodeVisitor {
     }
 
     override fun head(node: Node?, depth: Int) {
-        val textView = TextView(context).apply {
-            fromHtml(node?.outerHtml().toString())
-            text = text.trim()
-            transformationMethod = LinkTransformationMethod()
-            movementMethod = LinkMovementMethod.getInstance()
-        }
         val viewElement = when (node?.nodeName()) {
-            BODY -> ViewGroupElement(this, node.nodeName())
-            TABLE -> ViewGroupElement(TableLayout(context), node.nodeName())
-            ROW -> ViewGroupElement(TableRow(context), node.nodeName())
-            HEADING -> ViewGroupElement(TableRow(context), node.nodeName())
+            Tags.BODY -> ViewGroupElement(node.nodeName(), this)
+            Tags.TABLE -> ViewGroupElement(node.nodeName(), TableLayout(context))
+            Tags.ROW -> ViewGroupElement(node.nodeName(), TableRow(context))
         //BLOCK -> {}
         //UNORDERED -> {}
         //ORDERED -> {}
-            PRE -> ViewGroupElement(HorizontalScrollView(context), node.nodeName())
-            CELL -> TextViewElement(textView, node.nodeName())
-            ITEM -> TextViewElement(textView, node.nodeName())
-            CODE -> TextViewElement(textView, node.nodeName())
-            PARAGRAPH -> TextViewElement(textView, node.nodeName())
+            Tags.PRE -> ViewGroupElement(node.nodeName(), HorizontalScrollView(context))
+            Tags.CELL, Tags.ITEM, Tags.CODE, Tags.PARAGRAPH,
+            Tags.HEADING -> TextViewElement(node, context)
             else -> null
         }
 
@@ -94,68 +80,4 @@ internal class HTMLView : LinearLayout, NodeVisitor {
             viewStack.push(it)
         }
     }
-
-    interface ViewElement {
-        val tag: String
-
-        fun add(element: ViewElement)
-    }
-
-    /**
-     * TAGS: [HEADING], [CELL], [PARAGRAPH], [ITEM], [CODE]
-     */
-    class TextViewElement(
-            val textView: TextView, override val tag: String
-    ) : ViewElement {
-        override fun add(element: ViewElement) {
-        }
-
-        override fun toString(): String = "$tag = ${textView.text}"
-    }
-
-    /**
-     * TAGS: [BODY], [TABLE], [THEAD], [TBODY], [BLOCK], [UNORDERED], [ORDERED], [ROW], [PRE]
-     */
-    class ViewGroupElement(
-            val viewGroup: ViewGroup, override val tag: String
-    ) : ViewElement {
-
-        override fun add(element: ViewElement) {
-            Timber.tag("tantrums").d("add $element to ${viewGroup.javaClass.simpleName}")
-            when (element) {
-                is TextViewElement -> viewGroup.addView(element.textView)
-                is ViewGroupElement -> viewGroup.addView(element.viewGroup)
-            }
-        }
-
-        override fun toString(): String {
-            return tag
-        }
-    }
-
-    companion object {
-        private const val BODY = "body"
-        private const val TABLE = "table"
-        private const val THEAD = "thead"
-        private const val TBODY = "tbody"
-        private const val ROW = "tr"
-        private const val HEADING = "th"
-        private const val CELL = "td"
-        private const val BLOCK = "blockquote"
-        private const val UNORDERED = "ul"
-        private const val ORDERED = "ol"
-        private const val ITEM = "li"
-        private const val PRE = "pre"
-        private const val CODE = "code"
-
-        private const val DIV = "div"
-        private const val TEXT = "#text"
-        private const val PARAGRAPH = "p"
-        private const val ITALIC = "em"
-        private const val BOLD = "strong"
-        private const val LINK = "a"
-        private const val STRIKETHROUGH = "del"
-        private const val SUPER = "sup"
-    }
-
 }
