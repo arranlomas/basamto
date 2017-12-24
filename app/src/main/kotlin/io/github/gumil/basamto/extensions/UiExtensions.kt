@@ -76,6 +76,5 @@ internal fun View.setVisible(visible: Boolean) {
 }
 
 internal fun View.setPadding(dp: Int) {
-    val dip = context.dip(dp)
-    setPadding(dip, dip, dip, dip)
+    setPadding(dp, dp, dp, dp)
 }

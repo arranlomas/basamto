@@ -28,6 +28,7 @@ import android.content.Context
 import android.graphics.Typeface
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
+import io.github.gumil.basamto.R
 import io.github.gumil.basamto.extensions.fromHtml
 import io.github.gumil.basamto.extensions.setPadding
 import io.github.gumil.basamto.widget.textview.LinkTransformationMethod
@@ -47,13 +48,14 @@ internal class TextViewElement(
 
     init {
         var html = node.outerHtml().toString()
+        val quarterPadding = context.resources.getDimensionPixelSize(R.dimen.default_quarter_padding)
         when(tag) {
             Tags.HEADING -> {
                 textView.setTypeface(textView.typeface, Typeface.BOLD)
-                textView.setPadding(4)
+                textView.setPadding(quarterPadding)
             }
             Tags.CELL -> {
-                textView.setPadding(4)
+                textView.setPadding(quarterPadding)
             }
             Tags.ITEM -> {
                 /**
