@@ -7,4 +7,6 @@
     <color name="white">#FFFFFF</color>
 
     <color name="subreddit_icon_tint">#73FFFFFF</color>
+
+    <color name="line">#CCCCCC</color>
 </resources>

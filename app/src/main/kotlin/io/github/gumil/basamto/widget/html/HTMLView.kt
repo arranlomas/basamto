@@ -71,6 +71,7 @@ internal class HTMLView : LinearLayout, NodeVisitor {
         //UNORDERED -> {}
         //ORDERED -> {}
             Tags.PRE -> ViewGroupElement(node.nodeName(), HorizontalScrollView(context))
+            Tags.BLOCK -> ViewGroupElement(node.nodeName(), BlockQuoteView(context))
             Tags.CELL, Tags.ITEM, Tags.CODE, Tags.PARAGRAPH,
             Tags.HEADING -> TextViewElement(node, context)
             else -> null

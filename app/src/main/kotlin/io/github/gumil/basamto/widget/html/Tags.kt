@@ -24,7 +24,7 @@
 
 package io.github.gumil.basamto.widget.html
 
-object Tags {
+internal object Tags {
     internal const val BODY = "body"
     internal const val TABLE = "table"
     internal const val THEAD = "thead"

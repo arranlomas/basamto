@@ -40,15 +40,13 @@ internal class TextViewElement(
 
     override val tag: String = node.nodeName()
 
-    private val html = node.outerHtml().toString()
-
     val textView = TextView(context).apply {
         transformationMethod = LinkTransformationMethod()
         movementMethod = LinkMovementMethod.getInstance()
-        fromHtml(node.outerHtml().toString())
     }
 
     init {
+        var html = node.outerHtml().toString()
         when(tag) {
             Tags.HEADING -> {
                 textView.setTypeface(textView.typeface, Typeface.BOLD)
@@ -64,10 +62,11 @@ internal class TextViewElement(
             }
             Tags.CODE -> {
                 textView.typeface = Typeface.MONOSPACE
-                val spaces = html.replace(" ", "&nbsp;")
-                textView.fromHtml(spaces)
+                html = html.replace(" ", "&nbsp;")
             }
         }
+
+        textView.fromHtml(html)
     }
 
     override fun add(element: ViewElement) {

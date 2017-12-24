@@ -24,7 +24,7 @@
 
 package io.github.gumil.basamto.widget.html
 
-interface ViewElement {
+internal interface ViewElement {
     val tag: String
     fun add(element: ViewElement)
 }
