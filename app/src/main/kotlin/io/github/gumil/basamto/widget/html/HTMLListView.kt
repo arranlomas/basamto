@@ -25,14 +25,13 @@
 package io.github.gumil.basamto.widget.html
 
 import android.content.Context
+import android.support.v4.widget.Space
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import io.github.gumil.basamto.R
-import io.github.gumil.basamto.extensions.dip
-import io.github.gumil.basamto.extensions.getColorRes
 
-internal class BlockQuoteView : LinearLayout {
+internal class HTMLListView : LinearLayout {
 
     private val content by lazy {
         LinearLayout(context).apply {
@@ -47,16 +46,14 @@ internal class BlockQuoteView : LinearLayout {
         orientation = HORIZONTAL
         val dp = context.resources.getDimensionPixelSize(R.dimen.default_quarter_padding)
         setPadding(0, dp, dp, dp)
-        val blockLine = View(context).apply {
-            layoutParams = LayoutParams(context.dip(2), LayoutParams.MATCH_PARENT).apply {
-                val margin = resources.getDimensionPixelSize(R.dimen.default_quarter_padding)
-                marginEnd = margin
-                marginStart = margin
-            }
-            setBackgroundColor(context.getColorRes(R.color.line))
+        val space = Space(context).apply {
+            layoutParams = LayoutParams(
+                    resources.getDimensionPixelSize(R.dimen.default_padding),
+                    LayoutParams.MATCH_PARENT
+            )
         }
 
-        super.addView(blockLine)
+        super.addView(space)
         super.addView(content)
     }
 

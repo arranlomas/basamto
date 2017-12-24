@@ -27,10 +27,9 @@ package io.github.gumil.basamto.reddit.comments
 import android.view.View
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.common.adapter.ViewItem
-import io.github.gumil.basamto.extensions.decodeHtml
+import io.github.gumil.basamto.extensions.formatHtml
 import kotlinx.android.synthetic.main.item_comment.view.author
 import kotlinx.android.synthetic.main.item_comment.view.body
-import org.jsoup.Jsoup
 
 internal class CommentViewItem : ViewItem<CommentItem> {
 
@@ -40,8 +39,7 @@ internal class CommentViewItem : ViewItem<CommentItem> {
 
     override fun bind(view: View, item: CommentItem) {
         view.author.text = item.user
-
-        view.body.populate(Jsoup.parse(item.body.decodeHtml()))
+        view.body.populate(item.body.formatHtml())
     }
 
 }
