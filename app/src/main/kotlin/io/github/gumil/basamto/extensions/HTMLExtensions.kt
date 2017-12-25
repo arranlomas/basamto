@@ -26,6 +26,7 @@ package io.github.gumil.basamto.extensions
 
 import android.os.Build
 import android.text.Html
+import io.github.gumil.basamto.widget.html.Tags
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
@@ -45,8 +46,10 @@ internal fun String.formatHtml(): Document {
     return Jsoup.parse(html).apply {
         getElementsByTag("li").forEach { li ->
             li.children().forEach {
-                it.remove()
-                li.parent().insertChildren(li.elementSiblingIndex() + 1, it)
+                if (it.nodeName() == Tags.UNORDERED || it.nodeName() == Tags.ORDERED) {
+                    it.remove()
+                    li.parent().insertChildren(li.elementSiblingIndex() + 1, it)
+                }
             }
         }
     }
