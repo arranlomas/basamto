@@ -43,14 +43,31 @@ internal fun String.formatHtml(): Document {
             .replace("&gt;", ">")
             .replace("\n", "<br/>")
 
-    return Jsoup.parse(html).apply {
-        getElementsByTag("li").forEach { li ->
-            li.children().forEach {
-                if (it.nodeName() == Tags.UNORDERED || it.nodeName() == Tags.ORDERED) {
-                    it.remove()
-                    li.parent().insertChildren(li.elementSiblingIndex() + 1, it)
-                }
+    return Jsoup.parse(html)
+            .remapNestedLists()
+            .addIdsToOrderedList()
+}
+
+private fun Document.addIdsToOrderedList(): Document {
+    getElementsByTag("ol").forEach {
+        var i = 1
+        it.children().forEach {
+            if (it.nodeName() == Tags.ITEM) {
+                it.attr(Tags.ID, "${i++}")
             }
         }
     }
+    return this
+}
+
+private fun Document.remapNestedLists(): Document {
+    getElementsByTag("li").forEach { li ->
+        li.children().forEach {
+            if (it.nodeName() == Tags.UNORDERED || it.nodeName() == Tags.ORDERED) {
+                it.remove()
+                li.parent().insertChildren(li.elementSiblingIndex() + 1, it)
+            }
+        }
+    }
+    return this
 }

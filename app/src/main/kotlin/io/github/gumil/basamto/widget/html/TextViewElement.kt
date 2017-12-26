@@ -32,6 +32,7 @@ import io.github.gumil.basamto.R
 import io.github.gumil.basamto.extensions.fromHtml
 import io.github.gumil.basamto.extensions.setPadding
 import io.github.gumil.basamto.widget.textview.LinkTransformationMethod
+import org.jsoup.nodes.Element
 import org.jsoup.nodes.Node
 
 internal class TextViewElement(
@@ -58,9 +59,19 @@ internal class TextViewElement(
                 textView.setPadding(quarterPadding)
             }
             Tags.ITEM -> {
-                /**
-                 * handle ordered and unordered list
-                 */
+                val copy = node.clone()
+                Element("dummy").apply {
+                    appendChild(copy)
+                }
+
+                val prefix = when {
+                    node.parentNode().nodeName() == Tags.ORDERED ->
+                        "${node.attr(Tags.ID)}.$SPACE$SPACE"
+                    node.parentNode().nodeName() == Tags.UNORDERED ->
+                        "$BULLET$SPACE$SPACE"
+                    else -> ""
+                }
+                html = prefix + copy.unwrap().outerHtml().trim()
             }
             Tags.CODE -> {
                 textView.typeface = Typeface.MONOSPACE
@@ -75,4 +86,9 @@ internal class TextViewElement(
     }
 
     override fun toString(): String = "$tag = ${textView.text}"
+
+    companion object {
+        private val BULLET = "&#8226;"
+        private val SPACE = "&nbsp;"
+    }
 }

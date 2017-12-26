@@ -41,4 +41,6 @@ internal object Tags {
     internal const val PARAGRAPH = "p"
     internal const val HR = "hr"
     internal const val BR = "br"
+
+    internal const val ID = "id"
 }
