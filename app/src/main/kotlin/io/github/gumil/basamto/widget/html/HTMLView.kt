@@ -30,6 +30,9 @@ import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import android.widget.TableLayout
 import android.widget.TableRow
+import io.github.gumil.basamto.widget.html.elements.TextViewElement
+import io.github.gumil.basamto.widget.html.elements.ViewElement
+import io.github.gumil.basamto.widget.html.elements.ViewGroupElement
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Node
 import org.jsoup.select.NodeVisitor

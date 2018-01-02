@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright 2017 Miguel Panelo
+ * Copyright 2018 Miguel Panelo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,15 +22,17 @@
  * SOFTWARE.
  */
 
-package io.github.gumil.basamto.widget.html
+package io.github.gumil.basamto.widget.html.elements
 
 import android.content.Context
 import android.graphics.Typeface
 import android.text.method.LinkMovementMethod
+import android.view.View
 import android.widget.TextView
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.extensions.fromHtml
 import io.github.gumil.basamto.extensions.setPadding
+import io.github.gumil.basamto.widget.html.Tags
 import io.github.gumil.basamto.widget.textview.LinkTransformationMethod
 import org.jsoup.nodes.Element
 import org.jsoup.nodes.Node
@@ -39,6 +41,9 @@ internal class TextViewElement(
         node: Node,
         context: Context
 ) : ViewElement {
+
+    override val view: View
+        get() = textView
 
     override val tag: String = node.nodeName()
 
@@ -66,9 +71,9 @@ internal class TextViewElement(
 
                 val prefix = when {
                     node.parentNode().nodeName() == Tags.ORDERED ->
-                        "${node.attr(Tags.ID)}.$SPACE$SPACE"
+                        "${node.attr(Tags.ID)}.${SPACE}${SPACE}"
                     node.parentNode().nodeName() == Tags.UNORDERED ->
-                        "$BULLET$SPACE$SPACE"
+                        "${BULLET}${SPACE}${SPACE}"
                     else -> ""
                 }
                 html = prefix + copy.unwrap().outerHtml().trim()
@@ -83,6 +88,7 @@ internal class TextViewElement(
     }
 
     override fun add(element: ViewElement) {
+        throw UnsupportedOperationException("Adding to ${this.javaClass.simpleName} is not supported")
     }
 
     override fun toString(): String = "$tag = ${textView.text}"

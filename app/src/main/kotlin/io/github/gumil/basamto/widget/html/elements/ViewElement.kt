@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright 2017 Miguel Panelo
+ * Copyright 2018 Miguel Panelo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,31 +22,13 @@
  * SOFTWARE.
  */
 
-package io.github.gumil.basamto.widget.html
+package io.github.gumil.basamto.widget.html.elements
 
-import android.view.ViewGroup
+import android.view.View
 
-internal class ViewGroupElement(
-        override val tag: String,
-        val viewGroup: ViewGroup
-) : ViewElement {
+internal interface ViewElement {
+    val tag: String
+    val view: View
 
-    init {
-        when(tag) {
-            Tags.CELL -> {}
-            Tags.HEADING -> {}
-            Tags.PARAGRAPH -> {}
-            Tags.ITEM -> {}
-            Tags.CODE -> {}
-        }
-    }
-
-    override fun add(element: ViewElement) {
-        when (element) {
-            is TextViewElement -> viewGroup.addView(element.textView)
-            is ViewGroupElement -> viewGroup.addView(element.viewGroup)
-        }
-    }
-
-    override fun toString(): String = tag
+    fun add(element: ViewElement)
 }
