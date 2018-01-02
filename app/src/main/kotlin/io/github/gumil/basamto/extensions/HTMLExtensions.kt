@@ -27,6 +27,7 @@ package io.github.gumil.basamto.extensions
 import android.os.Build
 import android.text.Html
 import io.github.gumil.basamto.widget.html.Tags
+import org.apache.commons.text.StringEscapeUtils
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
@@ -38,9 +39,7 @@ internal fun String.fromHtml() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODE
 }
 
 internal fun String.formatHtml(): Document {
-    val html = this.replace("&amp;", "&")
-            .replace("&lt;", "<")
-            .replace("&gt;", ">")
+    val html = StringEscapeUtils.unescapeHtml4(this)
             .replace("\n", "<br/>")
 
     return Jsoup.parse(html)

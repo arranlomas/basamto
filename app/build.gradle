@@ -65,7 +65,8 @@ dependencies {
     implementation dependencies.picasso
     implementation dependencies.threeTenAbp
 
-    implementation 'org.jsoup:jsoup:1.11.2'
+    implementation dependencies.jsoup
+    implementation dependencies.apacheCommons
 
     androidTestImplementation(dependencies.espresso, {
         exclude group: 'com.android.support', module: 'support-annotations'
