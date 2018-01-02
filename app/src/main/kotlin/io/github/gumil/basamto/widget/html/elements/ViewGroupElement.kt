@@ -30,7 +30,7 @@ import io.github.gumil.basamto.widget.html.Tags
 
 internal class ViewGroupElement(
         override val tag: String,
-        val viewGroup: ViewGroup
+        private val viewGroup: ViewGroup
 ) : ViewElement {
 
     override val view: View
