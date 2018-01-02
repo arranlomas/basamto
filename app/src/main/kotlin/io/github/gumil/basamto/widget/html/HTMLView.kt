@@ -26,10 +26,15 @@ package io.github.gumil.basamto.widget.html
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import android.widget.TableLayout
 import android.widget.TableRow
+import io.github.gumil.basamto.R
+import io.github.gumil.basamto.extensions.dip
+import io.github.gumil.basamto.extensions.getColorRes
+import io.github.gumil.basamto.widget.html.elements.SingleViewElement
 import io.github.gumil.basamto.widget.html.elements.TextViewElement
 import io.github.gumil.basamto.widget.html.elements.ViewElement
 import io.github.gumil.basamto.widget.html.elements.ViewGroupElement
@@ -77,11 +82,23 @@ internal class HTMLView : LinearLayout, NodeVisitor {
             Tags.CELL, Tags.ITEM, Tags.CODE, Tags.PARAGRAPH, Tags.HEADING,
             Tags.H1, Tags.H2, Tags.H3, Tags.H4, Tags.H5, Tags.H6->
                 TextViewElement(node, context)
+            Tags.HR -> SingleViewElement(node.nodeName(), createHrView(context))
             else -> null
         }
 
         viewElement?.let {
             viewStack.push(it)
+        }
+    }
+
+    companion object {
+        fun createHrView(context: Context) = View(context).apply {
+            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, context.dip(2)).apply {
+                val margin = resources.getDimensionPixelSize(R.dimen.default_quarter_padding)
+                topMargin = margin
+                bottomMargin = margin
+            }
+            setBackgroundColor(context.getColorRes(R.color.line))
         }
     }
 }
