@@ -71,7 +71,8 @@ internal class HTMLView : LinearLayout, NodeVisitor {
                 ViewGroupElement(node.nodeName(), HTMLListView(context))
             Tags.PRE -> ViewGroupElement(node.nodeName(), HorizontalScrollView(context))
             Tags.BLOCK -> ViewGroupElement(node.nodeName(), BlockQuoteView(context))
-            Tags.CELL, Tags.ITEM, Tags.CODE, Tags.PARAGRAPH, Tags.HEADING ->
+            Tags.CELL, Tags.ITEM, Tags.CODE, Tags.PARAGRAPH, Tags.HEADING,
+            Tags.H1, Tags.H2, Tags.H3, Tags.H4, Tags.H5, Tags.H6->
                 TextViewElement(node, context)
             else -> null
         }
