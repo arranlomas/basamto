@@ -71,9 +71,9 @@ internal class TextViewElement(
 
                 val prefix = when {
                     node.parentNode().nodeName() == Tags.ORDERED ->
-                        "${node.attr(Tags.ID)}.${SPACE}${SPACE}"
+                        "${node.attr(Tags.ID)}.$SPACE$SPACE"
                     node.parentNode().nodeName() == Tags.UNORDERED ->
-                        "${BULLET}${SPACE}${SPACE}"
+                        "$BULLET$SPACE$SPACE"
                     else -> ""
                 }
                 html = prefix + copy.unwrap().outerHtml().trim()

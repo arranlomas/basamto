@@ -26,7 +26,6 @@ package io.github.gumil.basamto.widget.html.elements
 
 import android.view.View
 import android.view.ViewGroup
-import io.github.gumil.basamto.widget.html.Tags
 
 internal class ViewGroupElement(
         override val tag: String,
@@ -36,17 +35,10 @@ internal class ViewGroupElement(
     override val view: View
         get() = viewGroup
 
-    init {
-        when(tag) {
-            Tags.CELL -> {}
-            Tags.HEADING -> {}
-            Tags.PARAGRAPH -> {}
-            Tags.ITEM -> {}
-            Tags.CODE -> {}
-        }
-    }
-
     override fun add(element: ViewElement) {
+        if (element is TextViewElement && element.textView.text.trim().isEmpty()) {
+            return
+        }
         viewGroup.addView(element.view)
     }
 
