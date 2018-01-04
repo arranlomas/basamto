@@ -30,6 +30,10 @@ import io.github.gumil.basamto.widget.html.Tags
 import org.apache.commons.text.StringEscapeUtils
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.jsoup.nodes.TextNode
+import timber.log.Timber
+
+private const val REGEX_URL = "^[A-Za-z][A-Za-z0-9+.-]{1,120}:[A-Za-z0-9/](([A-Za-z0-9\$_.+!*,;/?:@&~=-])|%[A-Fa-f0-9]{2}){1,333}(#([a-zA-Z0-9][a-zA-Z0-9\$_.+!*,;/?:@&~=%-]{0,1000}))?$"
 
 @Suppress("deprecation")
 internal fun String.fromHtml() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -45,6 +49,7 @@ internal fun String.formatHtml(): Document {
     return Jsoup.parse(html)
             .remapNestedLists()
             .addIdsToOrderedList()
+            .remapSpoilers()
 }
 
 private fun Document.addIdsToOrderedList(): Document {
@@ -70,3 +75,19 @@ private fun Document.remapNestedLists(): Document {
     }
     return this
 }
+
+private fun Document.remapSpoilers(): Document {
+    getElementsByTag("a").forEach {
+        if (it.hasAttr("title")) {
+            val title = it.attr("title")
+            it.attr("href", title)
+            if (it.children().isEmpty()) {
+                it.appendChild(TextNode(title))
+            }
+            Timber.tag("tantrums").d("it = $it")
+        }
+    }
+    return this
+}
+
+internal fun String.isValidUrl() = matches(Regex(REGEX_URL))

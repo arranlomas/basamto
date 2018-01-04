@@ -31,6 +31,8 @@ import android.text.method.TransformationMethod
 import android.text.style.URLSpan
 import android.view.View
 import android.widget.TextView
+import io.github.gumil.basamto.extensions.isValidUrl
+import timber.log.Timber
 
 internal class LinkTransformationMethod : TransformationMethod {
     override fun onFocusChanged(p0: View?, p1: CharSequence?, p2: Boolean, p3: Int, p4: Rect?) {
@@ -45,7 +47,15 @@ internal class LinkTransformationMethod : TransformationMethod {
                     val end = text.getSpanEnd(it)
                     val url = it.url
                     text.removeSpan(it)
-                    text.setSpan(CustomTabsUrlSpan(url), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+                    val span = if (url.isValidUrl()) {
+                        CustomTabsUrlSpan(url)
+                    } else {
+                        Timber.tag("tantrums").d("source = $source")
+                        Timber.tag("tantrums").d("url = $url")
+                        SpoilerSpan(source.toString(), url)
+                    }
+                    text.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 }
                 text
             } ?: source

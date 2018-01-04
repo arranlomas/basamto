@@ -30,19 +30,15 @@ import android.text.style.URLSpan
 import android.view.View
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.extensions.getColorRes
+import io.github.gumil.basamto.extensions.isValidUrl
 
 internal class CustomTabsUrlSpan(url: String) : URLSpan(url) {
 
     override fun onClick(view: View) {
-        if (url.matches(Regex(REGEX_URL))) {
+        if (url.isValidUrl()) {
             CustomTabsIntent.Builder().apply {
                 setToolbarColor(view.context.getColorRes(R.color.colorPrimary))
             }.build().launchUrl(view.context, Uri.parse(url))
         }
-    }
-
-    companion object {
-        private const val REGEX_URL = "^[A-Za-z][A-Za-z0-9+.-]{1,120}:[A-Za-z0-9/](([A-Za-z0-9\$_.+!*,;/?:@&~=-])|%[A-Fa-f0-9]{2}){1,333}(#([a-zA-Z0-9][a-zA-Z0-9\$_.+!*,;/?:@&~=%-]{0,1000}))?$"
-
     }
 }
