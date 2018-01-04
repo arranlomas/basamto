@@ -28,11 +28,14 @@ import android.graphics.Rect
 import android.text.Spannable
 import android.text.Spanned
 import android.text.method.TransformationMethod
+import android.text.style.BackgroundColorSpan
+import android.text.style.ForegroundColorSpan
 import android.text.style.URLSpan
 import android.view.View
 import android.widget.TextView
+import io.github.gumil.basamto.R
+import io.github.gumil.basamto.extensions.getColorRes
 import io.github.gumil.basamto.extensions.isValidUrl
-import timber.log.Timber
 
 internal class LinkTransformationMethod : TransformationMethod {
     override fun onFocusChanged(p0: View?, p1: CharSequence?, p2: Boolean, p3: Int, p4: Rect?) {
@@ -48,14 +51,14 @@ internal class LinkTransformationMethod : TransformationMethod {
                     val url = it.url
                     text.removeSpan(it)
 
-                    val span = if (url.isValidUrl()) {
-                        CustomTabsUrlSpan(url)
+                    if (!url.isValidUrl() && source.contains(url)) {
+                        text.setSpan(BackgroundColorSpan(textView.context.getColorRes(R.color.colorAccent)),
+                                start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+                        text.setSpan(ForegroundColorSpan(textView.context.getColorRes(R.color.colorAccent)),
+                                start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
                     } else {
-                        Timber.tag("tantrums").d("source = $source")
-                        Timber.tag("tantrums").d("url = $url")
-                        SpoilerSpan(source.toString(), url)
+                        text.setSpan(CustomTabsUrlSpan(url), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                     }
-                    text.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 }
                 text
             } ?: source

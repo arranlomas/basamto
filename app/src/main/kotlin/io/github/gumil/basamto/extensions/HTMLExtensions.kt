@@ -30,8 +30,6 @@ import io.github.gumil.basamto.widget.html.Tags
 import org.apache.commons.text.StringEscapeUtils
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.jsoup.nodes.TextNode
-import timber.log.Timber
 
 private const val REGEX_URL = "^[A-Za-z][A-Za-z0-9+.-]{1,120}:[A-Za-z0-9/](([A-Za-z0-9\$_.+!*,;/?:@&~=-])|%[A-Fa-f0-9]{2}){1,333}(#([a-zA-Z0-9][a-zA-Z0-9\$_.+!*,;/?:@&~=%-]{0,1000}))?$"
 
@@ -81,10 +79,11 @@ private fun Document.remapSpoilers(): Document {
         if (it.hasAttr("title")) {
             val title = it.attr("title")
             it.attr("href", title)
-            if (it.children().isEmpty()) {
-                it.appendChild(TextNode(title))
-            }
-            Timber.tag("tantrums").d("it = $it")
+            it.text(if (it.text().isNotEmpty()) {
+                "${it.text()} $title"
+            } else {
+                title
+            })
         }
     }
     return this
