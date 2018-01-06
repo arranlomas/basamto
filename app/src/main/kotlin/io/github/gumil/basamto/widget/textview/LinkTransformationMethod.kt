@@ -28,8 +28,6 @@ import android.graphics.Rect
 import android.text.Spannable
 import android.text.Spanned
 import android.text.method.TransformationMethod
-import android.text.style.BackgroundColorSpan
-import android.text.style.ForegroundColorSpan
 import android.text.style.URLSpan
 import android.view.View
 import android.widget.TextView
@@ -52,9 +50,7 @@ internal class LinkTransformationMethod : TransformationMethod {
                     text.removeSpan(it)
 
                     if (!url.isValidUrl() && source.contains(url)) {
-                        text.setSpan(BackgroundColorSpan(textView.context.getColorRes(R.color.colorAccent)),
-                                start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
-                        text.setSpan(ForegroundColorSpan(textView.context.getColorRes(R.color.colorAccent)),
+                        text.setSpan(SpoilerSpan(textView.context.getColorRes(R.color.colorAccent)),
                                 start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
                     } else {
                         text.setSpan(CustomTabsUrlSpan(url), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)

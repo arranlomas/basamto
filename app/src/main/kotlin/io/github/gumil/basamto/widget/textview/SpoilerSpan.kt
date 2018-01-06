@@ -48,16 +48,29 @@
 
 package io.github.gumil.basamto.widget.textview
 
+import android.graphics.Color
+import android.text.TextPaint
 import android.text.style.ClickableSpan
 import android.view.View
 
 internal class SpoilerSpan(
-        private val teaser: String,
-        private val spoiler: String
+        private val color: Int
 ) : ClickableSpan() {
 
-    override fun onClick(widget: View?) {
+    private var isPressed = false
 
+    override fun onClick(widget: View?) {
+        isPressed = !isPressed
+        widget?.invalidate()
+    }
+
+    override fun updateDrawState(ds: TextPaint) {
+        if (isPressed) {
+            ds.color = Color.WHITE
+        } else {
+            ds.color = color
+        }
+        ds.bgColor = color
     }
 
 }
