@@ -50,7 +50,8 @@ internal sealed class SubredditState: MviState {
 
 internal sealed class SubredditIntent : MviIntent {
     data class Initial(
-            val subreddit: String
+            val subreddit: String,
+            val initialList: List<SubmissionItem> = emptyList()
     ) : SubredditIntent()
 
     data class Load(

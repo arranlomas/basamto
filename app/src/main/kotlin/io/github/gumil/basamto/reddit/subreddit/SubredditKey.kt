@@ -31,8 +31,10 @@ import kotlinx.android.parcel.Parcelize
 
 @SuppressLint("ParcelCreator")
 @Parcelize
-internal class SubredditKey : BaseKey() {
+internal data class SubredditKey(
+        var submissions: List<SubmissionItem> = emptyList()
+) : BaseKey() {
 
-    override fun createFragment(): BaseFragment = SubredditFragment()
+    override fun createFragment(): BaseFragment = SubredditFragment.newInstance(this)
 
 }

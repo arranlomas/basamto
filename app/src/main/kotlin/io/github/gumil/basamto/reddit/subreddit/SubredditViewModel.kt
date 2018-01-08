@@ -30,6 +30,7 @@ import com.zhuinden.simplestack.Backstack
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.common.MviStateMachine
 import io.github.gumil.basamto.common.MviViewModel
+import io.github.gumil.basamto.navigation.BaseKey
 import io.github.gumil.basamto.reddit.comments.CommentsKey
 import io.github.gumil.data.repository.subreddit.SubredditRepository
 import io.github.gumil.data.util.just
@@ -46,7 +47,16 @@ internal class SubredditViewModel(
             MviStateMachine<SubredditState, SubredditIntent, SubredditResult>(SubredditState.Initial(), {
                 when (it) {
                     is SubredditIntent.Initial -> {
-                        subredditRepository.loadThreads(it.subreddit, null, LIMIT, SubredditResult.Mode.REFRESH)
+                        val startWith = if (it.initialList.isNotEmpty()) {
+                            SubredditResult.Success(
+                                    it.initialList,
+                                    SubredditResult.Mode.REFRESH
+                            )
+                        } else {
+                            SubredditResult.InProgress(SubredditResult.Mode.REFRESH)
+                        }
+
+                        subredditRepository.loadThreads(it.subreddit, null, LIMIT, SubredditResult.Mode.REFRESH, startWith)
                     }
                     is SubredditIntent.Load -> {
                         subredditRepository.loadThreads(it.subreddit, it.after, LIMIT, SubredditResult.Mode.LOAD_MORE)
@@ -56,12 +66,13 @@ internal class SubredditViewModel(
             }, { _, result ->
                 when (result) {
                     is SubredditResult.Success -> {
+                        (backstack.top<BaseKey>() as? SubredditKey)?.let {
+                            it.submissions = result.threads
+                        }
                         renderListLoading(result.mode, result.threads, false)
                     }
                     is SubredditResult.Error -> SubredditState.Error(R.string.error_subreddit_list)
-                    is SubredditResult.InProgress -> {
-                        renderListLoading(result.mode, emptyList(), true)
-                    }
+                    is SubredditResult.InProgress -> renderListLoading(result.mode, emptyList(), true)
                     is SubredditResult.GoTo -> {
                         backstack.goTo(result.key)
                         SubredditState.Void

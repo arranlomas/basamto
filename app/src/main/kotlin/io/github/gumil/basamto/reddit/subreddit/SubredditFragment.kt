@@ -75,7 +75,7 @@ internal class SubredditFragment : BaseFragment(), MviView<SubredditIntent, Subr
         return rxLifecycle.filter {
             it == Lifecycle.Event.ON_START
         }.map {
-            SubredditIntent.Initial(subreddit)
+            SubredditIntent.Initial(subreddit, arguments?.getParcelableArrayList(ARG_SUBMISSIONS) ?: emptyList())
         }
     }
 
@@ -109,5 +109,14 @@ internal class SubredditFragment : BaseFragment(), MviView<SubredditIntent, Subr
         }
         is SubredditState.Error -> showSnackbarError(message)
         is SubredditState.Void -> {}
+    }
+
+    companion object {
+        private const val ARG_SUBMISSIONS = "arg_submissions"
+        fun newInstance(subredditKey: SubredditKey) : SubredditFragment = SubredditFragment().apply {
+            arguments = Bundle().apply {
+                putParcelableArrayList(ARG_SUBMISSIONS, ArrayList(subredditKey.submissions))
+            }
+        }
     }
 }

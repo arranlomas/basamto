@@ -37,7 +37,8 @@ internal fun SubredditRepository.loadThreads(
         subreddit: String,
         after: String?,
         limit: Int,
-        mode: SubredditResult.Mode
+        mode: SubredditResult.Mode,
+        startWith: SubredditResult = SubredditResult.InProgress(mode)
 ): Observable<SubredditResult> {
     return getThreadsFrom(subreddit, after, limit)
             .map {
@@ -47,7 +48,7 @@ internal fun SubredditRepository.loadThreads(
             .onErrorReturn { SubredditResult.Error }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .startWith(SubredditResult.InProgress(mode))
+            .startWith(startWith)
 }
 
 internal fun Link.map(): SubmissionItem {
