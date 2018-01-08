@@ -60,11 +60,7 @@ internal class FragmentStateChanger(
 
         previousState.forEach { key ->
             fragmentManager.findFragmentByTag(key.getFragmentTag())?.also {
-                if (!newState.contains(key)) {
-                    fragmentTransaction.remove(it)
-                } else if (!it.isDetached) {
-                    fragmentTransaction.detach(it)
-                }
+                fragmentTransaction.remove(it)
             }
         }
 
