@@ -30,7 +30,7 @@ import io.github.gumil.basamto.common.BaseFragment
 
 internal abstract class BaseKey: Parcelable {
 
-    fun getFragmentTag(): String = toString()
+    fun getFragmentTag(): String = javaClass.simpleName
 
     fun newFragment(): BaseFragment {
         return createFragment().apply {
