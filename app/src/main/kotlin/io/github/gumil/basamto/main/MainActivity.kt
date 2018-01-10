@@ -32,6 +32,7 @@ import com.zhuinden.simplestack.navigator.Navigator
 import dagger.android.support.DaggerAppCompatActivity
 import io.github.gumil.basamto.BasamToApplication
 import io.github.gumil.basamto.R
+import io.github.gumil.basamto.navigation.BackstackKey
 import io.github.gumil.basamto.navigation.FragmentStateChanger
 import io.github.gumil.basamto.reddit.subreddit.SubredditKey
 import kotlinx.android.synthetic.main.activity_main.fragmentContainer
@@ -54,7 +55,7 @@ internal class MainActivity : DaggerAppCompatActivity() {
         Navigator.configure()
                 .setStateChanger(FragmentStateChanger(supportFragmentManager, R.id.fragmentContainer))
                 .setShouldPersistContainerChild(false)
-                .install(this, fragmentContainer, HistoryBuilder.single(SubredditKey()))
+                .install(this, fragmentContainer, HistoryBuilder.single(BackstackKey(SubredditKey())))
 
     }
 

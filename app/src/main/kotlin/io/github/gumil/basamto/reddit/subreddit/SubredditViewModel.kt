@@ -30,7 +30,8 @@ import com.zhuinden.simplestack.Backstack
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.common.MviStateMachine
 import io.github.gumil.basamto.common.MviViewModel
-import io.github.gumil.basamto.navigation.BaseKey
+import io.github.gumil.basamto.navigation.move
+import io.github.gumil.basamto.navigation.update
 import io.github.gumil.basamto.reddit.comments.CommentsKey
 import io.github.gumil.data.repository.subreddit.SubredditRepository
 import io.github.gumil.data.util.just
@@ -66,15 +67,13 @@ internal class SubredditViewModel(
             }, { _, result ->
                 when (result) {
                     is SubredditResult.Success -> {
-                        (backstack.top<BaseKey>() as? SubredditKey)?.let {
-                            it.submissions = result.threads
-                        }
+                        backstack.update(SubredditKey(result.threads))
                         renderListLoading(result.mode, result.threads, false)
                     }
                     is SubredditResult.Error -> SubredditState.Error(R.string.error_subreddit_list)
                     is SubredditResult.InProgress -> renderListLoading(result.mode, emptyList(), true)
                     is SubredditResult.GoTo -> {
-                        backstack.goTo(result.key)
+                        backstack.move(result.key)
                         SubredditState.Void
                     }
                 }

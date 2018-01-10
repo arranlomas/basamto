@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright 2017 Miguel Panelo
+ * Copyright 2018 Miguel Panelo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,19 +22,19 @@
  * SOFTWARE.
  */
 
-package io.github.gumil.basamto.reddit.subreddit
+package io.github.gumil.basamto.navigation
 
-import android.annotation.SuppressLint
-import io.github.gumil.basamto.common.BaseFragment
-import io.github.gumil.basamto.navigation.BaseKey
-import kotlinx.android.parcel.Parcelize
+import com.zhuinden.simplestack.Backstack
 
-@SuppressLint("ParcelCreator")
-@Parcelize
-internal data class SubredditKey(
-        val submissions: List<SubmissionItem> = emptyList()
-) : BaseKey() {
+internal fun Backstack.move(key: BaseKey) {
+    goTo(BackstackKey(key))
+}
 
-    override fun createFragment(): BaseFragment = SubredditFragment.newInstance(this)
-
+@Suppress("UNCHECKED_CAST")
+internal fun <T: BaseKey> Backstack.update(key: T) {
+    (top<BaseKey>() as? BackstackKey)?.let { backstackKey ->
+        (backstackKey.key as? T)?.let {
+            backstackKey.key = key
+        }
+    }
 }
