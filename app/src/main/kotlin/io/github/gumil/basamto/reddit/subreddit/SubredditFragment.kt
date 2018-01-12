@@ -56,7 +56,7 @@ internal class SubredditFragment : BaseFragment(), MviView<SubredditIntent, Subr
     override val layoutId: Int
         get() = R.layout.fragment_subreddit
 
-    private val subreddit = "test"
+    private val subreddit = "movies"
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
