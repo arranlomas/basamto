@@ -29,6 +29,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import io.github.gumil.basamto.R
@@ -67,16 +68,16 @@ internal class CommentsFragment : BaseFragment(), MviView<CommentsIntent, Commen
         })
 
         viewModel.processIntents(intents())
+
+        commentsList.layoutManager = LinearLayoutManager(context)
+        commentsList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
     }
 
     override fun CommentsState.render() = when (this) {
         is CommentsState.View -> {
             swipeRefreshLayout.isRefreshing = isLoading
 
-            if (commentsList.adapter == null) {
-                commentsList.layoutManager = LinearLayoutManager(context)
-                commentsList.adapter = adapter
-            }
+            commentsList.adapter ?: let { commentsList.adapter = adapter }
 
             adapter.list = comments
 

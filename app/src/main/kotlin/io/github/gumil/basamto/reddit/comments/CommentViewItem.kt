@@ -32,7 +32,7 @@ import io.github.gumil.basamto.common.adapter.ViewItem
 import io.github.gumil.basamto.extensions.formatHtml
 import kotlinx.android.synthetic.main.item_comment.view.author
 import kotlinx.android.synthetic.main.item_comment.view.body
-import kotlinx.android.synthetic.main.item_comment.view.nestComments
+import kotlinx.android.synthetic.main.item_comment.view.replies
 
 internal class CommentViewItem : ViewItem<CommentItem> {
 
@@ -43,9 +43,11 @@ internal class CommentViewItem : ViewItem<CommentItem> {
     override fun bind(view: View, item: CommentItem) {
         view.author.text = item.user
         view.body.populate(item.body.formatHtml())
-        view.nestComments.layoutManager = LinearLayoutManager(view.context)
-        view.nestComments.adapter = ItemAdapter(CommentViewItem()).apply {
-            list = item.replies
+        view.replies.apply {
+            layoutManager = LinearLayoutManager(view.context)
+            adapter = ItemAdapter(CommentViewItem()).apply {
+                list = item.replies
+            }
         }
     }
 

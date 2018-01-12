@@ -26,6 +26,7 @@ package io.github.gumil.basamto.widget.html.elements
 
 import android.view.View
 import android.view.ViewGroup
+import io.github.gumil.basamto.R
 
 internal class ViewGroupElement(
         override val tag: String,
@@ -39,7 +40,11 @@ internal class ViewGroupElement(
         if (element is TextViewElement && element.textView.text.trim().isEmpty()) {
             return
         }
-        viewGroup.addView(element.view)
+        viewGroup.addView(element.view.apply {
+            setPadding(0,
+                    context.resources.getDimensionPixelSize(R.dimen.default_half_padding),
+                    0,0)
+        })
     }
 
     override fun toString(): String = tag

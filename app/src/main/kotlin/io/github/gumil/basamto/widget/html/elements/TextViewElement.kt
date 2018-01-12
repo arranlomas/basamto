@@ -50,6 +50,7 @@ internal class TextViewElement(
     val textView = TextView(context).apply {
         transformationMethod = LinkTransformationMethod()
         movementMethod = LinkMovementMethod.getInstance()
+        lineSpacingExtra
     }
 
     init {
