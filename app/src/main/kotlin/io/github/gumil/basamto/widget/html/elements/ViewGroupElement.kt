@@ -26,7 +26,7 @@ package io.github.gumil.basamto.widget.html.elements
 
 import android.view.View
 import android.view.ViewGroup
-import io.github.gumil.basamto.R
+import io.github.gumil.basamto.extensions.dip
 
 internal class ViewGroupElement(
         override val tag: String,
@@ -41,9 +41,7 @@ internal class ViewGroupElement(
             return
         }
         viewGroup.addView(element.view.apply {
-            setPadding(0,
-                    context.resources.getDimensionPixelSize(R.dimen.default_half_padding),
-                    0,0)
+            setPadding(0, context.dip(16), 0,0)
         })
     }
 

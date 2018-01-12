@@ -30,6 +30,7 @@ import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.TextView
 import io.github.gumil.basamto.R
+import io.github.gumil.basamto.extensions.dip
 import io.github.gumil.basamto.extensions.fromHtml
 import io.github.gumil.basamto.extensions.setPadding
 import io.github.gumil.basamto.widget.html.Tags
@@ -50,7 +51,7 @@ internal class TextViewElement(
     val textView = TextView(context).apply {
         transformationMethod = LinkTransformationMethod()
         movementMethod = LinkMovementMethod.getInstance()
-        lineSpacingExtra
+        setLineSpacing(context.dip(4).toFloat(), 1.0f)
     }
 
     init {
