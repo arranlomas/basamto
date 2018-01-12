@@ -82,7 +82,7 @@ internal class TextViewElement(
             }
             Tags.CODE -> {
                 textView.typeface = Typeface.MONOSPACE
-                html = html.replace(" ", "&nbsp;")
+                html = html.replace(" ", SPACE)
             }
         }
 
