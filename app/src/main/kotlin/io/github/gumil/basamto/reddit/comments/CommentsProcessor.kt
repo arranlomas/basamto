@@ -55,7 +55,8 @@ private fun Comment.map(): CommentItem {
             score,
             bodyHtml,
             (replies as? Listing)?.children?.filterIsInstance<Comment>()
-                    ?.map { it.map() }?: emptyList()
+                    ?.map { it.map() }?: emptyList(),
+            depth
     )
 }
 
@@ -65,5 +66,6 @@ internal data class CommentItem(
         val user: String,
         val score: Int,
         val body: String,
-        val replies: List<CommentItem>
+        val replies: List<CommentItem>,
+        val depth: Int
 )

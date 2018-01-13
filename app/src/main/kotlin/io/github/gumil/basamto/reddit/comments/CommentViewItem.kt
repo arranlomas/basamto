@@ -29,12 +29,24 @@ import android.view.View
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.common.adapter.ItemAdapter
 import io.github.gumil.basamto.common.adapter.ViewItem
+import io.github.gumil.basamto.extensions.getColorRes
+import io.github.gumil.basamto.extensions.setVisible
 import io.github.gumil.basamto.widget.html.getBlocks
 import kotlinx.android.synthetic.main.item_comment.view.author
 import kotlinx.android.synthetic.main.item_comment.view.body
+import kotlinx.android.synthetic.main.item_comment.view.depth
+import kotlinx.android.synthetic.main.item_comment.view.divider
 import kotlinx.android.synthetic.main.item_comment.view.replies
 
 internal class CommentViewItem : ViewItem<CommentItem> {
+
+    private var depthColors = arrayOf(
+            R.color.md_blue_500,
+            R.color.md_green_500,
+            R.color.md_yellow_500,
+            R.color.md_orange_500,
+            R.color.md_red_500
+    )
 
     override var onItemClick: ((CommentItem) -> Unit)? = null
 
@@ -44,10 +56,18 @@ internal class CommentViewItem : ViewItem<CommentItem> {
         val blocks = item.body.getBlocks()
         view.author.text = item.user
         view.body.setViews(blocks)
-        view.replies.apply {
+        view.replies.run {
             layoutManager = LinearLayoutManager(view.context)
             adapter = ItemAdapter(CommentViewItem()).apply {
                 list = item.replies
+            }
+        }
+        view.divider.setVisible(item.replies.isNotEmpty())
+
+        if (item.depth > 0) {
+            view.depth.run {
+                setVisible(item.depth > 0)
+                setBackgroundColor(context.getColorRes(depthColors[item.depth - 1]))
             }
         }
     }
