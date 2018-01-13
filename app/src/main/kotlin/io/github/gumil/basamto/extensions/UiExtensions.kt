@@ -33,6 +33,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
+import io.github.gumil.basamto.widget.html.fromHtml
 
 fun ViewGroup.inflateLayout(@LayoutRes layout: Int, addToRoot: Boolean = false) =
         LayoutInflater.from(context).inflate(layout, this, addToRoot)

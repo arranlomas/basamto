@@ -48,7 +48,6 @@ import android.util.DisplayMetrics
 import android.view.WindowManager
 import android.widget.TextView
 import io.github.gumil.basamto.R
-import io.github.gumil.basamto.extensions.fromHtml
 import io.github.gumil.basamto.extensions.getColorRes
 import io.github.gumil.basamto.widget.html.span.CustomQuoteSpan
 import org.apache.commons.lang3.StringUtils

@@ -87,9 +87,7 @@ ext {
 
             picasso             : "com.squareup.picasso:picasso:2.5.2",
 
-            boilerpipe          : "com.github.BartoszJarocki:android-boilerpipe:3330c21f8d",
             apacheCommons       : "org.apache.commons:commons-text:1.2",
-            jsoup               : "org.jsoup:jsoup:1.11.2",
 
             //Test
             junit               : "junit:junit:4.12",

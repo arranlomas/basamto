@@ -65,7 +65,6 @@ dependencies {
     implementation dependencies.picasso
     implementation dependencies.threeTenAbp
 
-    implementation dependencies.jsoup
     implementation dependencies.apacheCommons
 
     androidTestImplementation(dependencies.espresso, {

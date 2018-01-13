@@ -24,6 +24,8 @@
 
 package io.github.gumil.basamto.widget.html
 
+import android.os.Build
+import android.text.Html
 import org.apache.commons.text.StringEscapeUtils
 import java.util.*
 import java.util.regex.Pattern
@@ -173,6 +175,13 @@ private fun parseLists(html: String): String {
     html = html.replace("<ol>", "").replace("<ul>", "").replace("<li>", "").replace("</li>", "").replace("</ol>", "").replace("</ul>", "") //Remove the tags, which actually work in Android 7.0 on
 
     return html
+}
+
+@Suppress("deprecation")
+internal fun String.fromHtml() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+    Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
+} else {
+    Html.fromHtml(this)
 }
 
 private fun parseHR(blocks: List<String>): List<String> {
