@@ -45,8 +45,9 @@
             android:textSize="12sp"
             android:textStyle="bold"/>
 
-        <io.github.gumil.basamto.widget.html.HTMLView
+        <io.github.gumil.basamto.widget.html.CommentOverflow
             android:id="@+id/body"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>

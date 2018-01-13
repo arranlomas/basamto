@@ -29,7 +29,7 @@ import android.view.View
 import io.github.gumil.basamto.R
 import io.github.gumil.basamto.common.adapter.ItemAdapter
 import io.github.gumil.basamto.common.adapter.ViewItem
-import io.github.gumil.basamto.extensions.formatHtml
+import io.github.gumil.basamto.widget.html.getBlocks
 import kotlinx.android.synthetic.main.item_comment.view.author
 import kotlinx.android.synthetic.main.item_comment.view.body
 import kotlinx.android.synthetic.main.item_comment.view.replies
@@ -41,8 +41,9 @@ internal class CommentViewItem : ViewItem<CommentItem> {
     override val layout: Int get() = R.layout.item_comment
 
     override fun bind(view: View, item: CommentItem) {
+        val blocks = item.body.getBlocks()
         view.author.text = item.user
-        view.body.populate(item.body.formatHtml())
+        view.body.setViews(blocks)
         view.replies.apply {
             layoutManager = LinearLayoutManager(view.context)
             adapter = ItemAdapter(CommentViewItem()).apply {
