@@ -8,4 +8,5 @@
     <string name="error_subreddit_list">Error loading submissions</string>
     <string name="error_comments_list">Error loading comments</string>
     <string name="error_no_connection">No network connection</string>
+    <string name="load_more">Load More…</string>
 </resources>

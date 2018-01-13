@@ -27,6 +27,7 @@ package io.github.gumil.basamto.reddit.comments
 import io.github.gumil.basamto.reddit.subreddit.map
 import io.github.gumil.data.model.Comment
 import io.github.gumil.data.model.Listing
+import io.github.gumil.data.model.More
 import io.github.gumil.data.repository.subreddit.SubredditRepository
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -48,24 +49,40 @@ internal fun SubredditRepository.loadComments(
 }
 
 private fun Comment.map(): CommentItem {
-    return CommentItem(
+    val children = (replies as? Listing)?.children
+    val more = children?.filterIsInstance<More>()?.firstOrNull()
+    return CommentBodyItem(
             id,
             createdUtc,
             author,
             score,
             bodyHtml,
-            (replies as? Listing)?.children?.filterIsInstance<Comment>()
-                    ?.map { it.map() }?: emptyList(),
+            children?.map {
+                when (it) {
+                    is Comment -> it.map()
+                    is More -> MoreItem(it.id, it.count)
+                    else -> null
+                }
+            }?.filterIsInstance<CommentItem>() ?: emptyList(),
             depth
     )
 }
 
-internal data class CommentItem(
-        val id: String,
+internal sealed class CommentItem {
+    abstract val id: String
+}
+
+internal data class CommentBodyItem(
+        override val id: String,
         val timestamp: Long,
         val user: String,
         val score: Int,
         val body: String,
         val replies: List<CommentItem>,
         val depth: Int
-)
+): CommentItem()
+
+internal data class MoreItem(
+        override val id: String,
+        val count: Int
+): CommentItem()

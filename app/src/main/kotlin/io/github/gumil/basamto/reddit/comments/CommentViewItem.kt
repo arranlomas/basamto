@@ -53,6 +53,13 @@ internal class CommentViewItem : ViewItem<CommentItem> {
     override val layout: Int get() = R.layout.item_comment
 
     override fun bind(view: View, item: CommentItem) {
+        when (item) {
+            is CommentBodyItem -> renderComment(view, item)
+            is MoreItem -> renderMore(view, item)
+        }
+    }
+
+    private fun renderComment(view: View, item: CommentBodyItem) {
         val blocks = item.body.getBlocks()
         view.author.text = item.user
         view.body.setViews(blocks)
@@ -69,6 +76,14 @@ internal class CommentViewItem : ViewItem<CommentItem> {
                 setVisible(item.depth > 0)
                 setBackgroundColor(context.getColorRes(depthColors[item.depth - 1]))
             }
+        }
+    }
+
+    private fun renderMore(view: View, item: MoreItem) {
+        view.author.text = view.context.getString(R.string.load_more)
+        view.depth.run {
+            setVisible(true)
+            setBackgroundColor(context.getColorRes(R.color.md_grey_700))
         }
     }
 
