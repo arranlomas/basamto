@@ -37,9 +37,13 @@ import io.github.gumil.basamto.common.BaseFragment
 import io.github.gumil.basamto.common.MviView
 import io.github.gumil.basamto.common.adapter.ItemAdapter
 import io.github.gumil.basamto.extensions.load
+import io.github.gumil.basamto.extensions.setVisible
 import io.github.gumil.basamto.main.MainActivity
 import io.github.gumil.basamto.reddit.subreddit.SubmissionItem
+import io.github.gumil.basamto.widget.html.getBlocks
 import io.reactivex.Observable
+import kotlinx.android.synthetic.main.fragment_comments.body
+import kotlinx.android.synthetic.main.fragment_comments.bodyContainer
 import kotlinx.android.synthetic.main.fragment_comments.commentsList
 import kotlinx.android.synthetic.main.fragment_comments.commentsPreview
 import kotlinx.android.synthetic.main.fragment_comments.swipeRefreshLayout
@@ -81,7 +85,12 @@ internal class CommentsFragment : BaseFragment(), MviView<CommentsIntent, Commen
 
             adapter.list = comments
 
+            commentsPreview.setVisible(submissionItem?.preview != null)
             commentsPreview.load(submissionItem?.preview)
+            submissionItem?.body?.getBlocks()?.let {
+                body.setViews(it)
+                bodyContainer.setVisible(true)
+            }
         }
         is CommentsState.Error -> showSnackbarError(message)
     }

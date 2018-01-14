@@ -29,7 +29,6 @@ import android.support.v4.app.FragmentManager
 import com.zhuinden.simplestack.StateChange
 import com.zhuinden.simplestack.StateChanger
 import io.github.gumil.basamto.R
-import io.github.gumil.basamto.extensions.getColorRes
 
 internal class FragmentStateChanger(
         private val fragmentManager: FragmentManager,
@@ -66,7 +65,6 @@ internal class FragmentStateChanger(
 
         newState.forEach { key ->
             var fragment: Fragment? = fragmentManager.findFragmentByTag(key.getFragmentTag())
-            fragment?.view?.setBackgroundColor(fragment.context.getColorRes(R.color.white))
             if (key == stateChange.topNewState()) {
                 fragment?.also {
                     if (it.isDetached) {

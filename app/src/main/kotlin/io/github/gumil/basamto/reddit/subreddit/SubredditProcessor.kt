@@ -61,6 +61,7 @@ internal fun Link.map(): SubmissionItem {
             score,
             commentsCount,
             name,
+            selfTextHtml,
             preview?.images?.firstOrNull()?.source?.url
     )
 }
@@ -76,5 +77,6 @@ internal data class SubmissionItem(
         val numUpvotes: Int,
         val numComments: Int,
         val after: String,
+        val body: String?,
         val preview: String? = null
 ) : Parcelable
